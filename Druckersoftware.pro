@@ -25,10 +25,24 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        controlwindow.cpp
+        controlwindow.cpp \
+    machinecontroller.cpp \
+    gcodereader.cpp \
+    gcodeinterpreter.cpp \
+    serialinterface.cpp \
+    motorcontroller.cpp \
+    heatingcontroller.cpp \
+    sensorlistener.cpp
 
 HEADERS += \
-        controlwindow.h
+        controlwindow.h \
+    machinecontroller.h \
+    gcodereader.h \
+    gcodeinterpreter.h \
+    serialinterface.h \
+    motorcontroller.h \
+    heatingcontroller.h \
+    sensorlistener.h
 
 FORMS += \
         controlwindow.ui
