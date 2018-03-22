@@ -28,7 +28,6 @@ SOURCES += \
         controlwindow.cpp \
     machinecontroller.cpp \
     gcodereader.cpp \
-    gcodeinterpreter.cpp \
     serialinterface.cpp \
     motorcontroller.cpp \
     heatingcontroller.cpp \
@@ -38,7 +37,6 @@ HEADERS += \
         controlwindow.h \
     machinecontroller.h \
     gcodereader.h \
-    gcodeinterpreter.h \
     serialinterface.h \
     motorcontroller.h \
     heatingcontroller.h \
