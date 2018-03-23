@@ -2,12 +2,16 @@
 #define MACHINECONTROLLER_H
 
 #include <QObject>
+#include <QUrl>
+#include "gcodereader.h"
+#include "motorcontroller.h"
+#include "heatingcontroller.h"
+#include "sensorlistener.h"
+#include "serialinterface.h"
 
 class MachineController : public QObject
 {
     Q_OBJECT
-
-    Q_PROPERTY(int m_unit READ unit WRITE setUnit NOTIFY unitChanged)
 
 public:
     explicit MachineController(QObject *parent = nullptr);
@@ -42,18 +46,38 @@ public:
     bool m203(int x, int y, int z, int e);    //set max feedrate
     bool m204(int p, int t);    //set default acceleration
     void m400();    //wait for current moves to finish
+    bool absolutePositioning();
+    bool absoluteExtruder();
 
 public slots:
 
     void movementFinished();
-    void clear();
+    void endstopHit();
+    void heatingFinished();
+    void pause();
+    void play();
+    void reset();
+    void print(QUrl filePath);
+    void overheat();
+    void printerHeadSensorTriggered();
 
 signals:
 
 private:
 
-    bool m_absolutePositioning;
-    bool m_absoluteExtruder;
+    bool measurePrinterBedTilt();
+    bool calculatePrinterBedTilt();
+
+    bool *m_absolutePositioning;
+    bool *m_absoluteExtruder;
+    int *m_printerBedMeasurements;
+    int *m_printerBedXAxisTilt;
+    int *m_printerBedYAxisTilt;
+    GCodeReader *m_gCodeReader;
+    MotorController *m_motorController;
+    HeatingController *m_heatingController;
+    SensorListener *m_sensorListener;
+    SerialInterface *m_serialInterface;
 
 };
 

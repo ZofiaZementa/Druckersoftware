@@ -3,11 +3,32 @@
 MachineController::MachineController(QObject *parent) : QObject(parent)
 {
 
+    //defining pointers
+
+    m_absolutePositioning = new bool;    //holds wether the movement of the axes is absolute or not
+    m_absoluteExtruder = new bool;    //holds wether the movement of the extruders is absolute or not
+    m_printerBedMeasurements = new int[9];    //holds the printerbed measurements used to calculate the printerbed tilt
+    m_printerBedXAxisTilt = new int;    //holds the tilt of the printerbed in the x-axis direction in degrees
+    m_printerBedYAxisTilt = new int;    //holds the tilt of the printerbed in the y-axis direction in degrees
+    m_gCodeReader = new GCodeReader(this);
+    m_motorController = new MotorController(this);
+    m_heatingController = new HeatingController(this);
+    m_sensorListener = new SensorListener(this);
+    m_serialInterface = new SerialInterface(this);
+
+
 }
 
 MachineController::~MachineController()
 {
 
+    //deleting pointers
+
+    delete m_absolutePositioning;
+    delete m_absoluteExtruder;
+    delete m_printerBedMeasurements;
+    delete m_printerBedXAxisTilt;
+    delete m_printerBedYAxisTilt;
 }
 
 //rapid linear move
@@ -214,13 +235,80 @@ void MachineController::m400()
 
 }
 
+//returns m_absolutePositioning
+bool MachineController::absolutePositioning()
+{
+
+    return m_absolutePositioning;
+}
+
+bool MachineController::absoluteExtruder()
+{
+
+    return m_absoluteExtruder;
+}
+
+//returns m_absoluteExtruder
 void MachineController::movementFinished()
 {
 
 }
 
 //clears buffer and m_unit
-void MachineController::clear()
+void MachineController::endstopHit()
+{
+
+}
+
+//triggered when heating is finished
+void MachineController::heatingFinished()
+{
+
+}
+
+//pauses the machine
+void MachineController::pause()
+{
+
+}
+
+//continues the machine
+void MachineController::play()
+{
+
+}
+
+//resets the machine
+void MachineController::reset()
+{
+
+}
+
+//prints the file at filePath
+void MachineController::print(QUrl filePath)
+{
+
+}
+
+//triggered whzen overheating, turns off all heaters and motors,
+//ramps the fans to 100%, displays message
+void MachineController::overheat()
+{
+
+}
+
+void MachineController::printerHeadSensorTriggered()
+{
+
+
+}
+
+bool MachineController::measurePrinterBedTilt()
+{
+
+}
+
+bool MachineController::calculatePrinterBedTilt()
 {
 
 }

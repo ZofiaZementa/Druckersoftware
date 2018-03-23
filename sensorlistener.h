@@ -11,6 +11,8 @@ public:
 
 signals:
 
+     void printerHeadSensorTriggered();
+
 public slots:
 };
 
