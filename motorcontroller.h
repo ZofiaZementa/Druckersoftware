@@ -7,25 +7,25 @@ class MotorController : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(int m_currentXAxisPosition READ currentXAxisPosition NOTIFY currentXAxisPositionChanged)
-    Q_PROPERTY(int m_currentYAxisPosition READ currentYAxisPosition NOTIFY currentYAxisPositionChanged)
-    Q_PROPERTY(int m_currentZAxisPosition READ currentZAxisPosition NOTIFY currentZAxisPositionChanged)
-    Q_PROPERTY(int m_currentExtruderPosition READ currentExtruderPosition NOTIFY currentExtruderPositionChanged)
+    Q_PROPERTY(int m_currentXAxisPosition READ currentXAxisPosition WRITE setCurrentXAxisPosition NOTIFY currentXAxisPositionChanged)
+    Q_PROPERTY(int m_currentYAxisPosition READ currentYAxisPosition WRITE setCurrentYAxisPosition NOTIFY currentYAxisPositionChanged)
+    Q_PROPERTY(int m_currentZAxisPosition READ currentZAxisPosition WRITE setCurrentZAxisPosition NOTIFY currentZAxisPositionChanged)
+    Q_PROPERTY(int m_currentExtruderPosition READ currentExtruderPosition WRITE setCurrentExtruderPosition NOTIFY currentExtruderPositionChanged)
 
 public:
     explicit MotorController(QObject *parent = nullptr);
     ~MotorController();
 
-    bool absoluteMoveXAxis(int position);
-    bool relativeMoveXAxis(int value);
-    bool absoluteMoveYAxis(int position);
-    bool relativeMoveYAxis(int value);
-    bool absoluteMoveZAxis(int position);
-    bool relativeMoveZAxis(int value);
-    bool absoluteMoveExtruder(int position);
-    bool relativeMoveExtruder(int value);
-    bool absoluteMove(int x, int y, int z, int e);
-    bool relativeMove(int x, int y, int z, int e);
+    bool absoluteMoveXAxis(int position, int speed);
+    bool relativeMoveXAxis(int value, int speed);
+    bool absoluteMoveYAxis(int position, int speed);
+    bool relativeMoveYAxis(int value, int speed);
+    bool absoluteMoveZAxis(int position, int speed);
+    bool relativeMoveZAxis(int value, int speed);
+    bool absoluteMoveExtruder(int position, int speed);
+    bool relativeMoveExtruder(int value, int speed);
+    bool absoluteMove(int x, int y, int z, int e, int speed);
+    bool relativeMove(int x, int y, int z, int e, int speed);
     void setXAxisMaxPrintingAcceleration(int xAxisMaxPrintingAcceleration);
     int xAxisMaxPrintingAcceleration();
     void setXAxisMaxTravelAcceleration(int xAxisMaxTravelAcceleration);
@@ -58,6 +58,10 @@ public:
     int currentYAxisPosition();
     int currentZAxisPosition();
     int currentExtruderPosition();
+    int setCurrentXAxisPosition(int currentXAxisPosition);
+    int setCurrentYAxisPosition(int currentYAxisPosition);
+    int setCurrentZAxisPosition(int currentZAxisPosition);
+    int setCurrentExtruderPosition(int currentExtruderPosition);
 
 signals:
 
@@ -71,6 +75,7 @@ public slots:
     void clear();
     void pause();
     void play();
+    void stop();
 
 private:
 

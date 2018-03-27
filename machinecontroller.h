@@ -2,6 +2,7 @@
 #define MACHINECONTROLLER_H
 
 #include <QObject>
+//#include <QThread>
 #include <QUrl>
 #include "gcodereader.h"
 #include "motorcontroller.h"
@@ -16,6 +17,14 @@ class MachineController : public QObject
 public:
     explicit MachineController(QObject *parent = nullptr);
     ~MachineController();
+
+    //defining enums
+
+    enum PrinterState{Idle, Startup, PrePrintSetup, Printing, Paused};
+    enum PositioningMode{AbsolutePositioning, RelativePositioning};
+    enum ExtruderMode{AbsoluteExtruder, RelativeExtruder};
+
+    //defining methods
 
     bool g0(int x, int y, int z, int e, int f, int s);    //rapid linear move
     bool g1(int x, int y, int z, int e, int f, int s);    //linear move
@@ -46,38 +55,50 @@ public:
     bool m203(int x, int y, int z, int e);    //set max feedrate
     bool m204(int p, int t);    //set default acceleration
     void m400();    //wait for current moves to finish
-    bool absolutePositioning();
-    bool absoluteExtruder();
+    PositioningMode positioningMode();    //returns the PrintingMode
+    ExtruderMode extruderMode();    //returns the ExtruderModes
 
 public slots:
 
     void movementFinished();
-    void endstopHit();
     void heatingFinished();
     void pause();
     void play();
     void reset();
     void print(QUrl filePath);
     void overheat();
-    void printerHeadSensorTriggered();
+    void xAxisPositiveEndstopHit();
+    void xAxisNegativeEndstopHit();
+    void yAxisPositiveEndstopHit();
+    void yAxisNegativeEndstopHit();
+    void zAxisPositiveEndstopHit();
+    void zAxisNegativeEndstopHit();
 
 signals:
 
 private:
 
-    bool measurePrinterBedTilt();
+    //defining methods
+
+    void measurePrinterBedTilt();
     bool calculatePrinterBedTilt();
 
-    bool *m_absolutePositioning;
-    bool *m_absoluteExtruder;
-    int *m_printerBedMeasurements;
-    int *m_printerBedXAxisTilt;
-    int *m_printerBedYAxisTilt;
+    //defining pointers
+
+    PrinterState *m_printerState;
+    PositioningMode *m_positioningMode;
+    ExtruderMode *m_extruderMode;
+    QList<int> *m_printerBedMeasurements;
+    qreal *m_printerBedXAxisTilt;
+    qreal *m_printerBedYAxisTilt;
     GCodeReader *m_gCodeReader;
     MotorController *m_motorController;
     HeatingController *m_heatingController;
     SensorListener *m_sensorListener;
     SerialInterface *m_serialInterface;
+    int *m_printerXAxisLength;
+    int *m_printerYAxisLength;
+    int *m_printerZAxisLength;
 
 };
 

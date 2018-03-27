@@ -49,66 +49,68 @@ MotorController::~MotorController()
     delete m_currentExtruderPosition;
 }
 
-//absolutely moves x-axis to position in mm
-bool MotorController::absoluteMoveXAxis(int position)
+//absolutely moves x-axis to position in mm, speed = the speed the head is going to move in mm/min
+bool MotorController::absoluteMoveXAxis(int position, int speed)
 {
 
 }
 
-//relatively moves x-axis by position in mm
-bool MotorController::relativeMoveXAxis(int value)
+//relatively moves x-axis by position in mm, speed = the speed the head is going to move in mm/min
+bool MotorController::relativeMoveXAxis(int value, int speed)
 {
 
 }
 
-//absolutely moves y-axis to position in mm
-bool MotorController::absoluteMoveYAxis(int position)
+//absolutely moves y-axis to position in mm, speed = the speed the head is going to move in mm/min
+bool MotorController::absoluteMoveYAxis(int position, int speed)
 {
 
 }
 
-//relatively moves y-axis by value in mm
-bool MotorController::relativeMoveYAxis(int value)
+//relatively moves y-axis by value in mm, speed = the speed the head is going to move in mm/min
+bool MotorController::relativeMoveYAxis(int value, int speed)
 {
 
 }
 
-//absolutely moves z-axis to position in mm
-bool MotorController::absoluteMoveZAxis(int position)
+//absolutely moves z-axis to position in mm, speed = the speed the head is going to move in mm/min
+bool MotorController::absoluteMoveZAxis(int position, int speed)
 {
 
 }
 
-//relatively moves z-axis by value in mm
-bool MotorController::relativeMoveZAxis(int value)
+//relatively moves z-axis by value in mm, speed = the speed the head is going to move in mm/min
+bool MotorController::relativeMoveZAxis(int value, int speed)
 {
 
 }
 
-//absolutely moves extruder to position in mm
-bool MotorController::absoluteMoveExtruder(int position)
+//absolutely moves extruder to position in mm, speed = the speed the head is going to move in mm/min
+bool MotorController::absoluteMoveExtruder(int position, int speed)
 {
 
 }
 
-//relatively moves extruder by value in mm
-bool MotorController::relativeMoveExtruder(int value)
+//relatively moves extruder by value in mm, speed = the speed the head is going to move in mm/min
+bool MotorController::relativeMoveExtruder(int value, int speed)
 {
 
 }
 
 //absolutely moves all axes and extruder
-//x = position to move to on the x-axis, y = position to move to on the y-axis
-//z = position to move to on the z-axis, e = position to move the extruder to
-bool MotorController::absoluteMove(int x, int y, int z, int e)
+//x = position to move to on the x-axis in mm, y = position to move to on the y-axis in mm
+//z = position to move to on the z-axis in mm, e = position to move the extruder to in mm
+//speed = the speed the head is going to move in mm/min
+bool MotorController::absoluteMove(int x, int y, int z, int e, int speed)
 {
 
 }
 
 //relatively moves all axes and extruder
-//x = value to move by on the x-axis, y = value to move by on the y-axis
-//z = value to move by on the z-axis, e = value to move the extruder by
-bool MotorController::relativeMove(int x, int y, int z, int e)
+//x = value to move by on the x-axis in mm, y = value to move by on the y-axis in mm
+//z = value to move by on the z-axis in mm, e = value to move the extruder by in mm
+//speed = the speed the head is going to move in mm/min
+bool MotorController::relativeMove(int x, int y, int z, int e, int speed)
 {
 
 }
@@ -308,6 +310,66 @@ int MotorController::defaultTravelAcceleration()
     return *m_defaultTravelAcceleration;
 }
 
+//returns m_currentXAxisPosition
+int MotorController::currentXAxisPosition()
+{
+
+}
+
+//returns m_currentYAxisPosition
+int MotorController::currentYAxisPosition()
+{
+
+}
+
+//returns m_currentZAxisPosition
+int MotorController::currentZAxisPosition()
+{
+
+}
+
+//returns m_currentExtruderPosition
+int MotorController::currentExtruderPosition()
+{
+
+}
+
+//this method doesn't change the position on the x-axis
+//this method is only to setup the the printer after startup
+//sets m_setCurrentXAxisPosition to currentXAxisPosition
+int MotorController::setCurrentXAxisPosition(int currentXAxisPosition)
+{
+
+    *m_currentXAxisPosition = currentXAxisPosition;
+}
+
+//this method doesn't change the position on the y-axis
+//this method is only to setup the the printer after startup
+//sets m_setCurrentYAxisPosition to currentYAxisPosition
+int MotorController::setCurrentYAxisPosition(int currentYAxisPosition)
+{
+
+    *m_currentYAxisPosition = currentYAxisPosition;
+}
+
+//this method doesn't change the position on the z-axis
+//this method is only to setup the the printer after startup
+//sets m_currentZAxisPosition to currentZAxisPosition
+int MotorController::setCurrentZAxisPosition(int currentZAxisPosition)
+{
+
+    *m_currentZAxisPosition = currentZAxisPosition;
+}
+
+//this method doesn't change the position on the extruder
+//this method is only to setup the the printer after stratup
+//sets m_currentExtruderPosition to currentExtruderPosition
+int MotorController::setCurrentExtruderPosition(int currentExtruderPosition)
+{
+
+    *m_currentExtruderPosition = currentExtruderPosition;
+}
+
 //clears all the values
 void MotorController::clear()
 {
@@ -322,6 +384,12 @@ void MotorController::pause()
 
 //continues the motors
 void MotorController::play()
+{
+
+}
+
+//stops all movement
+void MotorController::stop()
 {
 
 }

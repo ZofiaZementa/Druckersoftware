@@ -11,7 +11,12 @@ public:
 
 signals:
 
-     void printerHeadSensorTriggered();
+    void xAxisPositiveEndstopHit();
+    void xAxisNegativeEndstopHit();
+    void yAxisPositiveEndstopHit();
+    void yAxisNegativeEndstopHit();
+    void zAxisPositiveEndstopHit();
+    void zAxisNegativeEndstopHit();
 
 public slots:
 };
