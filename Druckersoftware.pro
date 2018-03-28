@@ -31,7 +31,8 @@ SOURCES += \
     serialinterface.cpp \
     motorcontroller.cpp \
     heatingcontroller.cpp \
-    sensorlistener.cpp
+    sensorlistener.cpp \
+    fancontroller.cpp
 
 HEADERS += \
         controlwindow.h \
@@ -40,7 +41,8 @@ HEADERS += \
     serialinterface.h \
     motorcontroller.h \
     heatingcontroller.h \
-    sensorlistener.h
+    sensorlistener.h \
+    fancontroller.h
 
 FORMS += \
         controlwindow.ui

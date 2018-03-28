@@ -13,16 +13,16 @@ MotorController::MotorController(QObject *parent) : QObject(parent)
     m_zAxisMaxTravelAcceleration = new int;    //holds the maximum acceleration for the z-axis during travel
     m_extruderMaxPrintingAcceleration = new int;    //holds the maximum acceleration for the extruder during printing
     m_extruderMaxTravelAcceleration = new int;    //holds the maximum acceleration for the extruder during travel
-    m_xAxisMaxFeedrate = new int;    //holds the maximum feedrate during movement on the x-axis
-    m_yAxisMaxFeedrate = new int;    //holds the maximum feedrate during movement on the y-axis
-    m_zAxisMaxFeedrate = new int;    //holds the maximum feedrate during movement on the z-axis
-    m_extruderMaxFeedrate = new int;    //holds the maximum feedrate during movement on the extruder
+    m_xAxisMaxFeedrate = new qreal;    //holds the maximum feedrate during movement on the x-axis
+    m_yAxisMaxFeedrate = new qreal;    //holds the maximum feedrate during movement on the y-axis
+    m_zAxisMaxFeedrate = new qreal;    //holds the maximum feedrate during movement on the z-axis
+    m_extruderMaxFeedrate = new qreal;    //holds the maximum feedrate during movement on the extruder
     m_defaultPrintingAcceleration = new int;    //holds the default acceleration during printing for all axes including the extruder
     m_defaultTravelAcceleration = new int;    //holds the default acceleration during travel for all axes including the extruder
-    m_currentXAxisPosition = new int;    //holds the current position on the x-axis
-    m_currentYAxisPosition = new int;    //holds the current position on the y-axis
-    m_currentZAxisPosition = new int;    //holds the current position on the z-axis
-    m_currentExtruderPosition = new int;    //holds the current position on the extruder
+    m_currentXAxisPosition = new qreal;    //holds the current position on the x-axis
+    m_currentYAxisPosition = new qreal;    //holds the current position on the y-axis
+    m_currentZAxisPosition = new qreal;    //holds the current position on the z-axis
+    m_currentExtruderPosition = new qreal;    //holds the current position on the extruder
 }
 
 MotorController::~MotorController()
@@ -47,52 +47,73 @@ MotorController::~MotorController()
     delete m_currentYAxisPosition;
     delete m_currentZAxisPosition;
     delete m_currentExtruderPosition;
+
+    //setting the pointers to NULL
+
+    m_xAxisMaxPrintingAcceleration = NULL;
+    m_xAxisMaxTravelAcceleration = NULL;
+    m_yAxisMaxPrintingAcceleration = NULL;
+    m_yAxisMaxTravelAcceleration = NULL;
+    m_zAxisMaxPrintingAcceleration = NULL;
+    m_zAxisMaxTravelAcceleration = NULL;
+    m_extruderMaxPrintingAcceleration = NULL;
+    m_extruderMaxTravelAcceleration = NULL;
+    m_xAxisMaxFeedrate = NULL;
+    m_yAxisMaxFeedrate = NULL;
+    m_zAxisMaxFeedrate = NULL;
+    m_extruderMaxFeedrate = NULL;
+    m_defaultPrintingAcceleration = NULL;
+    m_defaultTravelAcceleration = NULL;
+    m_currentXAxisPosition = NULL;
+    m_currentYAxisPosition = NULL;
+    m_currentZAxisPosition = NULL;
+    m_currentExtruderPosition = NULL;
 }
 
 //absolutely moves x-axis to position in mm, speed = the speed the head is going to move in mm/min
-bool MotorController::absoluteMoveXAxis(int position, int speed)
+bool MotorController::absoluteMoveXAxis(qreal position, qreal speed)
 {
 
 }
 
 //relatively moves x-axis by position in mm, speed = the speed the head is going to move in mm/min
-bool MotorController::relativeMoveXAxis(int value, int speed)
+bool MotorController::relativeMoveXAxis(qreal value, qreal speed)
 {
 
 }
 
 //absolutely moves y-axis to position in mm, speed = the speed the head is going to move in mm/min
-bool MotorController::absoluteMoveYAxis(int position, int speed)
+bool MotorController::absoluteMoveYAxis(qreal position, qreal speed)
 {
 
 }
 
 //relatively moves y-axis by value in mm, speed = the speed the head is going to move in mm/min
-bool MotorController::relativeMoveYAxis(int value, int speed)
+bool MotorController::relativeMoveYAxis(qreal value, qreal speed)
 {
 
 }
 
 //absolutely moves z-axis to position in mm, speed = the speed the head is going to move in mm/min
-bool MotorController::absoluteMoveZAxis(int position, int speed)
+bool MotorController::absoluteMoveZAxis(qreal position, qreal speed)
 {
 
 }
 
 //relatively moves z-axis by value in mm, speed = the speed the head is going to move in mm/min
-bool MotorController::relativeMoveZAxis(int value, int speed)
+bool MotorController::relativeMoveZAxis(qreal value, qreal speed)
 {
 
 }
 
 //absolutely moves extruder to position in mm, speed = the speed the head is going to move in mm/min
-bool MotorController::absoluteMoveExtruder(int position, int speed)
+bool MotorController::absoluteMoveExtruder(qreal position, qreal speed)
 {
 
 }
 
 //relatively moves extruder by value in mm, speed = the speed the head is going to move in mm/min
-bool MotorController::relativeMoveExtruder(int value, int speed)
+bool MotorController::relativeMoveExtruder(qreal value, qreal speed)
 {
 
 }
@@ -101,7 +122,7 @@ bool MotorController::relativeMoveExtruder(int value, int speed)
 //x = position to move to on the x-axis in mm, y = position to move to on the y-axis in mm
 //z = position to move to on the z-axis in mm, e = position to move the extruder to in mm
 //speed = the speed the head is going to move in mm/min
-bool MotorController::absoluteMove(int x, int y, int z, int e, int speed)
+bool MotorController::absoluteMove(qreal x, qreal y, qreal z, qreal e, qreal speed)
 {
 
 }
@@ -110,7 +131,7 @@ bool MotorController::absoluteMove(int x, int y, int z, int e, int speed)
 //x = value to move by on the x-axis in mm, y = value to move by on the y-axis in mm
 //z = value to move by on the z-axis in mm, e = value to move the extruder by in mm
 //speed = the speed the head is going to move in mm/min
-bool MotorController::relativeMove(int x, int y, int z, int e, int speed)
+bool MotorController::relativeMove(qreal x, qreal y, qreal z, qreal e, qreal speed)
 {
 
 }
@@ -227,7 +248,7 @@ int MotorController::extruderMaxTravelAcceleration()
 }
 
 //sets m_xAxisMaxFeedrate to xAxisMaxFeedrate
-void MotorController::setXAxisMaxFeedrate(int xAxisMaxFeedrate)
+void MotorController::setXAxisMaxFeedrate(qreal xAxisMaxFeedrate)
 {
 
     *m_xAxisMaxFeedrate = xAxisMaxFeedrate;
@@ -241,7 +262,7 @@ int MotorController::xAxisMaxFeedrate()
 }
 
 //sets m_yAxisMaxFeedrate to yAxisMaxFeedrate
-void MotorController::setYAxisMaxFeedrate(int yAxisMaxFeedrate)
+void MotorController::setYAxisMaxFeedrate(qreal yAxisMaxFeedrate)
 {
 
     *m_yAxisMaxFeedrate = yAxisMaxFeedrate;
@@ -255,7 +276,7 @@ int MotorController::yAxisMaxFeedrate()
 }
 
 //sets m_zAxisMaxFeedrate to zAxisMaxFeedrate
-void MotorController::setZAxisMaxFeedrate(int zAxisMaxFeedrate)
+void MotorController::setZAxisMaxFeedrate(qreal zAxisMaxFeedrate)
 {
 
     *m_zAxisMaxFeedrate = zAxisMaxFeedrate;
@@ -269,7 +290,7 @@ int MotorController::zAxisMaxFeedrate()
 }
 
 //sets m_extruderMaxFeedrate to extruderMaxFeedrate
-void MotorController::setExtruderMaxFeedrate(int extruderMaxFeedrate)
+void MotorController::setExtruderMaxFeedrate(qreal extruderMaxFeedrate)
 {
 
     *m_extruderMaxFeedrate = extruderMaxFeedrate;
@@ -311,25 +332,25 @@ int MotorController::defaultTravelAcceleration()
 }
 
 //returns m_currentXAxisPosition
-int MotorController::currentXAxisPosition()
+qreal MotorController::currentXAxisPosition()
 {
 
 }
 
 //returns m_currentYAxisPosition
-int MotorController::currentYAxisPosition()
+qreal MotorController::currentYAxisPosition()
 {
 
 }
 
 //returns m_currentZAxisPosition
-int MotorController::currentZAxisPosition()
+qreal MotorController::currentZAxisPosition()
 {
 
 }
 
 //returns m_currentExtruderPosition
-int MotorController::currentExtruderPosition()
+qreal MotorController::currentExtruderPosition()
 {
 
 }
@@ -337,7 +358,7 @@ int MotorController::currentExtruderPosition()
 //this method doesn't change the position on the x-axis
 //this method is only to setup the the printer after startup
 //sets m_setCurrentXAxisPosition to currentXAxisPosition
-int MotorController::setCurrentXAxisPosition(int currentXAxisPosition)
+void MotorController::setCurrentXAxisPosition(qreal currentXAxisPosition)
 {
 
     *m_currentXAxisPosition = currentXAxisPosition;
@@ -346,7 +367,7 @@ int MotorController::setCurrentXAxisPosition(int currentXAxisPosition)
 //this method doesn't change the position on the y-axis
 //this method is only to setup the the printer after startup
 //sets m_setCurrentYAxisPosition to currentYAxisPosition
-int MotorController::setCurrentYAxisPosition(int currentYAxisPosition)
+void MotorController::setCurrentYAxisPosition(qreal currentYAxisPosition)
 {
 
     *m_currentYAxisPosition = currentYAxisPosition;
@@ -355,7 +376,7 @@ int MotorController::setCurrentYAxisPosition(int currentYAxisPosition)
 //this method doesn't change the position on the z-axis
 //this method is only to setup the the printer after startup
 //sets m_currentZAxisPosition to currentZAxisPosition
-int MotorController::setCurrentZAxisPosition(int currentZAxisPosition)
+void MotorController::setCurrentZAxisPosition(qreal currentZAxisPosition)
 {
 
     *m_currentZAxisPosition = currentZAxisPosition;
@@ -364,7 +385,7 @@ int MotorController::setCurrentZAxisPosition(int currentZAxisPosition)
 //this method doesn't change the position on the extruder
 //this method is only to setup the the printer after stratup
 //sets m_currentExtruderPosition to currentExtruderPosition
-int MotorController::setCurrentExtruderPosition(int currentExtruderPosition)
+void MotorController::setCurrentExtruderPosition(qreal currentExtruderPosition)
 {
 
     *m_currentExtruderPosition = currentExtruderPosition;

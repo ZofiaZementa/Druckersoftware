@@ -7,25 +7,25 @@ class MotorController : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(int m_currentXAxisPosition READ currentXAxisPosition WRITE setCurrentXAxisPosition NOTIFY currentXAxisPositionChanged)
-    Q_PROPERTY(int m_currentYAxisPosition READ currentYAxisPosition WRITE setCurrentYAxisPosition NOTIFY currentYAxisPositionChanged)
-    Q_PROPERTY(int m_currentZAxisPosition READ currentZAxisPosition WRITE setCurrentZAxisPosition NOTIFY currentZAxisPositionChanged)
-    Q_PROPERTY(int m_currentExtruderPosition READ currentExtruderPosition WRITE setCurrentExtruderPosition NOTIFY currentExtruderPositionChanged)
+    Q_PROPERTY(qreal m_currentXAxisPosition READ currentXAxisPosition WRITE setCurrentXAxisPosition NOTIFY currentXAxisPositionChanged)
+    Q_PROPERTY(qreal m_currentYAxisPosition READ currentYAxisPosition WRITE setCurrentYAxisPosition NOTIFY currentYAxisPositionChanged)
+    Q_PROPERTY(qreal m_currentZAxisPosition READ currentZAxisPosition WRITE setCurrentZAxisPosition NOTIFY currentZAxisPositionChanged)
+    Q_PROPERTY(qreal m_currentExtruderPosition READ currentExtruderPosition WRITE setCurrentExtruderPosition NOTIFY currentExtruderPositionChanged)
 
 public:
     explicit MotorController(QObject *parent = nullptr);
     ~MotorController();
 
-    bool absoluteMoveXAxis(int position, int speed);
-    bool relativeMoveXAxis(int value, int speed);
-    bool absoluteMoveYAxis(int position, int speed);
-    bool relativeMoveYAxis(int value, int speed);
-    bool absoluteMoveZAxis(int position, int speed);
-    bool relativeMoveZAxis(int value, int speed);
-    bool absoluteMoveExtruder(int position, int speed);
-    bool relativeMoveExtruder(int value, int speed);
-    bool absoluteMove(int x, int y, int z, int e, int speed);
-    bool relativeMove(int x, int y, int z, int e, int speed);
+    bool absoluteMoveXAxis(qreal position, qreal speed);
+    bool relativeMoveXAxis(qreal value, qreal speed);
+    bool absoluteMoveYAxis(qreal position, qreal speed);
+    bool relativeMoveYAxis(qreal value, qreal speed);
+    bool absoluteMoveZAxis(qreal position, qreal speed);
+    bool relativeMoveZAxis(qreal value, qreal speed);
+    bool absoluteMoveExtruder(qreal position, qreal speed);
+    bool relativeMoveExtruder(qreal value, qreal speed);
+    bool absoluteMove(qreal x, qreal y, qreal z, qreal e, qreal speed);
+    bool relativeMove(qreal x, qreal y, qreal z, qreal e, qreal speed);
     void setXAxisMaxPrintingAcceleration(int xAxisMaxPrintingAcceleration);
     int xAxisMaxPrintingAcceleration();
     void setXAxisMaxTravelAcceleration(int xAxisMaxTravelAcceleration);
@@ -42,33 +42,33 @@ public:
     int extruderMaxPrintingAcceleration();
     void setExtruderMaxTravelAcceleration(int extruderMaxTravelAcceleration);
     int extruderMaxTravelAcceleration();
-    void setXAxisMaxFeedrate(int xAxisMaxFeedrate);
+    void setXAxisMaxFeedrate(qreal xAxisMaxFeedrate);
     int xAxisMaxFeedrate();
-    void setYAxisMaxFeedrate(int yAxisMaxFeedrate);
+    void setYAxisMaxFeedrate(qreal yAxisMaxFeedrate);
     int yAxisMaxFeedrate();
-    void setZAxisMaxFeedrate(int zAxisMaxFeedrate);
+    void setZAxisMaxFeedrate(qreal zAxisMaxFeedrate);
     int zAxisMaxFeedrate();
-    void setExtruderMaxFeedrate(int extruderMaxFeedrate);
+    void setExtruderMaxFeedrate(qreal extruderMaxFeedrate);
     int extruderMaxFeedrate();
     void setDefaultPrintingAcceleration(int defaultPrintingAcceleration);
     int defaultPrintingAcceleration();
     void setDefaultTravelAcceleration(int defaultTravelAcceleration);
     int defaultTravelAcceleration();
-    int currentXAxisPosition();
-    int currentYAxisPosition();
-    int currentZAxisPosition();
-    int currentExtruderPosition();
-    int setCurrentXAxisPosition(int currentXAxisPosition);
-    int setCurrentYAxisPosition(int currentYAxisPosition);
-    int setCurrentZAxisPosition(int currentZAxisPosition);
-    int setCurrentExtruderPosition(int currentExtruderPosition);
+    qreal currentXAxisPosition();
+    qreal currentYAxisPosition();
+    qreal currentZAxisPosition();
+    qreal currentExtruderPosition();
+    void setCurrentXAxisPosition(qreal currentXAxisPosition);
+    void setCurrentYAxisPosition(qreal currentYAxisPosition);
+    void setCurrentZAxisPosition(qreal currentZAxisPosition);
+    void setCurrentExtruderPosition(qreal currentExtruderPosition);
 
 signals:
 
-    void currentXAxisPositionChanged(int position);
-    void currentYAxisPositionChanged(int position);
-    void currentZAxisPositionChanged(int position);
-    void currentExtruderPositionChanged(int position);
+    void currentXAxisPositionChanged(qreal position);
+    void currentYAxisPositionChanged(qreal position);
+    void currentZAxisPositionChanged(qreal position);
+    void currentExtruderPositionChanged(qreal position);
 
 public slots:
 
@@ -87,16 +87,16 @@ private:
     int *m_zAxisMaxTravelAcceleration;
     int *m_extruderMaxPrintingAcceleration;
     int *m_extruderMaxTravelAcceleration;
-    int *m_xAxisMaxFeedrate;
-    int *m_yAxisMaxFeedrate;
-    int *m_zAxisMaxFeedrate;
-    int *m_extruderMaxFeedrate;
+    qreal *m_xAxisMaxFeedrate;
+    qreal *m_yAxisMaxFeedrate;
+    qreal *m_zAxisMaxFeedrate;
+    qreal *m_extruderMaxFeedrate;
     int *m_defaultPrintingAcceleration;
     int *m_defaultTravelAcceleration;
-    int *m_currentXAxisPosition;
-    int *m_currentYAxisPosition;
-    int *m_currentZAxisPosition;
-    int *m_currentExtruderPosition;
+    qreal *m_currentXAxisPosition;
+    qreal *m_currentYAxisPosition;
+    qreal *m_currentZAxisPosition;
+    qreal *m_currentExtruderPosition;
 
 };
 
