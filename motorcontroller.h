@@ -65,6 +65,7 @@ public:
 
 signals:
 
+    void send(QString text);
     void currentXAxisPositionChanged(qreal position);
     void currentYAxisPositionChanged(qreal position);
     void currentZAxisPositionChanged(qreal position);
@@ -97,6 +98,7 @@ private:
     qreal *m_currentYAxisPosition;
     qreal *m_currentZAxisPosition;
     qreal *m_currentExtruderPosition;
+    QStringList *m_commandBuffer;
 
 };
 

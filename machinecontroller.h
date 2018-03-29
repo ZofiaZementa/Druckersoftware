@@ -27,13 +27,13 @@ public:
 
     //defining methods
 
-    bool g0(qreal x, qreal y, qreal z, qreal e, qreal s);    //rapid linear move
-    bool g1(qreal x, qreal y, qreal z, qreal e, qreal f, qreal s);    //linear move
+    bool g0(qreal x, qreal y, qreal z, qreal e, int s);    //rapid linear move
+    bool g1(qreal x, qreal y, qreal z, qreal e, qreal f, int s);    //linear move
     bool g2(qreal x, qreal y, qreal i, qreal j, qreal e, qreal f);    //clockwise arc
     bool g3(qreal x, qreal y, qreal i, qreal j, qreal e, qreal f);    //counter-clockwise arc
-    bool g4(int p);    //pause the machine for a period of time
-    bool g10(qreal s);    //retracts the filament
-    bool g11(qreal s);    //unretracts the filament
+    void g4(int p);    //pause the machine for a period of time
+    void g10(qreal s);    //retracts the filament
+    void g11(qreal s);    //unretracts the filament
     bool g28(bool x, bool y, bool z);    //moves to origin/home
     void g90();    //sets absolute positioning
     void g91();    //sets relative positioning
@@ -51,10 +51,10 @@ public:
     bool m116(int p, int h);    //wait until heating/cooling finished
     bool m190(int s);    //wait for bed temperature to reach target temperature
     bool m200(int d);    //set filament diameter
-    bool m201(int x, int y, int z, int e);    //set max printing acceleration
-    bool m202(int x, int y, int z, int e);    //set max travel acceleration
-    bool m203(qreal x, qreal y, qreal z, qreal e);    //set max feedrate
-    bool m204(int p, int t);    //set default acceleration
+    void m201(int x, int y, int z, int e);    //set max printing acceleration
+    void m202(int x, int y, int z, int e);    //set max travel acceleration
+    void m203(qreal x, qreal y, qreal z, qreal e);    //set max feedrate
+    void m204(int p, int t);    //set default acceleration
     void m400();    //wait for current moves to finish
     PositioningMode positioningMode();    //returns the PrintingMode
     ExtruderMode extruderMode();    //returns the ExtruderModes
@@ -92,7 +92,6 @@ private:
     QList<qreal> *m_printerBedMeasurements;
     qreal *m_printerBedXAxisTilt;
     qreal *m_printerBedYAxisTilt;
-    int *m_printerMaxSpeed;
     FanController *m_fanController;
     GCodeReader *m_gCodeReader;
     MotorController *m_motorController;

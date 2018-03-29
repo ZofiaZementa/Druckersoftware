@@ -2,6 +2,7 @@
 #include <QtMath>
 #include <QTimer>
 #include <QDebug>
+#define PRINTERMAXSPEED 15000
 
 MachineController::MachineController(QObject *parent) : QObject(parent)
 {
@@ -17,7 +18,6 @@ MachineController::MachineController(QObject *parent) : QObject(parent)
     m_printerXAxisLength = new qreal;    //holds the the dimensions of the printer in the x-axis in mm
     m_printerYAxisLength = new qreal;    //holds the the dimensions of the printer in the y-axis in mm
     m_printerZAxisLength = new qreal;    //holds the the dimensions of the printer in the z-axis in mm
-    m_printerMaxSpeed = new int;    //the printers top speed in mm/min
     m_fanController = new FanController(this);
     m_gCodeReader = new GCodeReader(this);
     m_motorController = new MotorController(this);
@@ -64,7 +64,6 @@ MachineController::~MachineController()
     delete m_printerXAxisLength;
     delete m_printerYAxisLength;
     delete m_printerZAxisLength;
-    delete m_printerMaxSpeed;
 
     //setting the pointers to NULL
 
@@ -77,7 +76,6 @@ MachineController::~MachineController()
     m_printerXAxisLength = NULL;
     m_printerYAxisLength = NULL;
     m_printerZAxisLength = NULL;
-    m_printerMaxSpeed = NULL;
 
 }
 
@@ -86,7 +84,7 @@ MachineController::~MachineController()
 //x = the position to move to on the x axis in mm, y = the position to move to on the y axis in mm, z = the position to move to on the z axis in mm
 //e = the amount to extrude between the starting point and ending point in mm
 //s = flag to check if an endstop was hit (0 to ignore, 1 to check, 2 to see note)
-bool MachineController::g0(qreal x, qreal y, qreal z, qreal e, qreal s)
+bool MachineController::g0(qreal x, qreal y, qreal z, qreal e, int s)
 {
 
     x = x + (qSin(*m_printerBedXAxisTilt) * z);
@@ -96,13 +94,13 @@ bool MachineController::g0(qreal x, qreal y, qreal z, qreal e, qreal s)
 
     if(*m_positioningMode == MachineController::AbsolutePositioning){
 
-        m_motorController->absoluteMove(x, y, z, e, *m_printerMaxSpeed);
+        m_motorController->absoluteMove(x, y, z, e, PRINTERMAXSPEED);
         return true;
     }
 
     else if(*m_positioningMode == MachineController::RelativePositioning){
 
-        m_motorController->relativeMove(x, y, z, e, *m_printerMaxSpeed);
+        m_motorController->relativeMove(x, y, z, e, PRINTERMAXSPEED);
         return true;
     }
 
@@ -116,7 +114,7 @@ bool MachineController::g0(qreal x, qreal y, qreal z, qreal e, qreal s)
 //x = the position to move to on the x axis in mm, y = the position to move to on the y axis in mm, z = the position to move to on the z axis in mm
 //e = the amount to extrude between the starting point and ending point in mm, f = the feedrate per minute of the move between the starting point and ending point
 //s = flag to check if an endstop was hit (0 to ignore, 1 to check, 2 to see note)
-bool MachineController::g1(qreal x, qreal y, qreal z, qreal e, qreal f, qreal s)
+bool MachineController::g1(qreal x, qreal y, qreal z, qreal e, qreal f, int s)
 {
 
     x = x + (qSin(*m_printerBedXAxisTilt) * z);
@@ -162,25 +160,26 @@ bool MachineController::g3(qreal x, qreal y, qreal i, qreal j, qreal e, qreal f)
 
 //pause the machine for a period of time
 //p = time to wait in milliseconds
-bool MachineController::g4(int p)
+void MachineController::g4(int p)
 {
 
     QTimer::singleShot(p, m_gCodeReader, SLOT(nextLine()));
-    return true;
 }
 
 //retracts the filament
 //s = retract length in mm
-bool MachineController::g10(qreal s)
+void MachineController::g10(qreal s)
 {
 
+    m_motorController->relativeMoveExtruder(-s, 100.0);
 }
 
 //unretracts the filament
 //s = retract length in mm
-bool MachineController::g11(qreal s)
+void MachineController::g11(qreal s)
 {
 
+    m_motorController->relativeMoveExtruder(s, 100.0);
 }
 
 //moves to origin/home
@@ -230,9 +229,14 @@ void MachineController::g91()
 
 //sets position
 //x = new x-axis position, y = new y-axis position, z = new z-axis position, e = new extruder position
+//this method doesnt trigger any physical motion
 bool MachineController::g92(qreal x, qreal y, qreal z, qreal e)
 {
 
+    m_motorController->setCurrentXAxisPosition(x);
+    m_motorController->setCurrentYAxisPosition(y);
+    m_motorController->setCurrentZAxisPosition(z);
+    m_motorController->setCurrentExtruderPosition(e);
 }
 
 //stop
@@ -294,6 +298,7 @@ bool MachineController::m109(int s, int r)
 void MachineController::m110(int n)
 {
 
+    m_gCodeReader->setLineNumber(n);
 }
 
 //emergency stop
@@ -326,7 +331,7 @@ bool MachineController::m200(int d)
 
 //set max printing acceleration
 //x = acceleration for x-axis, y = acceleration for y-axis, z = acceleration for z-axis, e = acceleration for all extruders
-bool MachineController::m201(int x, int y, int z, int e)
+void MachineController::m201(int x, int y, int z, int e)
 {
 
     m_motorController->setXAxisMaxPrintingAcceleration(x);
@@ -337,7 +342,7 @@ bool MachineController::m201(int x, int y, int z, int e)
 
 //set max travel acceleration
 //x = acceleration for x-axis, y = acceleration for y-axis, z = acceleration for z-axis, e = acceleration for all extruders
-bool MachineController::m202(int x, int y, int z, int e)
+void MachineController::m202(int x, int y, int z, int e)
 {
 
     m_motorController->setXAxisMaxTravelAcceleration(x);
@@ -348,14 +353,18 @@ bool MachineController::m202(int x, int y, int z, int e)
 
 //set max feedrate
 //x = feedrate for x-axis, y = feedrate for y-axis, z = feedrate for z-axis, e = feedrate for all extruders
-bool MachineController::m203(qreal x, qreal y, qreal z, qreal e)
+void MachineController::m203(qreal x, qreal y, qreal z, qreal e)
 {
 
+    m_motorController->setXAxisMaxFeedrate(x);
+    m_motorController->setYAxisMaxFeedrate(y);
+    m_motorController->setZAxisMaxFeedrate(z);
+    m_motorController->setExtruderMaxFeedrate(e);
 }
 
 //set default acceleration
 //p = acceleration for printing moves, t = acceleration for travel moves
-bool MachineController::m204(int p, int t)
+void MachineController::m204(int p, int t)
 {
 
     m_motorController->setDefaultPrintingAcceleration(p);

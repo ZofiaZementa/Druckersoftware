@@ -1,28 +1,95 @@
 #include "motorcontroller.h"
 #include <QDebug>
 
+#define MOTOR_POSITIONINGMODE 1    //holds the positioning mode of the motors, see nanotec programming manual, page 51
+#define MOTOR_POSITIVE_TURNINGDIRECTION 0    //holds the positive turning direction of the motors, 0 being left, 1 being right, see nanotec programming manual, page 57
+#define MOTOR_NEGATIVE_TURNINGDIRECTION 1    //holds the negative turning direction of the motors, 0 being left, 1 being right, see nanotec programming manual, page 57
+#define XAXIS_MOTORADRESS 1    //holds the adress of the x-axis motor
+#define YAXIS_MOTORADRESS 2    //holds the adress of the y-axis motor
+#define ZAXIS_MOTORADRESS 3    //holds the adress of the z-axis motor
+#define EXTRUDER_MOTORADRESS 4    //holds the adress of the extruder motor
+#define XAXIS_MULTIPLIER 100    //holds the multiplier which times the position to drive to in mm results in the number of microsteps to go to reach the new position
+#define YAXIS_MULTIPLIER 100    //holds the multiplier which times the position to drive to in mm results in the number of microsteps to go to reach the new position
+#define ZAXIS_MULTIPLIER 100    //holds the multiplier which times the position to drive to in mm results in the number of microsteps to go to reach the new position
+#define EXTRUDER_MULTIPLIER 100    //holds the multiplier which times the position to drive to in mm results in the number of microsteps to go to reach the new position
+#define XAXIS_MIN_STEPFREQUENCY 100    //holds the minimal step frequency of the x-axis in Hz, see nanotec programming manual, page 53
+#define YAXIS_MIN_STEPFREQUENCY 100    //holds the minimal step frequency of the y-axis in Hz, see nanotec programming manual, page 53
+#define ZAXIS_MIN_STEPFREQUENCY 100    //holds the minimal step frequency of the z-axis in Hz, see nanotec programming manual, page 53
+#define EXTRUDER_MIN_STEPFREQUENCY 100    //holds the minimal step frequency of the extruder in Hz, see nanotec programming manual, page 53
+#define XAXIS_MAXIMUM_BRAKE_DECCELERATION 500    //holds the maximum decceleration during braking of the x-axis in Hz/millisecond, see nanotec programming manual, page 55
+#define YAXIS_MAXIMUM_BRAKE_DECCELERATION 500    //holds the maximum decceleration during braking of the y-axis in Hz/millisecond, see nanotec programming manual, page 55
+#define ZAXIS_MAXIMUM_BRAKE_DECCELERATION 500    //holds the maximum decceleration during braking of the z-axis in Hz/millisecond, see nanotec programming manual, page 55
+#define EXTRUDER_MAXIMUM_BRAKE_DECCELERATION 500    //holds the maximum decceleration during braking of the extruder in Hz/millisecond, see nanotec programming manual, page 55
+#define XAXIS_MAXIMUM_ACCELERATION_CHANGE 100    //holds the maximum change of the acceleration during accelerating of the x-axis, see nanotec programming manual, page 59
+#define YAXIS_MAXIMUM_ACCELERATION_CHANGE 100    //holds the maximum change of the acceleration during accelerating of the x-axis, see nanotec programming manual, page 59
+#define ZAXIS_MAXIMUM_ACCELERATION_CHANGE 100    //holds the maximum change of the acceleration during accelerating of the x-axis, see nanotec programming manual, page 59
+#define EXTRUDER_MAXIMUM_ACCELERATION_CHANGE 100    //holds the maximum change of the acceleration during accelerating of the x-axis, see nanotec programming manual, page 59
+#define XAXIS_MAXIMUM_DECCELERATION_CHANGE 100    //holds the maximum change of the decceleration during braking of the x-axis, see nanotec programming manual, page 59
+#define YAXIS_MAXIMUM_DECCELERATION_CHANGE 100    //holds the maximum change of the decceleration during braking of the x-axis, see nanotec programming manual, page 59
+#define ZAXIS_MAXIMUM_DECCELERATION_CHANGE 100    //holds the maximum change of the decceleration during braking of the x-axis, see nanotec programming manual, page 59
+#define EXTRUDER_MAXIMUM_DECCELERATION_CHANGE 100    //holds the maximum change of the decceleration during braking of the x-axis, see nanotec programming manual, page 59
+
 MotorController::MotorController(QObject *parent) : QObject(parent)
 {
     //defining pointers
 
-    m_xAxisMaxPrintingAcceleration = new int;    //holds the maximum acceleration for the x-axis during printing
-    m_xAxisMaxTravelAcceleration = new int;    //holds the maximum acceleration for the x-axis during travel
-    m_yAxisMaxPrintingAcceleration = new int;    //holds the maximum acceleration for the y-axis during printing
-    m_yAxisMaxTravelAcceleration = new int;    //holds the maximum acceleration for the y-axis during travel
-    m_zAxisMaxPrintingAcceleration = new int;    //holds the maximum acceleration for the z-axis during printing
-    m_zAxisMaxTravelAcceleration = new int;    //holds the maximum acceleration for the z-axis during travel
-    m_extruderMaxPrintingAcceleration = new int;    //holds the maximum acceleration for the extruder during printing
-    m_extruderMaxTravelAcceleration = new int;    //holds the maximum acceleration for the extruder during travel
-    m_xAxisMaxFeedrate = new qreal;    //holds the maximum feedrate during movement on the x-axis
-    m_yAxisMaxFeedrate = new qreal;    //holds the maximum feedrate during movement on the y-axis
-    m_zAxisMaxFeedrate = new qreal;    //holds the maximum feedrate during movement on the z-axis
-    m_extruderMaxFeedrate = new qreal;    //holds the maximum feedrate during movement on the extruder
-    m_defaultPrintingAcceleration = new int;    //holds the default acceleration during printing for all axes including the extruder
-    m_defaultTravelAcceleration = new int;    //holds the default acceleration during travel for all axes including the extruder
+    m_xAxisMaxPrintingAcceleration = new int;    //holds the maximum acceleration for the x-axis during printing in mm/s^2
+    m_xAxisMaxTravelAcceleration = new int;    //holds the maximum acceleration for the x-axis during travel in mm/s^2
+    m_yAxisMaxPrintingAcceleration = new int;    //holds the maximum acceleration for the y-axis during printing in mm/s^2
+    m_yAxisMaxTravelAcceleration = new int;    //holds the maximum acceleration for the y-axis during travel in mm/s^2
+    m_zAxisMaxPrintingAcceleration = new int;    //holds the maximum acceleration for the z-axis during printing in mm/s^2
+    m_zAxisMaxTravelAcceleration = new int;    //holds the maximum acceleration for the z-axis during travel in mm/s^2
+    m_extruderMaxPrintingAcceleration = new int;    //holds the maximum acceleration for the extruder during printing in mm/s^2
+    m_extruderMaxTravelAcceleration = new int;    //holds the maximum acceleration for the extruder during travel in mm/s^2
+    m_xAxisMaxFeedrate = new qreal;    //holds the maximum feedrate during movement on the x-axis in mm/min
+    m_yAxisMaxFeedrate = new qreal;    //holds the maximum feedrate during movement on the y-axis in mm/min
+    m_zAxisMaxFeedrate = new qreal;    //holds the maximum feedrate during movement on the z-axis in mm/min
+    m_extruderMaxFeedrate = new qreal;    //holds the maximum feedrate during movement on the extruder in mm/min
+    m_defaultPrintingAcceleration = new int;    //holds the default acceleration during printing for all axes including the extruder in mm/s^2
+    m_defaultTravelAcceleration = new int;    //holds the default acceleration during travel for all axes including the extruder in mm/s^2
     m_currentXAxisPosition = new qreal;    //holds the current position on the x-axis
     m_currentYAxisPosition = new qreal;    //holds the current position on the y-axis
     m_currentZAxisPosition = new qreal;    //holds the current position on the z-axis
     m_currentExtruderPosition = new qreal;    //holds the current position on the extruder
+    m_commandBuffer = new QStringList;    //holds all the commands that still need to be executed
+
+    //motorsetup
+
+    //setting the positioningtype to MOTOR_POSITIONINGMODE on al motors
+    m_commandBuffer->append(QString("#*p%1\r").arg(MOTOR_POSITIONINGMODE));
+
+    //sets the maximum decceleration
+
+    //converts decceleration of the x-axis from mm/s^2 to steps/second/millisecond and appends it to the buffer
+    m_commandBuffer->append(QString("#%1B%2\r").arg(XAXIS_MOTORADRESS, (int)(XAXIS_MAXIMUM_BRAKE_DECCELERATION * XAXIS_MULTIPLIER / 64 / 1000)));
+    //converts decceleration of the y-axis from mm/s^2 to steps/second/millisecond and appends it to the buffer
+    m_commandBuffer->append(QString("#%1B%2\r").arg(YAXIS_MOTORADRESS, (int)(YAXIS_MAXIMUM_BRAKE_DECCELERATION * YAXIS_MULTIPLIER / 64 / 1000)));
+    //converts decceleration of the z-axis from mm/s^2 to steps/second/millisecond and appends it to the buffer
+    m_commandBuffer->append(QString("#%1B%2\r").arg(ZAXIS_MOTORADRESS, (int)(ZAXIS_MAXIMUM_BRAKE_DECCELERATION * ZAXIS_MULTIPLIER / 64 / 1000)));
+    //converts decceleration of the extruder from mm/s^2 to steps/second/millisecond and appends it to the buffer
+    m_commandBuffer->append(QString("#%1B%2\r").arg(EXTRUDER_MOTORADRESS, (int)(EXTRUDER_MAXIMUM_BRAKE_DECCELERATION * EXTRUDER_MULTIPLIER / 64 / 1000)));
+
+    //sets the maximum acceleration change
+
+    //sets the maximum change of acceleration of the x-axis and appends it to the buffer
+    m_commandBuffer->append(QString("#%1:b%2\r").arg(XAXIS_MOTORADRESS, XAXIS_MAXIMUM_ACCELERATION_CHANGE));
+    //sets the maximum change of acceleration of the y-axis and appends it to the buffer
+    m_commandBuffer->append(QString("#%1:b%2\r").arg(YAXIS_MOTORADRESS, YAXIS_MAXIMUM_ACCELERATION_CHANGE));
+    //sets the maximum change of acceleration of the z-axis and appends it to the buffer
+    m_commandBuffer->append(QString("#%1:b%2\r").arg(ZAXIS_MOTORADRESS, ZAXIS_MAXIMUM_ACCELERATION_CHANGE));
+    //sets the maximum change of acceleration of the extruder and appends it to the buffer
+    m_commandBuffer->append(QString("#%1:b%2\r").arg(EXTRUDER_MOTORADRESS, EXTRUDER_MAXIMUM_ACCELERATION_CHANGE));
+
+    //set the maximum decceleration change
+
+    //sets the maximum change of decceleration of the x-axis and appends it to the buffer
+    m_commandBuffer->append(QString("#%1:B%2\r").arg(XAXIS_MOTORADRESS, XAXIS_MAXIMUM_DECCELERATION_CHANGE));
+    //sets the maximum change of decceleration of the y-axis and appends it to the buffer
+    m_commandBuffer->append(QString("#%1:B%2\r").arg(YAXIS_MOTORADRESS, YAXIS_MAXIMUM_DECCELERATION_CHANGE));
+    //sets the maximum change of decceleration of the z-axis and appends it to the buffer
+    m_commandBuffer->append(QString("#%1:B%2\r").arg(ZAXIS_MOTORADRESS, ZAXIS_MAXIMUM_DECCELERATION_CHANGE));
+    //sets the maximum change of decceleration of the extruder and appends it to the buffer
+    m_commandBuffer->append(QString("#%1:B%2\r").arg(EXTRUDER_MOTORADRESS, EXTRUDER_MAXIMUM_DECCELERATION_CHANGE));
 }
 
 MotorController::~MotorController()
@@ -47,6 +114,7 @@ MotorController::~MotorController()
     delete m_currentYAxisPosition;
     delete m_currentZAxisPosition;
     delete m_currentExtruderPosition;
+    delete m_commandBuffer;
 
     //setting the pointers to NULL
 
@@ -68,18 +136,85 @@ MotorController::~MotorController()
     m_currentYAxisPosition = NULL;
     m_currentZAxisPosition = NULL;
     m_currentExtruderPosition = NULL;
+    m_commandBuffer = NULL;
 }
 
 //absolutely moves x-axis to position in mm, speed = the speed the head is going to move in mm/min
 bool MotorController::absoluteMoveXAxis(qreal position, qreal speed)
 {
 
+    return relativeMoveXAxis(position - *m_currentXAxisPosition, speed);
 }
 
 //relatively moves x-axis by position in mm, speed = the speed the head is going to move in mm/min
 bool MotorController::relativeMoveXAxis(qreal value, qreal speed)
 {
 
+    //sets speed at which to start and appends it to the buffer
+    m_commandBuffer->append(QString("#%1u%2\r").arg(XAXIS_MOTORADRESS, XAXIS_MIN_STEPFREQUENCY));
+
+    //converts acceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
+    m_commandBuffer->append(QString("#%1b%2\r").arg(XAXIS_MOTORADRESS, (int)(*m_defaultTravelAcceleration * XAXIS_MULTIPLIER / 64 / 1000)));
+
+    //checks if the speed is too high or too low
+    if((int)(speed * XAXIS_MULTIPLIER / 64 / 60) > 1000000 || (int)(speed * XAXIS_MULTIPLIER / 64 / 60) < 1){
+
+        return false;
+    }
+
+    else{
+
+        //converts speed form mm/min to steps/second and appends it to the buffer
+        m_commandBuffer->append(QString("#%1o%2\r").arg(XAXIS_MOTORADRESS, (int)(speed * XAXIS_MULTIPLIER / 64 / 60)));
+    }
+
+    //checks if the way to drive is negative
+    if(value < 0){
+
+        //sets the turning direction to MOTOR_NEGATIVE_TURNINGDIRECTION and appends it to the buffer
+        m_commandBuffer->append(QString("#%1d%2\r").arg(XAXIS_MOTORADRESS, MOTOR_NEGATIVE_TURNINGDIRECTION));
+
+
+        //changes the sign of value
+        qreal help;
+
+        while(value != 0){
+
+            value++;
+            help++;
+        }
+
+        value = help;
+    }
+
+    //checks if the way to drive is positive
+    else if(value > 0){
+
+        //sets the turning direction to MOTOR_POSITIVE_TURNINGDIRECTION and appends it to the buffer
+        m_commandBuffer->append(QString("#%1d%2\r").arg(XAXIS_MOTORADRESS, MOTOR_POSITIVE_TURNINGDIRECTION));
+    }
+
+    else{
+
+        return false;
+    }
+
+    //if the way to drive is too big, the motor is being driven multiple times
+    while((int)(value * XAXIS_MULTIPLIER) > 100000000){
+
+            value = value - 100000000;
+            //sets the way to drive and appends it to the buffer
+            m_commandBuffer->append(QString("#%1s100000000\r").arg(XAXIS_MOTORADRESS));
+            //starts the motor and appends it to the buffer
+            m_commandBuffer->append(QString("#%1A\r").arg(XAXIS_MOTORADRESS));
+    }
+
+    //sets the way to drive and appends it to the buffer
+    m_commandBuffer->append(QString("#%1s%2\r").arg(XAXIS_MOTORADRESS, (int)(value * XAXIS_MULTIPLIER)));
+    //starts the motor and appends it to the buffer
+    m_commandBuffer->append(QString("#%1A\r").arg(XAXIS_MOTORADRESS));
+
+    return true;
 }
 
 //absolutely moves y-axis to position in mm, speed = the speed the head is going to move in mm/min
@@ -335,24 +470,28 @@ int MotorController::defaultTravelAcceleration()
 qreal MotorController::currentXAxisPosition()
 {
 
+    return *m_currentXAxisPosition;
 }
 
 //returns m_currentYAxisPosition
 qreal MotorController::currentYAxisPosition()
 {
 
+    return *m_currentYAxisPosition;
 }
 
 //returns m_currentZAxisPosition
 qreal MotorController::currentZAxisPosition()
 {
 
+    return *m_currentZAxisPosition;
 }
 
 //returns m_currentExtruderPosition
 qreal MotorController::currentExtruderPosition()
 {
 
+    return *m_currentExtruderPosition;
 }
 
 //this method doesn't change the position on the x-axis
