@@ -22,6 +22,8 @@ public:
     explicit MotorController(QObject *parent = nullptr);
     ~MotorController();
 
+    enum MotorState{Moving, Paused, Stopped, Idle};
+
     bool absoluteMoveXAxis(qreal position, qreal speed);
     bool relativeMoveXAxis(qreal value, qreal speed);
     bool absoluteMoveYAxis(qreal position, qreal speed);
@@ -71,6 +73,7 @@ public:
 
 signals:
 
+    void error(QString errorMessage);
     void movementFinished();
     void send(QString text);
     void currentXAxisPositionChanged(qreal position);
@@ -95,6 +98,7 @@ private:
     void calculateMovementChange();
     void checkBuffer();
 
+    MotorState *m_motorState;
     int *m_xAxisMaxPrintingAcceleration;
     int *m_xAxisMaxTravelAcceleration;
     int *m_yAxisMaxPrintingAcceleration;
