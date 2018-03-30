@@ -43,6 +43,10 @@ MachineController::MachineController(QObject *parent) : QObject(parent)
     QObject::connect(m_sensorListener, SIGNAL(zAxisPositiveEndstopHit()), this, SLOT(zAxisPositiveEndstopHit()));
     QObject::connect(m_sensorListener, SIGNAL(zAxisNegativeEndstopHit()), this, SLOT(zAxisNegativeEndstopHit()));
 
+    //connecting the MotorController
+
+    QObject::connect(m_motorController, SIGNAL(movementFinished()), this, SLOT(movementFinished()));
+
 
     //printer startup
 

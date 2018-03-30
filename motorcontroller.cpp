@@ -1,7 +1,12 @@
 #include "motorcontroller.h"
+#include <QTimer>
 #include <QDebug>
 
 #define MOTOR_POSITIONINGMODE 1    //holds the positioning mode of the motors, see nanotec programming manual, page 51
+#define MOTOR_TYPE 0    //holds the type of the motor, see nanotec programming manual, page 18
+#define MOTOR_STEPSIZE 64    //holds how many microsteps equal a step
+#define MOTOR_PHASECURRENT 50    //holds the phasecurrent in percent, see nanotec programming manual, page 18
+#define MOTOR_HALT_PHASECURRENT 25    //holds the phasecurrent during halt of the motor in percent, see nanotec programming manual, page 19
 #define MOTOR_POSITIVE_TURNINGDIRECTION 0    //holds the positive turning direction of the motors, 0 being left, 1 being right, see nanotec programming manual, page 57
 #define MOTOR_NEGATIVE_TURNINGDIRECTION 1    //holds the negative turning direction of the motors, 0 being left, 1 being right, see nanotec programming manual, page 57
 #define XAXIS_MOTORADRESS 1    //holds the adress of the x-axis motor
@@ -51,45 +56,84 @@ MotorController::MotorController(QObject *parent) : QObject(parent)
     m_currentYAxisPosition = new qreal;    //holds the current position on the y-axis
     m_currentZAxisPosition = new qreal;    //holds the current position on the z-axis
     m_currentExtruderPosition = new qreal;    //holds the current position on the extruder
-    m_commandBuffer = new QStringList;    //holds all the commands that still need to be executed
+    m_previousXAxisPosition = new qreal;    //holds the previous position on the x-axis in mm
+    m_previousYAxisPosition = new qreal;    //holds the previous position on the y-axis in mm
+    m_previousZAxisPosition = new qreal;    //holds the previous position on the z-axis in mm
+    m_previousExtruderPosition = new qreal;    //holds the previous position on the extruder in mm
+    m_currentXAxisMotorPosition = new qint32;    //holds the current motorpositoion of the x-axis relative to the last motorposition in microsteps
+    m_currentYAxisMotorPosition = new qint32;    //holds the current motorpositoion of the y-axis relative to the last motorposition in microsteps
+    m_currentZAxisMotorPosition = new qint32;    //holds the current motorpositoion of the z-axis relative to the last motorposition in microsteps
+    m_currentExtruderMotorPosition = new qint32;    //holds the current motorpositoion of the extruder relative to the last motorposition in microsteps
+    m_desiredXAxisMotorPosition = new qint32;    //holds the desired motorposition of the x-axis in microsteps
+    m_desiredYAxisMotorPosition = new qint32;    //holds the desired motorposition of the y-axis in microsteps
+    m_desiredZAxisMotorPosition = new qint32;    //holds the desired motorposition of the z-axis in microsteps
+    m_desiredExtruderMotorPosition = new qint32;    //holds the desired motorposition of the extruder in microsteps
+    m_commandBuffer = new CommandBuffer;    //holds all the commands that still need to be executed
 
     //motorsetup
 
-    //setting the positioningtype to MOTOR_POSITIONINGMODE on al motors
-    m_commandBuffer->append(QString("#*p%1\r").arg(MOTOR_POSITIONINGMODE));
+    //sets the phasecurrent of all motors to MOTOR_PHASECURRENT and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#*i%1\r").arg(MOTOR_PHASECURRENT));
+    m_commandBuffer->bufferInfo.append(0);
+    //sets the phasecurrent during halt of all motors to MOTOR_HALT_PHASECURRENT and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#*r%1\r").arg(MOTOR_HALT_PHASECURRENT));
+    m_commandBuffer->bufferInfo.append(0);
+    //sets the motor type for all motors to MOTOR_TYPE and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#*:CL_motor_type=%1\r").arg(MOTOR_TYPE));
+    m_commandBuffer->bufferInfo.append(0);
+    //setting the positioningtype of all motors to MOTOR_POSITIONINGMODE
+    m_commandBuffer->buffer.append(QString("#*p%1\r").arg(MOTOR_POSITIONINGMODE));
+    m_commandBuffer->bufferInfo.append(0);
+    //setting the stepmode of all motors to MOTOR_STEPSIZE
+    m_commandBuffer->buffer.append(QString("#*g%1\r").arg(MOTOR_STEPSIZE));
+    m_commandBuffer->bufferInfo.append(0);
 
     //sets the maximum decceleration
 
     //converts decceleration of the x-axis from mm/s^2 to steps/second/millisecond and appends it to the buffer
-    m_commandBuffer->append(QString("#%1B%2\r").arg(XAXIS_MOTORADRESS, (int)(XAXIS_MAXIMUM_BRAKE_DECCELERATION * XAXIS_MULTIPLIER / 64 / 1000)));
+    m_commandBuffer->buffer.append(QString("#%1B%2\r").arg(XAXIS_MOTORADRESS).arg((qint32)((qreal)(XAXIS_MAXIMUM_BRAKE_DECCELERATION) * (qreal)(XAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 1000.0)));
+    m_commandBuffer->bufferInfo.append(0);
     //converts decceleration of the y-axis from mm/s^2 to steps/second/millisecond and appends it to the buffer
-    m_commandBuffer->append(QString("#%1B%2\r").arg(YAXIS_MOTORADRESS, (int)(YAXIS_MAXIMUM_BRAKE_DECCELERATION * YAXIS_MULTIPLIER / 64 / 1000)));
+    m_commandBuffer->buffer.append(QString("#%1B%2\r").arg(YAXIS_MOTORADRESS).arg((qint32)((qreal)(YAXIS_MAXIMUM_BRAKE_DECCELERATION) * (qreal)(YAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 1000.0)));
+    m_commandBuffer->bufferInfo.append(0);
     //converts decceleration of the z-axis from mm/s^2 to steps/second/millisecond and appends it to the buffer
-    m_commandBuffer->append(QString("#%1B%2\r").arg(ZAXIS_MOTORADRESS, (int)(ZAXIS_MAXIMUM_BRAKE_DECCELERATION * ZAXIS_MULTIPLIER / 64 / 1000)));
+    m_commandBuffer->buffer.append(QString("#%1B%2\r").arg(ZAXIS_MOTORADRESS).arg((qint32)((qreal)(ZAXIS_MAXIMUM_BRAKE_DECCELERATION) * (qreal)(ZAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 1000.0)));
+    m_commandBuffer->bufferInfo.append(0);
     //converts decceleration of the extruder from mm/s^2 to steps/second/millisecond and appends it to the buffer
-    m_commandBuffer->append(QString("#%1B%2\r").arg(EXTRUDER_MOTORADRESS, (int)(EXTRUDER_MAXIMUM_BRAKE_DECCELERATION * EXTRUDER_MULTIPLIER / 64 / 1000)));
+    m_commandBuffer->buffer.append(QString("#%1B%2\r").arg(EXTRUDER_MOTORADRESS).arg((qint32)(((qreal)(EXTRUDER_MAXIMUM_BRAKE_DECCELERATION) * (qreal)(EXTRUDER_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 1000.0))));
+    m_commandBuffer->bufferInfo.append(0);
 
     //sets the maximum acceleration change
 
     //sets the maximum change of acceleration of the x-axis and appends it to the buffer
-    m_commandBuffer->append(QString("#%1:b%2\r").arg(XAXIS_MOTORADRESS, XAXIS_MAXIMUM_ACCELERATION_CHANGE));
+    m_commandBuffer->buffer.append(QString("#%1:b=%2\r").arg(XAXIS_MOTORADRESS).arg(XAXIS_MAXIMUM_ACCELERATION_CHANGE));
+    m_commandBuffer->bufferInfo.append(0);
     //sets the maximum change of acceleration of the y-axis and appends it to the buffer
-    m_commandBuffer->append(QString("#%1:b%2\r").arg(YAXIS_MOTORADRESS, YAXIS_MAXIMUM_ACCELERATION_CHANGE));
+    m_commandBuffer->buffer.append(QString("#%1:b=%2\r").arg(YAXIS_MOTORADRESS).arg(YAXIS_MAXIMUM_ACCELERATION_CHANGE));
+    m_commandBuffer->bufferInfo.append(0);
     //sets the maximum change of acceleration of the z-axis and appends it to the buffer
-    m_commandBuffer->append(QString("#%1:b%2\r").arg(ZAXIS_MOTORADRESS, ZAXIS_MAXIMUM_ACCELERATION_CHANGE));
+    m_commandBuffer->buffer.append(QString("#%1:b=%2\r").arg(ZAXIS_MOTORADRESS).arg(ZAXIS_MAXIMUM_ACCELERATION_CHANGE));
+    m_commandBuffer->bufferInfo.append(0);
     //sets the maximum change of acceleration of the extruder and appends it to the buffer
-    m_commandBuffer->append(QString("#%1:b%2\r").arg(EXTRUDER_MOTORADRESS, EXTRUDER_MAXIMUM_ACCELERATION_CHANGE));
+    m_commandBuffer->buffer.append(QString("#%1:b=%2\r").arg(EXTRUDER_MOTORADRESS).arg(EXTRUDER_MAXIMUM_ACCELERATION_CHANGE));
+    m_commandBuffer->bufferInfo.append(0);
 
     //set the maximum decceleration change
 
     //sets the maximum change of decceleration of the x-axis and appends it to the buffer
-    m_commandBuffer->append(QString("#%1:B%2\r").arg(XAXIS_MOTORADRESS, XAXIS_MAXIMUM_DECCELERATION_CHANGE));
+    m_commandBuffer->buffer.append(QString("#%1:B=%2\r").arg(XAXIS_MOTORADRESS).arg(XAXIS_MAXIMUM_DECCELERATION_CHANGE));
+    m_commandBuffer->bufferInfo.append(0);
     //sets the maximum change of decceleration of the y-axis and appends it to the buffer
-    m_commandBuffer->append(QString("#%1:B%2\r").arg(YAXIS_MOTORADRESS, YAXIS_MAXIMUM_DECCELERATION_CHANGE));
+    m_commandBuffer->buffer.append(QString("#%1:B=%2\r").arg(YAXIS_MOTORADRESS).arg(YAXIS_MAXIMUM_DECCELERATION_CHANGE));
+    m_commandBuffer->bufferInfo.append(0);
     //sets the maximum change of decceleration of the z-axis and appends it to the buffer
-    m_commandBuffer->append(QString("#%1:B%2\r").arg(ZAXIS_MOTORADRESS, ZAXIS_MAXIMUM_DECCELERATION_CHANGE));
+    m_commandBuffer->buffer.append(QString("#%1:B=%2\r").arg(ZAXIS_MOTORADRESS).arg(ZAXIS_MAXIMUM_DECCELERATION_CHANGE));
+    m_commandBuffer->bufferInfo.append(0);
     //sets the maximum change of decceleration of the extruder and appends it to the buffer
-    m_commandBuffer->append(QString("#%1:B%2\r").arg(EXTRUDER_MOTORADRESS, EXTRUDER_MAXIMUM_DECCELERATION_CHANGE));
+    m_commandBuffer->buffer.append(QString("#%1:B=%2\r").arg(EXTRUDER_MOTORADRESS).arg(EXTRUDER_MAXIMUM_DECCELERATION_CHANGE));
+    m_commandBuffer->bufferInfo.append(0);
+
+    checkBuffer();
 }
 
 MotorController::~MotorController()
@@ -114,6 +158,18 @@ MotorController::~MotorController()
     delete m_currentYAxisPosition;
     delete m_currentZAxisPosition;
     delete m_currentExtruderPosition;
+    delete m_previousXAxisPosition;
+    delete m_previousYAxisPosition;
+    delete m_previousZAxisPosition;
+    delete m_previousExtruderPosition;
+    delete m_currentXAxisMotorPosition;
+    delete m_currentYAxisMotorPosition;
+    delete m_currentZAxisMotorPosition;
+    delete m_currentExtruderMotorPosition;
+    delete m_desiredXAxisMotorPosition;
+    delete m_desiredYAxisMotorPosition;
+    delete m_desiredZAxisMotorPosition;
+    delete m_desiredExtruderMotorPosition;
     delete m_commandBuffer;
 
     //setting the pointers to NULL
@@ -136,6 +192,18 @@ MotorController::~MotorController()
     m_currentYAxisPosition = NULL;
     m_currentZAxisPosition = NULL;
     m_currentExtruderPosition = NULL;
+    m_previousXAxisPosition = NULL;
+    m_previousYAxisPosition = NULL;
+    m_previousZAxisPosition = NULL;
+    m_previousExtruderPosition = NULL;
+    m_currentXAxisMotorPosition = NULL;
+    m_currentYAxisMotorPosition = NULL;
+    m_currentZAxisMotorPosition = NULL;
+    m_currentExtruderMotorPosition = NULL;
+    m_desiredXAxisMotorPosition = NULL;
+    m_desiredYAxisMotorPosition = NULL;
+    m_desiredZAxisMotorPosition = NULL;
+    m_desiredExtruderMotorPosition = NULL;
     m_commandBuffer = NULL;
 }
 
@@ -151,13 +219,15 @@ bool MotorController::relativeMoveXAxis(qreal value, qreal speed)
 {
 
     //sets speed at which to start and appends it to the buffer
-    m_commandBuffer->append(QString("#%1u%2\r").arg(XAXIS_MOTORADRESS, XAXIS_MIN_STEPFREQUENCY));
+    m_commandBuffer->buffer.append(QString("#%1u%2\r").arg(XAXIS_MOTORADRESS).arg(XAXIS_MIN_STEPFREQUENCY));
+    m_commandBuffer->bufferInfo.append(0);
 
     //converts acceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
-    m_commandBuffer->append(QString("#%1b%2\r").arg(XAXIS_MOTORADRESS, (int)(*m_defaultTravelAcceleration * XAXIS_MULTIPLIER / 64 / 1000)));
+    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(XAXIS_MOTORADRESS).arg((qint32)((qreal)(*m_defaultTravelAcceleration) * (qreal)(XAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 1000.0)));
+    m_commandBuffer->bufferInfo.append(0);
 
     //checks if the speed is too high or too low
-    if((int)(speed * XAXIS_MULTIPLIER / 64 / 60) > 1000000 || (int)(speed * XAXIS_MULTIPLIER / 64 / 60) < 1){
+    if((qint32)(speed * (qreal)(XAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0) > 1000000 || (qint32)(speed * (qreal)(XAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0) < 1){
 
         return false;
     }
@@ -165,15 +235,16 @@ bool MotorController::relativeMoveXAxis(qreal value, qreal speed)
     else{
 
         //converts speed form mm/min to steps/second and appends it to the buffer
-        m_commandBuffer->append(QString("#%1o%2\r").arg(XAXIS_MOTORADRESS, (int)(speed * XAXIS_MULTIPLIER / 64 / 60)));
+        m_commandBuffer->buffer.append(QString("#%1o%2\r").arg(XAXIS_MOTORADRESS).arg((qint32)(speed * (qreal)(XAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0)));
+        m_commandBuffer->bufferInfo.append(0);
     }
 
     //checks if the way to drive is negative
     if(value < 0){
 
         //sets the turning direction to MOTOR_NEGATIVE_TURNINGDIRECTION and appends it to the buffer
-        m_commandBuffer->append(QString("#%1d%2\r").arg(XAXIS_MOTORADRESS, MOTOR_NEGATIVE_TURNINGDIRECTION));
-
+        m_commandBuffer->buffer.append(QString("#%1d%2\r").arg(XAXIS_MOTORADRESS).arg(MOTOR_NEGATIVE_TURNINGDIRECTION));
+        m_commandBuffer->bufferInfo.append(0);
 
         //changes the sign of value
         qreal help;
@@ -191,7 +262,8 @@ bool MotorController::relativeMoveXAxis(qreal value, qreal speed)
     else if(value > 0){
 
         //sets the turning direction to MOTOR_POSITIVE_TURNINGDIRECTION and appends it to the buffer
-        m_commandBuffer->append(QString("#%1d%2\r").arg(XAXIS_MOTORADRESS, MOTOR_POSITIVE_TURNINGDIRECTION));
+        m_commandBuffer->buffer.append(QString("#%1d%2\r").arg(XAXIS_MOTORADRESS).arg(MOTOR_POSITIVE_TURNINGDIRECTION));
+        m_commandBuffer->bufferInfo.append(0);
     }
 
     else{
@@ -199,20 +271,16 @@ bool MotorController::relativeMoveXAxis(qreal value, qreal speed)
         return false;
     }
 
-    //if the way to drive is too big, the motor is being driven multiple times
-    while((int)(value * XAXIS_MULTIPLIER) > 100000000){
-
-            value = value - 100000000;
-            //sets the way to drive and appends it to the buffer
-            m_commandBuffer->append(QString("#%1s100000000\r").arg(XAXIS_MOTORADRESS));
-            //starts the motor and appends it to the buffer
-            m_commandBuffer->append(QString("#%1A\r").arg(XAXIS_MOTORADRESS));
-    }
-
     //sets the way to drive and appends it to the buffer
-    m_commandBuffer->append(QString("#%1s%2\r").arg(XAXIS_MOTORADRESS, (int)(value * XAXIS_MULTIPLIER)));
+    m_commandBuffer->buffer.append(QString("#%1s%2\r").arg(XAXIS_MOTORADRESS).arg((qint32)(value * (qreal)(XAXIS_MULTIPLIER))));
+    m_commandBuffer->bufferInfo.append(0);
     //starts the motor and appends it to the buffer
-    m_commandBuffer->append(QString("#%1A\r").arg(XAXIS_MOTORADRESS));
+    m_commandBuffer->buffer.append(QString("#%1A\r").arg(XAXIS_MOTORADRESS));
+    m_commandBuffer->bufferInfo.append(1);
+    //sets the desired x-axis position to the position to drive to
+    *m_desiredXAxisMotorPosition = (qint32)(value * (qreal)(XAXIS_MULTIPLIER));
+
+    checkBuffer();
 
     return true;
 }
@@ -221,6 +289,7 @@ bool MotorController::relativeMoveXAxis(qreal value, qreal speed)
 bool MotorController::absoluteMoveYAxis(qreal position, qreal speed)
 {
 
+    return relativeMoveYAxis(position - *m_currentYAxisPosition, speed);
 }
 
 //relatively moves y-axis by value in mm, speed = the speed the head is going to move in mm/min
@@ -233,6 +302,7 @@ bool MotorController::relativeMoveYAxis(qreal value, qreal speed)
 bool MotorController::absoluteMoveZAxis(qreal position, qreal speed)
 {
 
+    return relativeMoveZAxis(position - *m_currentZAxisPosition, speed);
 }
 
 //relatively moves z-axis by value in mm, speed = the speed the head is going to move in mm/min
@@ -245,6 +315,7 @@ bool MotorController::relativeMoveZAxis(qreal value, qreal speed)
 bool MotorController::absoluteMoveExtruder(qreal position, qreal speed)
 {
 
+    return relativeMoveExtruder(position - *m_currentExtruderPosition, speed);
 }
 
 //relatively moves extruder by value in mm, speed = the speed the head is going to move in mm/min
@@ -530,6 +601,47 @@ void MotorController::setCurrentExtruderPosition(qreal currentExtruderPosition)
     *m_currentExtruderPosition = currentExtruderPosition;
 }
 
+//executed when the serialinterface receives a message
+void MotorController::receive(QString text)
+{
+
+    //checks what the message says
+    //executed when the message contains the position of an motor
+    if(text.at(1) == "C"){
+
+        //checks which motor the message is from
+        //executed if the message is from the x-axis motor
+        if(text.at(0) == QString("%1").arg(XAXIS_MOTORADRESS)){
+
+            //sets the value of the current motorposition of the x-axis to the actual motorposition of the x-axis
+            *m_currentXAxisMotorPosition = text.mid(1, text.indexOf("\r") - 2).toInt();
+        }
+
+        //executed if the message is from the y-axis motor
+        else if(text.at(0) == QString("%1").arg(YAXIS_MOTORADRESS)){
+
+            //sets the value of the current motorposition of the y-axis to the actual motorposition of the y-axis
+            *m_currentYAxisMotorPosition = text.mid(1, text.indexOf("\r") - 2).toInt();
+        }
+
+        //executed if the message is from the z-axis motor
+        else if(text.at(0) == QString("%1").arg(ZAXIS_MOTORADRESS)){
+
+            //sets the value of the current motorposition of the z-axis to the actual motorposition of the z-axis
+            *m_currentZAxisMotorPosition = text.mid(1, text.indexOf("\r") - 2).toInt();
+        }
+
+        //executed if the message is from the extruder motor
+        else if(text.at(0) == QString("%1").arg(EXTRUDER_MOTORADRESS)){
+
+            //sets the value of the current motorposition of the extruder to the actual motorposition of the extruder
+            *m_currentExtruderMotorPosition = text.mid(1, text.indexOf("\r") - 2).toInt();
+        }
+
+        calculateMovementChange();
+    }
+}
+
 //clears all the values
 void MotorController::clear()
 {
@@ -552,4 +664,157 @@ void MotorController::play()
 void MotorController::stop()
 {
 
+}
+
+//checks if the positions of the motors are the positions they should move to
+void MotorController::checkMovement()
+{
+
+    //checks if the positions of the motors are the positions they should move to
+    //executed if any of the positions is not
+    if(*m_currentXAxisMotorPosition != *m_desiredXAxisMotorPosition || *m_currentYAxisMotorPosition != *m_desiredYAxisMotorPosition ||
+            *m_currentZAxisMotorPosition != *m_desiredZAxisMotorPosition || *m_currentExtruderMotorPosition != *m_desiredExtruderMotorPosition){
+
+        //sends the motors the command to return their current positions
+        emit send(QString("#*C\r"));
+        //starts a timer, that executes this function again after one millisecond
+        QTimer::singleShot(1, this, SLOT(checkMovement()));
+    }
+
+    //executed when all the positions are
+    else if(*m_currentXAxisMotorPosition == *m_desiredXAxisMotorPosition && *m_currentYAxisMotorPosition == *m_desiredYAxisMotorPosition &&
+            *m_currentZAxisMotorPosition == *m_desiredZAxisMotorPosition && *m_currentExtruderMotorPosition == *m_desiredExtruderMotorPosition){
+
+        //checks if the buffer is empty
+        //executed if it is
+        if(m_commandBuffer->buffer.isEmpty()){
+
+            //emits the signal that all the movements are finished
+            emit movementFinished();
+        }
+
+        //executed if it's not
+        else{
+
+            //checks the buffer again
+            checkBuffer();
+        }
+    }
+
+
+}
+
+//checks if the positions on all axis are the actual positions and, if not, rights them
+void MotorController::calculateMovementChange()
+{
+
+    //checks if the value of m_currentXAxisPosition is the actual current position on the x-axis
+    //executed if the value of m_currentXAxisPosition is not the actual current position on the x-axis
+    if(*m_currentXAxisPosition != *m_previousXAxisPosition + (qreal)(*m_currentXAxisMotorPosition) / (qreal)(XAXIS_MULTIPLIER)){
+
+        //sets the value of m_currentXAxisPosition to the actual current position on the x-axis
+        *m_currentXAxisPosition = *m_previousXAxisPosition + (qreal)(*m_currentXAxisMotorPosition) / (qreal)(XAXIS_MULTIPLIER);
+        //emits the signal that the current position on the x-axis has changed
+        emit currentXAxisPositionChanged(*m_currentXAxisPosition);
+    }
+
+    //checks if the value of m_currentYAxisPosition is the actual current position on the y-axis
+    //executed if the value of m_currentYAxisPosition is not the actual current position on the y-axis
+    if(*m_currentYAxisPosition != *m_previousYAxisPosition + (qreal)(*m_currentYAxisMotorPosition) / (qreal)(YAXIS_MULTIPLIER)){
+
+        //sets the value of m_currentYAxisPosition to the actual current position on the y-axis
+        *m_currentYAxisPosition = *m_previousYAxisPosition + (qreal)(*m_currentYAxisMotorPosition) / (qreal)(YAXIS_MULTIPLIER);
+        //emits the signal that the current position on the y-axis has changed
+        emit currentYAxisPositionChanged(*m_currentYAxisPosition);
+    }
+
+    //checks if the value of m_currentZAxisPosition is the actual current position on the z-axis
+    //executed if the value of m_currentZAxisPosition is not the actual current position on the z-axis
+    if(*m_currentZAxisPosition != *m_previousZAxisPosition + (qreal)(*m_currentZAxisMotorPosition) / (qreal)(ZAXIS_MULTIPLIER)){
+
+        //sets the value of m_currentZAxisPosition to the actual current position on the z-axis
+        *m_currentZAxisPosition = *m_previousZAxisPosition + (qreal)(*m_currentZAxisMotorPosition) / (qreal)(ZAXIS_MULTIPLIER);
+        //emits the signal that the current position on the z-axis has changed
+        emit currentZAxisPositionChanged(*m_currentZAxisPosition);
+    }
+
+    //checks if the value of m_currentExtruderPosition is the actual current position on the extruder
+    //executed if the value of m_currentExxtruderPosition is not the actual current position on the extruder
+    if(*m_currentExtruderPosition != *m_previousExtruderPosition + (qreal)(*m_currentExtruderMotorPosition) / (qreal)(EXTRUDER_MULTIPLIER)){
+
+        //sets the value of m_currentExtruderPosition to the actual current position on the extruder
+        *m_currentExtruderPosition = *m_previousExtruderPosition + (qreal)(*m_currentExtruderMotorPosition) / (qreal)(EXTRUDER_MULTIPLIER);
+        //emits the signal that the current position on the extruder has changed
+        emit currentExtruderPositionChanged(*m_currentExtruderPosition);
+    }
+}
+
+//checks for commands in the buffer and executes them until the buffer is empty
+void MotorController::checkBuffer()
+{
+
+    //checks if the command is moving the motors or not
+    //executed if the motors are not moved
+    if(m_commandBuffer->bufferInfo.first() == 0){
+
+        //sending the command to the buffer and removing it from the buffer
+        emit send(m_commandBuffer->buffer.takeFirst());
+        m_commandBuffer->bufferInfo.removeFirst();
+
+        //checks if there is another command left in the buffer
+        //executed if there is another command in the buffer
+        if(m_commandBuffer->buffer.isEmpty() == false){
+
+            checkBuffer();
+        }
+    }
+
+    //executed if the motors are moved
+    else if(m_commandBuffer->bufferInfo.first() > 0){
+
+        //this loop is there to send all the commands that move the motor at nearly the same time
+        while(m_commandBuffer->bufferInfo.first() > 0){
+
+            //checks which axis is moved by the command
+            //executed if the command moves the x-axis
+            if(m_commandBuffer->bufferInfo.first() == 1){
+
+                *m_previousXAxisPosition = *m_currentXAxisPosition;
+            }
+
+            //executed if the command moves the y-axis
+            else if(m_commandBuffer->bufferInfo.first() == 2){
+
+                *m_previousYAxisPosition = *m_currentYAxisPosition;
+            }
+
+            //executed if the command moves the z-axis
+            else if(m_commandBuffer->bufferInfo.first() == 3){
+
+                *m_previousZAxisPosition = *m_currentZAxisPosition;
+            }
+
+            //executed if the command moves the extruder
+            else if(m_commandBuffer->bufferInfo.first() == 4){
+
+                *m_previousExtruderPosition = *m_currentExtruderPosition;
+            }
+
+            //executed if the command moves all motors
+            else if(m_commandBuffer->bufferInfo.first() == 5){
+
+                *m_previousXAxisPosition = *m_currentXAxisPosition;
+                *m_previousYAxisPosition = *m_currentYAxisPosition;
+                *m_previousZAxisPosition = *m_currentZAxisPosition;
+                *m_previousExtruderPosition = *m_currentExtruderPosition;
+            }
+
+            //sending the command to the buffer and removing it from the buffer
+            emit send(m_commandBuffer->buffer.takeFirst());
+            m_commandBuffer->bufferInfo.removeFirst();
+        }
+
+        //updates the movement in realtime and then executes this method again if there are still commands in the buffer
+        checkMovement();
+    }
 }

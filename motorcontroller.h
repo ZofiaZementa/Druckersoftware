@@ -3,6 +3,12 @@
 
 #include <QObject>
 
+struct CommandBuffer {
+
+    QStringList buffer;
+    QList<ushort> bufferInfo;
+};
+
 class MotorController : public QObject
 {
     Q_OBJECT
@@ -65,6 +71,7 @@ public:
 
 signals:
 
+    void movementFinished();
     void send(QString text);
     void currentXAxisPositionChanged(qreal position);
     void currentYAxisPositionChanged(qreal position);
@@ -73,12 +80,20 @@ signals:
 
 public slots:
 
+    void receive(QString text);
     void clear();
     void pause();
     void play();
     void stop();
 
+private slots:
+
+    void checkMovement();
+
 private:
+
+    void calculateMovementChange();
+    void checkBuffer();
 
     int *m_xAxisMaxPrintingAcceleration;
     int *m_xAxisMaxTravelAcceleration;
@@ -98,7 +113,19 @@ private:
     qreal *m_currentYAxisPosition;
     qreal *m_currentZAxisPosition;
     qreal *m_currentExtruderPosition;
-    QStringList *m_commandBuffer;
+    qreal *m_previousXAxisPosition;
+    qreal *m_previousYAxisPosition;
+    qreal *m_previousZAxisPosition;
+    qreal *m_previousExtruderPosition;
+    qint32 *m_currentXAxisMotorPosition;
+    qint32 *m_currentYAxisMotorPosition;
+    qint32 *m_currentZAxisMotorPosition;
+    qint32 *m_currentExtruderMotorPosition;
+    qint32 *m_desiredXAxisMotorPosition;
+    qint32 *m_desiredYAxisMotorPosition;
+    qint32 *m_desiredZAxisMotorPosition;
+    qint32 *m_desiredExtruderMotorPosition;
+    CommandBuffer *m_commandBuffer;
 
 };
 
