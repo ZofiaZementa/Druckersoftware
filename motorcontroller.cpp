@@ -234,7 +234,7 @@ bool MotorController::relativeMoveXAxis(qreal value, qreal speed)
 
     else{
 
-        //converts speed form mm/min to steps/second and appends it to the buffer
+        //converts speed from mm/min to steps/second and appends it to the buffer
         m_commandBuffer->buffer.append(QString("#%1o%2\r").arg(XAXIS_MOTORADRESS).arg((qint32)(speed * (qreal)(XAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0)));
         m_commandBuffer->bufferInfo.append(0);
     }
@@ -296,6 +296,71 @@ bool MotorController::absoluteMoveYAxis(qreal position, qreal speed)
 bool MotorController::relativeMoveYAxis(qreal value, qreal speed)
 {
 
+    //sets speed at which to start and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1u%2\r").arg(YAXIS_MOTORADRESS).arg(YAXIS_MIN_STEPFREQUENCY));
+    m_commandBuffer->bufferInfo.append(0);
+
+    //converts acceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(YAXIS_MOTORADRESS).arg((qint32)((qreal)(*m_defaultTravelAcceleration) * (qreal)(YAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 1000.0)));
+    m_commandBuffer->bufferInfo.append(0);
+
+    //checks if the speed is too high or too low
+    if((qint32)(speed * (qreal)(YAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0) > 1000000 || (qint32)(speed * (qreal)(YAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0) < 1){
+
+        return false;
+    }
+
+    else{
+
+        //converts speed from mm/min to steps/second and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1o%2\r").arg(YAXIS_MOTORADRESS).arg((qint32)(speed * (qreal)(YAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0)));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    //checks if the way to drive is negative
+    if(value < 0){
+
+        //sets the turning direction to MOTOR_NEGATIVE_TURNINGDIRECTION and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1d%2\r").arg(YAXIS_MOTORADRESS).arg(MOTOR_NEGATIVE_TURNINGDIRECTION));
+        m_commandBuffer->bufferInfo.append(0);
+
+        //changes the sign of value
+        qreal help;
+
+        while(value != 0){
+
+            value++;
+            help++;
+        }
+
+        value = help;
+    }
+
+    //checks if the way to drive is positive
+    else if(value > 0){
+
+        //sets the turning direction to MOTOR_POSITIVE_TURNINGDIRECTION and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1d%2\r").arg(YAXIS_MOTORADRESS).arg(MOTOR_POSITIVE_TURNINGDIRECTION));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    else{
+
+        return false;
+    }
+
+    //sets the way to drive and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1s%2\r").arg(YAXIS_MOTORADRESS).arg((qint32)(value * (qreal)(YAXIS_MULTIPLIER))));
+    m_commandBuffer->bufferInfo.append(0);
+    //starts the motor and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1A\r").arg(YAXIS_MOTORADRESS));
+    m_commandBuffer->bufferInfo.append(2);
+    //sets the desired y-axis position to the position to drive to
+    *m_desiredYAxisMotorPosition = (qint32)(value * (qreal)(YAXIS_MULTIPLIER));
+
+    checkBuffer();
+
+    return true;
 }
 
 //absolutely moves z-axis to position in mm, speed = the speed the head is going to move in mm/min
@@ -309,6 +374,71 @@ bool MotorController::absoluteMoveZAxis(qreal position, qreal speed)
 bool MotorController::relativeMoveZAxis(qreal value, qreal speed)
 {
 
+    //sets speed at which to start and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1u%2\r").arg(ZAXIS_MOTORADRESS).arg(ZAXIS_MIN_STEPFREQUENCY));
+    m_commandBuffer->bufferInfo.append(0);
+
+    //converts acceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(ZAXIS_MOTORADRESS).arg((qint32)((qreal)(*m_defaultTravelAcceleration) * (qreal)(ZAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 1000.0)));
+    m_commandBuffer->bufferInfo.append(0);
+
+    //checks if the speed is too high or too low
+    if((qint32)(speed * (qreal)(ZAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0) > 1000000 || (qint32)(speed * (qreal)(ZAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0) < 1){
+
+        return false;
+    }
+
+    else{
+
+        //converts speed from mm/min to steps/second and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1o%2\r").arg(ZAXIS_MOTORADRESS).arg((qint32)(speed * (qreal)(ZAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0)));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    //checks if the way to drive is negative
+    if(value < 0){
+
+        //sets the turning direction to MOTOR_NEGATIVE_TURNINGDIRECTION and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1d%2\r").arg(ZAXIS_MOTORADRESS).arg(MOTOR_NEGATIVE_TURNINGDIRECTION));
+        m_commandBuffer->bufferInfo.append(0);
+
+        //changes the sign of value
+        qreal help;
+
+        while(value != 0){
+
+            value++;
+            help++;
+        }
+
+        value = help;
+    }
+
+    //checks if the way to drive is positive
+    else if(value > 0){
+
+        //sets the turning direction to MOTOR_POSITIVE_TURNINGDIRECTION and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1d%2\r").arg(ZAXIS_MOTORADRESS).arg(MOTOR_POSITIVE_TURNINGDIRECTION));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    else{
+
+        return false;
+    }
+
+    //sets the way to drive and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1s%2\r").arg(ZAXIS_MOTORADRESS).arg((qint32)(value * (qreal)(ZAXIS_MULTIPLIER))));
+    m_commandBuffer->bufferInfo.append(0);
+    //starts the motor and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1A\r").arg(ZAXIS_MOTORADRESS));
+    m_commandBuffer->bufferInfo.append(3);
+    //sets the desired z-axis position to the position to drive to
+    *m_desiredZAxisMotorPosition = (qint32)(value * (qreal)(ZAXIS_MULTIPLIER));
+
+    checkBuffer();
+
+    return true;
 }
 
 //absolutely moves extruder to position in mm, speed = the speed the head is going to move in mm/min
@@ -322,6 +452,71 @@ bool MotorController::absoluteMoveExtruder(qreal position, qreal speed)
 bool MotorController::relativeMoveExtruder(qreal value, qreal speed)
 {
 
+    //sets speed at which to start and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1u%2\r").arg(EXTRUDER_MOTORADRESS).arg(EXTRUDER_MIN_STEPFREQUENCY));
+    m_commandBuffer->bufferInfo.append(0);
+
+    //converts acceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(EXTRUDER_MOTORADRESS).arg((qint32)((qreal)(*m_defaultTravelAcceleration) * (qreal)(EXTRUDER_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 1000.0)));
+    m_commandBuffer->bufferInfo.append(0);
+
+    //checks if the speed is too high or too low
+    if((qint32)(speed * (qreal)(EXTRUDER_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0) > 1000000 || (qint32)(speed * (qreal)(EXTRUDER_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0) < 1){
+
+        return false;
+    }
+
+    else{
+
+        //converts speed from mm/min to steps/second and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1o%2\r").arg(EXTRUDER_MOTORADRESS).arg((qint32)(speed * (qreal)(EXTRUDER_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0)));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    //checks if the way to drive is negative
+    if(value < 0){
+
+        //sets the turning direction to MOTOR_NEGATIVE_TURNINGDIRECTION and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1d%2\r").arg(EXTRUDER_MOTORADRESS).arg(MOTOR_NEGATIVE_TURNINGDIRECTION));
+        m_commandBuffer->bufferInfo.append(0);
+
+        //changes the sign of value
+        qreal help;
+
+        while(value != 0){
+
+            value++;
+            help++;
+        }
+
+        value = help;
+    }
+
+    //checks if the way to drive is positive
+    else if(value > 0){
+
+        //sets the turning direction to MOTOR_POSITIVE_TURNINGDIRECTION and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1d%2\r").arg(EXTRUDER_MOTORADRESS).arg(MOTOR_POSITIVE_TURNINGDIRECTION));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    else{
+
+        return false;
+    }
+
+    //sets the way to drive and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1s%2\r").arg(EXTRUDER_MOTORADRESS).arg((qint32)(value * (qreal)(EXTRUDER_MULTIPLIER))));
+    m_commandBuffer->bufferInfo.append(0);
+    //starts the motor and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1A\r").arg(EXTRUDER_MOTORADRESS));
+    m_commandBuffer->bufferInfo.append(4);
+    //sets the desired extruder position to the position to drive to
+    *m_desiredExtruderMotorPosition = (qint32)(value * (qreal)(EXTRUDER_MULTIPLIER));
+
+    checkBuffer();
+
+    return true;
 }
 
 //absolutely moves all axes and extruder
@@ -331,6 +526,7 @@ bool MotorController::relativeMoveExtruder(qreal value, qreal speed)
 bool MotorController::absoluteMove(qreal x, qreal y, qreal z, qreal e, qreal speed)
 {
 
+    return relativeMove(x - *m_currentXAxisPosition, y - *m_currentXAxisPosition, z - *m_currentZAxisPosition, e - *m_currentExtruderPosition, speed);
 }
 
 //relatively moves all axes and extruder
@@ -340,6 +536,196 @@ bool MotorController::absoluteMove(qreal x, qreal y, qreal z, qreal e, qreal spe
 bool MotorController::relativeMove(qreal x, qreal y, qreal z, qreal e, qreal speed)
 {
 
+    qreal help;
+
+    //sets x-axis speed at which to start and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1u%2\r").arg(XAXIS_MOTORADRESS).arg(XAXIS_MIN_STEPFREQUENCY));
+    m_commandBuffer->bufferInfo.append(0);
+    //sets y-axis speed at which to start and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1u%2\r").arg(YAXIS_MOTORADRESS).arg(YAXIS_MIN_STEPFREQUENCY));
+    m_commandBuffer->bufferInfo.append(0);
+    //sets z-axis speed at which to start and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1u%2\r").arg(ZAXIS_MOTORADRESS).arg(ZAXIS_MIN_STEPFREQUENCY));
+    m_commandBuffer->bufferInfo.append(0);
+    //sets extruder speed at which to start and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1u%2\r").arg(EXTRUDER_MOTORADRESS).arg(EXTRUDER_MIN_STEPFREQUENCY));
+    m_commandBuffer->bufferInfo.append(0);
+
+    //converts x-axis acceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(XAXIS_MOTORADRESS).arg((qint32)((qreal)(*m_defaultTravelAcceleration) * (qreal)(XAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 1000.0)));
+    m_commandBuffer->bufferInfo.append(0);
+    //converts y-axis acceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(YAXIS_MOTORADRESS).arg((qint32)((qreal)(*m_defaultTravelAcceleration) * (qreal)(YAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 1000.0)));
+    m_commandBuffer->bufferInfo.append(0);
+    //converts z-axis acceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(ZAXIS_MOTORADRESS).arg((qint32)((qreal)(*m_defaultTravelAcceleration) * (qreal)(ZAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 1000.0)));
+    m_commandBuffer->bufferInfo.append(0);
+    //converts extruder acceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(EXTRUDER_MOTORADRESS).arg((qint32)((qreal)(*m_defaultTravelAcceleration) * (qreal)(EXTRUDER_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 1000.0)));
+    m_commandBuffer->bufferInfo.append(0);
+
+    //checks if the speed is too high or too low
+    if((qint32)(speed * (qreal)(XAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0) > 1000000 || (qint32)(speed * (qreal)(XAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0) < 1 ||
+            (qint32)(speed * (qreal)(YAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0) > 1000000 || (qint32)(speed * (qreal)(YAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0) < 1 ||
+            (qint32)(speed * (qreal)(ZAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0) > 1000000 || (qint32)(speed * (qreal)(ZAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0) < 1 ||
+            (qint32)(speed * (qreal)(EXTRUDER_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0) > 1000000 || (qint32)(speed * (qreal)(EXTRUDER_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0) < 1){
+
+        return false;
+    }
+
+    else{
+
+        //converts x-axis speed from mm/min to steps/second and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1o%2\r").arg(XAXIS_MOTORADRESS).arg((qint32)(speed * (qreal)(XAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0)));
+        m_commandBuffer->bufferInfo.append(0);
+        //converts y-axis speed from mm/min to steps/second and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1o%2\r").arg(YAXIS_MOTORADRESS).arg((qint32)(speed * (qreal)(YAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0)));
+        m_commandBuffer->bufferInfo.append(0);
+        //converts z-axis speed from mm/min to steps/second and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1o%2\r").arg(ZAXIS_MOTORADRESS).arg((qint32)(speed * (qreal)(ZAXIS_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0)));
+        m_commandBuffer->bufferInfo.append(0);
+        //converts extruder speed from mm/min to steps/second and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1o%2\r").arg(EXTRUDER_MOTORADRESS).arg((qint32)(speed * (qreal)(EXTRUDER_MULTIPLIER) / (qreal)(MOTOR_STEPSIZE) / 60.0)));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    //checks if the way to drive on the x-axis is negative
+    if(x < 0){
+
+        //sets the x-axis turning direction to MOTOR_NEGATIVE_TURNINGDIRECTION and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1d%2\r").arg(XAXIS_MOTORADRESS).arg(MOTOR_NEGATIVE_TURNINGDIRECTION));
+        m_commandBuffer->bufferInfo.append(0);
+
+        //changes the sign of x
+        help = 0.0;
+
+        while(x != 0){
+
+            x++;
+            help++;
+        }
+
+        x = help;
+    }
+
+    //checks if the way to drive on the x-axis is positive
+    else if(x > 0){
+
+        //sets the x-axis turning direction to MOTOR_POSITIVE_TURNINGDIRECTION and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1d%2\r").arg(XAXIS_MOTORADRESS).arg(MOTOR_POSITIVE_TURNINGDIRECTION));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    //checks if the way to drive on the y-axis is negative
+    if(y < 0){
+
+        //sets the y-axis turning direction to MOTOR_NEGATIVE_TURNINGDIRECTION and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1d%2\r").arg(YAXIS_MOTORADRESS).arg(MOTOR_NEGATIVE_TURNINGDIRECTION));
+        m_commandBuffer->bufferInfo.append(0);
+
+        //changes the sign of y
+        help = 0.0;
+
+        while(y != 0){
+
+            y++;
+            help++;
+        }
+
+        y = help;
+    }
+
+    //checks if the way to drive on the y-axis is positive
+    else if(y > 0){
+
+        //sets the y-axis turning direction to MOTOR_POSITIVE_TURNINGDIRECTION and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1d%2\r").arg(YAXIS_MOTORADRESS).arg(MOTOR_POSITIVE_TURNINGDIRECTION));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    //checks if the way to drive on the z-axis is negative
+    if(z < 0){
+
+        //sets the z-axis turning direction to MOTOR_NEGATIVE_TURNINGDIRECTION and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1d%2\r").arg(ZAXIS_MOTORADRESS).arg(MOTOR_NEGATIVE_TURNINGDIRECTION));
+        m_commandBuffer->bufferInfo.append(0);
+
+        //changes the sign of z
+        help = 0.0;
+
+        while(z != 0){
+
+            z++;
+            help++;
+        }
+
+        z = help;
+    }
+
+    //checks if the way to drive on the z-axis is positive
+    else if(z > 0){
+
+        //sets the z-axis turning direction to MOTOR_POSITIVE_TURNINGDIRECTION and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1d%2\r").arg(ZAXIS_MOTORADRESS).arg(MOTOR_POSITIVE_TURNINGDIRECTION));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    //checks if the way to drive on the extruder is negative
+    if(e < 0){
+
+        //sets the extruder turning direction to MOTOR_NEGATIVE_TURNINGDIRECTION and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1d%2\r").arg(EXTRUDER_MOTORADRESS).arg(MOTOR_NEGATIVE_TURNINGDIRECTION));
+        m_commandBuffer->bufferInfo.append(0);
+
+        //changes the sign of e
+        help = 0.0;
+
+        while(e != 0){
+
+            e++;
+            help++;
+        }
+
+        e = help;
+    }
+
+    //checks if the way to drive on the extruder is positive
+    else if(e > 0){
+
+        //sets the extruder turning direction to MOTOR_POSITIVE_TURNINGDIRECTION and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#%1d%2\r").arg(EXTRUDER_MOTORADRESS).arg(MOTOR_POSITIVE_TURNINGDIRECTION));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    //sets the way to drive on the x-axis and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1s%2\r").arg(XAXIS_MOTORADRESS).arg((qint32)(x * (qreal)(XAXIS_MULTIPLIER))));
+    m_commandBuffer->bufferInfo.append(0);
+    //sets the way to drive on the y-axis and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1s%2\r").arg(YAXIS_MOTORADRESS).arg((qint32)(y * (qreal)(YAXIS_MULTIPLIER))));
+    m_commandBuffer->bufferInfo.append(0);
+    //sets the way to drive on the z-axis and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1s%2\r").arg(ZAXIS_MOTORADRESS).arg((qint32)(z * (qreal)(ZAXIS_MULTIPLIER))));
+    m_commandBuffer->bufferInfo.append(0);
+    //sets the way to drive on the extruder and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#%1s%2\r").arg(EXTRUDER_MOTORADRESS).arg((qint32)(e * (qreal)(EXTRUDER_MULTIPLIER))));
+    m_commandBuffer->bufferInfo.append(0);
+
+    //starts the motors and appends it to the buffer
+    m_commandBuffer->buffer.append(QString("#*A\r"));
+    m_commandBuffer->bufferInfo.append(5);
+
+    //sets the desired x-axis position to the position to drive to
+    *m_desiredXAxisMotorPosition = (qint32)(x * (qreal)(XAXIS_MULTIPLIER));
+    //sets the desired y-axis position to the position to drive to
+    *m_desiredYAxisMotorPosition = (qint32)(y * (qreal)(YAXIS_MULTIPLIER));
+    //sets the desired z-axis position to the position to drive to
+    *m_desiredZAxisMotorPosition = (qint32)(z * (qreal)(ZAXIS_MULTIPLIER));
+    //sets the desired extruder position to the position to drive to
+    *m_desiredExtruderMotorPosition = (qint32)(e * (qreal)(EXTRUDER_MULTIPLIER));
+
+    checkBuffer();
+
+    return true;
 }
 
 //sets *m_xAxisMaxPrintingAcceleration to xAxisMaxPrintingAcceleration
