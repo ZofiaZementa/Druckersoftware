@@ -15,6 +15,10 @@ public:
     explicit ControlWindow(QWidget *parent = 0);
     ~ControlWindow();
 
+public slots:
+
+    void displayErrorMessage(QString errorMessage);
+
 private:
     Ui::ControlWindow *ui;
 };

@@ -2,6 +2,8 @@
 #define MOTORCONTROLLER_H
 
 #include <QObject>
+#include <QUrl>
+#include <QSettings>
 
 struct CommandBuffer {
 
@@ -95,6 +97,7 @@ private slots:
 
 private:
 
+    void motorSetup();
     void calculateMovementChange();
     void checkBuffer();
 
@@ -130,6 +133,7 @@ private:
     qint32 *m_desiredZAxisMotorPosition;
     qint32 *m_desiredExtruderMotorPosition;
     CommandBuffer *m_commandBuffer;
+    QSettings *m_settings;
 
 };
 

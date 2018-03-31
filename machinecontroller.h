@@ -21,7 +21,7 @@ public:
 
     //defining enums
 
-    enum PrinterState{Idle, Startup, PrePrintSetup, Printing, Paused};
+    enum PrinterState{Idle, CalibratingPosition, CalibratingBed, Printing, Paused};
     enum PositioningMode{AbsolutePositioning, RelativePositioning};
     enum ExtruderMode{AbsoluteExtruder, RelativeExtruder};
 
@@ -61,6 +61,8 @@ public:
 
 public slots:
 
+    void calibratePosition();
+    void calibrateBed();
     void movementFinished();
     void heatingFinished();
     void pause();
@@ -76,6 +78,8 @@ public slots:
     void zAxisNegativeEndstopHit();
 
 signals:
+
+    void error(QString errorMessage);
 
 private:
 
@@ -98,9 +102,6 @@ private:
     HeatingController *m_heatingController;
     SensorListener *m_sensorListener;
     SerialInterface *m_serialInterface;
-    qreal *m_printerXAxisLength;
-    qreal *m_printerYAxisLength;
-    qreal *m_printerZAxisLength;
 
 };
 
