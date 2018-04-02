@@ -9,7 +9,6 @@ ControlWindow::ControlWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    MachineController test;
 }
 
 ControlWindow::~ControlWindow()

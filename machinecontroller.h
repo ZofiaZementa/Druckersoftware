@@ -4,6 +4,7 @@
 #include <QObject>
 //#include <QThread>
 #include <QUrl>
+#include <QSettings>
 #include "fancontroller.h"
 #include "gcodereader.h"
 #include "motorcontroller.h"
@@ -61,6 +62,7 @@ public:
 
 public slots:
 
+    void errorOccured(QString errorMessage);
     void calibratePosition();
     void calibrateBed();
     void movementFinished();
@@ -76,6 +78,7 @@ public slots:
     void yAxisNegativeEndstopHit();
     void zAxisPositiveEndstopHit();
     void zAxisNegativeEndstopHit();
+    void serialInterfaceSetup();
 
 signals:
 
@@ -102,6 +105,7 @@ private:
     HeatingController *m_heatingController;
     SensorListener *m_sensorListener;
     SerialInterface *m_serialInterface;
+    QSettings *m_settings;
 
 };
 

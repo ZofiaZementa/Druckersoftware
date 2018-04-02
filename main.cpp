@@ -1,4 +1,5 @@
 #include "controlwindow.h"
+#include "machinecontroller.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])
@@ -10,6 +11,10 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationVersion("v0.2");
 
     ControlWindow w;
+    MachineController c;
+
+    QObject::connect(&c, SIGNAL(error(QString)), &w, SLOT(dislpayErrorMessage(QString)));
+
     w.show();
 
     return a.exec();

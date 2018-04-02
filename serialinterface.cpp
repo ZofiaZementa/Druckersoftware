@@ -313,6 +313,7 @@ void SerialInterface::onReadReady()
     checkBuffer();
 }
 
+//checks if there are command left in the buffer and if yes, clears them
 void SerialInterface::checkBuffer()
 {
 

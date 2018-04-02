@@ -34,8 +34,8 @@ public:
     bool relativeMoveZAxis(qreal value, qreal speed);
     bool absoluteMoveExtruder(qreal position, qreal speed);
     bool relativeMoveExtruder(qreal value, qreal speed);
-    bool absoluteMove(qreal x, qreal y, qreal z, qreal e, qreal speed);
-    bool relativeMove(qreal x, qreal y, qreal z, qreal e, qreal speed);
+    bool absoluteMove(qreal x, qreal y, qreal z, qreal e, qreal xSpeed, qreal ySpeed, qreal zSpeed, qreal eSpeed);
+    bool relativeMove(qreal x, qreal y, qreal z, qreal e, qreal xSpeed, qreal ySpeed, qreal zSpeed, qreal eSpeed);
     void setXAxisMaxPrintingAcceleration(int xAxisMaxPrintingAcceleration);
     int xAxisMaxPrintingAcceleration();
     void setXAxisMaxTravelAcceleration(int xAxisMaxTravelAcceleration);
