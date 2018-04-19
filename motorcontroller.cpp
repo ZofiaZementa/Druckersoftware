@@ -1,5 +1,4 @@
 #include "motorcontroller.h"
-#include <QTimer>
 #include <QDebug>
 
 #define MOTOR_POSITIONINGMODE 1    //holds the positioning mode of the motors, see nanotec programming manual, page 51
@@ -894,6 +893,7 @@ void MotorController::setDefaultPrintingAcceleration(int defaultPrintingAccelera
             (qint32)((qreal)(*m_defaultTravelAcceleration) * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(*m_defaultTravelAcceleration) * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1){
 
         emit error(QString("PrintingAcceleration set too high/low"));
+        return;
     }
 
     //executed if it isn't
@@ -994,7 +994,8 @@ void MotorController::receive(QString text)
 
     if(text.contains(QString("?"))){
 
-        emit error(QString("Motor replied that a command was invalid"));
+        emit error(QString("Motor replied that a command was invalid.\nReply: %1").arg(text));
+        return;
     }
     //checks what the message says
     //executed when the message contains the position of an motor
@@ -1118,7 +1119,7 @@ void MotorController::checkMovement()
             //sends the motors the command to return their current positions
             emit send(QString("#*C\r"));
             //starts a timer, that executes this function again after one millisecond
-            QTimer::singleShot(1, this, SLOT(checkMovement()));
+            QTimer::singleShot(1, Qt::PreciseTimer, this, SLOT(checkMovement()));
         }
 
         //executed when all the positions are
@@ -1154,15 +1155,53 @@ void MotorController::checkMovement()
 void MotorController::motorSetup()
 {
 
-    //sets the phasecurrent of all motors to MOTOR_PHASECURRENT and appends it to the buffer
-    m_commandBuffer->buffer.append(QString("#*i%1\r").arg(m_settings->value("motorsettings/phasecurrent", MOTOR_PHASECURRENT).toInt()));
-    m_commandBuffer->bufferInfo.append(0);
-    //sets the phasecurrent during halt of all motors to MOTOR_HALT_PHASECURRENT and appends it to the buffer
-    m_commandBuffer->buffer.append(QString("#*r%1\r").arg(m_settings->value("motorsettings/haltphasecurrent", MOTOR_HALT_PHASECURRENT).toInt()));
-    m_commandBuffer->bufferInfo.append(0);
-    //sets the motor type for all motors to MOTOR_TYPE and appends it to the buffer
-    m_commandBuffer->buffer.append(QString("#*:CL_motor_type=%1\r").arg(m_settings->value("motorsettings/motor_type", MOTOR_TYPE).toInt()));
-    m_commandBuffer->bufferInfo.append(0);
+    //ckecks if the phasecurrent is above 100%
+    //executed if it isn't
+    if(m_settings->value("motorsettings/phasecurrent", MOTOR_PHASECURRENT).toInt() < 100){
+
+        //sets the phasecurrent of all motors to MOTOR_PHASECURRENT and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#*i%1\r").arg(m_settings->value("motorsettings/phasecurrent", MOTOR_PHASECURRENT).toInt()));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    //executed if it is
+    else{
+
+        emit error(QString("Phasecurent too high"));
+        return;
+    }
+
+    //ckecks if the halt phasecurrent is set higher than the phasecurrent during driving
+    //executed if it isn't
+    if(m_settings->value("motorsettings/haltphasecurrent", MOTOR_HALT_PHASECURRENT).toInt() < m_settings->value("motorsettings/phasecurrent", MOTOR_PHASECURRENT).toInt()){
+
+        //sets the phasecurrent during halt of all motors to MOTOR_HALT_PHASECURRENT and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#*r%1\r").arg(m_settings->value("motorsettings/haltphasecurrent", MOTOR_HALT_PHASECURRENT).toInt()));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    //executed if it is
+    else{
+
+        emit error(QString("Halt phasecurrent is higher than phascurrent during driving"));
+        return;
+    }
+
+    //ckecks if the motor type is set to 1
+    //exected if it is
+    if(m_settings->value("motorsettings/motor_type", MOTOR_TYPE).toInt() == 0){
+
+        //sets the motor type for all motors to MOTOR_TYPE and appends it to the buffer
+        m_commandBuffer->buffer.append(QString("#*:CL_motor_type=%1\r").arg(m_settings->value("motorsettings/motor_type", MOTOR_TYPE).toInt()));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    //executed if it isn't
+    else{
+
+        emit error(QString("Wrong motortype set"));
+        return;
+    }
     //setting the positioningtype of all motors to MOTOR_POSITIONINGMODE
     m_commandBuffer->buffer.append(QString("#*p%1\r").arg(m_settings->value("motorsettings/positioningmode", MOTOR_POSITIONINGMODE).toInt()));
     m_commandBuffer->bufferInfo.append(0);
@@ -1333,6 +1372,7 @@ void MotorController::checkBuffer()
                 else{
 
                     emit error(QString("Invalid value in bufferInfo"));
+                    return;
                 }
 
                 //sending the command to the buffer and removing it from the buffer
@@ -1349,6 +1389,7 @@ void MotorController::checkBuffer()
         else{
 
             emit error(QString("Invalid value in bufferInfo"));
+            return;
         }
     }
 }

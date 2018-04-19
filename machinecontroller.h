@@ -5,6 +5,7 @@
 //#include <QThread>
 #include <QUrl>
 #include <QSettings>
+#include <QTimer>
 #include "fancontroller.h"
 #include "gcodereader.h"
 #include "motorcontroller.h"

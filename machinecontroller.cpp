@@ -172,7 +172,7 @@ bool MachineController::g3(qreal x, qreal y, qreal i, qreal j, qreal e, qreal f)
 void MachineController::g4(int p)
 {
 
-    QTimer::singleShot(p, m_gCodeReader, SLOT(nextLine()));
+    QTimer::singleShot(p, Qt::PreciseTimer, m_gCodeReader, SLOT(nextLine()));
 }
 
 //retracts the filament
@@ -471,6 +471,7 @@ void MachineController::xAxisPositiveEndstopHit()
     m_motorController->stop();
 
     emit error(QString("Positive endstop on the x-axis hit"));
+    return;
 }
 
 void MachineController::xAxisNegativeEndstopHit()
@@ -489,6 +490,7 @@ void MachineController::xAxisNegativeEndstopHit()
     else{
 
         emit error(QString("Negative endstop on the x-axis hit"));
+        return;
     }
 }
 
@@ -499,6 +501,7 @@ void MachineController::yAxisPositiveEndstopHit()
     m_motorController->stop();
 
     emit error(QString("Positive enstop on the y-axis hit"));
+    return;
 }
 
 void MachineController::yAxisNegativeEndstopHit()
@@ -517,6 +520,7 @@ void MachineController::yAxisNegativeEndstopHit()
     else{
 
         emit error(QString("Negative endstop on the y-axis hit"));
+        return;
     }
 }
 
@@ -526,16 +530,8 @@ void MachineController::zAxisPositiveEndstopHit()
     //stops motors from moving
     m_motorController->stop();
 
-    if(*m_printerState == MachineController::CalibratingBed){
-
-        m_printerBedMeasurements->append(m_motorController->currentZAxisPosition());
-        measurePrinterBedTilt();
-    }
-
-    else{
-
         emit error(QString("Positive endstop on the z-axis hit"));
-    }
+    return;
 }
 
 void MachineController::zAxisNegativeEndstopHit()
@@ -551,9 +547,16 @@ void MachineController::zAxisNegativeEndstopHit()
         *m_printerState = MachineController::Idle;
     }
 
+    else if(*m_printerState == MachineController::CalibratingBed){
+
+        m_printerBedMeasurements->append(m_motorController->currentZAxisPosition());
+        measurePrinterBedTilt();
+    }
+
     else{
 
         emit error(QString("Negative endstop on the z-axis hit"));
+        return;
     }
 }
 
@@ -584,90 +587,92 @@ void MachineController::measurePrinterBedTilt()
     if(m_printerBedMeasurements->count() == 0){
 
         m_printerBedMeasurements->clear();
+        *m_printerBedXAxisTilt = 0.0;
+        *m_printerBedYAxisTilt = 0.0;
         //moves printerbed 10 mm away from the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) - 10.0, (qreal)(ZAXIS_LENGTH) / (2.0 / 60.0));
+        m_motorController->absoluteMoveZAxis(10.0, (qreal)(ZAXIS_LENGTH) / (2.0 / 60.0));
         //slowly moves the bed towards the printerhead, it's designed to hit the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) + 10.0, 30.0);
+        m_motorController->absoluteMoveZAxis(-10.0, 30.0);
     }
 
     else if(m_printerBedMeasurements->count() == 1){
 
         //moves the printerbed back down to 10mm away from the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) - 10.0, 3600.0);
+        m_motorController->absoluteMoveZAxis(10.0, 3600.0);
         //moves the printerhead to the middle of the x-axis
         m_motorController->absoluteMoveXAxis((qreal)(XAXIS_LENGTH) / 2.0, (qreal)(XAXIS_LENGTH) / (2.0 / 60.0));
         //slowly moves the bed towards the printerhead, it's designed to hit the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) + 10.0, 30.0);
+        m_motorController->absoluteMoveZAxis(-10.0, 30.0);
     }
 
     else if(m_printerBedMeasurements->count() == 2){
 
         //moves the printerbed back down to 10mm away from the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) - 10.0, 3600.0);
+        m_motorController->absoluteMoveZAxis(10.0, 3600.0);
         //moves the printerhead to the end of the x-axis
         m_motorController->absoluteMoveXAxis((qreal)(XAXIS_LENGTH), (qreal)(XAXIS_LENGTH) / (2.0 / 60.0));
         //slowly moves the bed towards the printerhead, it's designed to hit the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) + 10.0, 30.0);
+        m_motorController->absoluteMoveZAxis(-10.0, 30.0);
     }
 
     else if(m_printerBedMeasurements->count() == 3){
 
         //moves the printerbed back down to 10mm away from the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) - 10.0, 3600.0);
+        m_motorController->absoluteMoveZAxis(10.0, 3600.0);
         //moves the printerhead to the beginning of the x-axis and the middle of the y-axis
         g0(0.0, (qreal)(YAXIS_LENGTH) / 2.0, 0.0, 0.0, 1);
         //slowly moves the bed towards the printerhead, it's designed to hit the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) + 10.0, 30.0);
+        m_motorController->absoluteMoveZAxis(-10.0, 30.0);
     }
 
     else if(m_printerBedMeasurements->count() == 4){
 
         //moves the printerbed back down to 10mm away from the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) - 10.0, 3600.0);
+        m_motorController->absoluteMoveZAxis(10.0, 3600.0);
         //moves the printerhead to the middle of the x-axis
         m_motorController->absoluteMoveXAxis((qreal)(XAXIS_LENGTH) / 2.0, (qreal)(XAXIS_LENGTH) / (2.0 / 60.0));
         //slowly moves the bed towards the printerhead, it's designed to hit the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) + 10.0, 30.0);
+        m_motorController->absoluteMoveZAxis(-10.0, 30.0);
     }
 
     else if(m_printerBedMeasurements->count() == 5){
 
         //moves the printerbed back down to 10mm away from the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) - 10.0, 3600.0);
+        m_motorController->absoluteMoveZAxis(10.0, 3600.0);
         //moves the printerhead to the end of the x-axis
         m_motorController->absoluteMoveXAxis((qreal)(XAXIS_LENGTH), (qreal)(XAXIS_LENGTH) / (2.0 / 60.0));
         //slowly moves the bed towards the printerhead, it's designed to hit the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) + 10.0, 30.0);
+        m_motorController->absoluteMoveZAxis(-10.0, 30.0);
     }
 
     else if(m_printerBedMeasurements->count() == 6){
 
         //moves the printerbed back down to 10mm away from the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) - 10.0, 3600.0);
+        m_motorController->absoluteMoveZAxis(10.0, 3600.0);
         //moves the printerhead to the beginning of the x-axis and the end of the y-axis
         g0(0.0, (qreal)(YAXIS_LENGTH), 0.0, 0.0, 0);
         //slowly moves the bed towards the printerhead, it's designed to hit the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) + 10.0, 30.0);
+        m_motorController->absoluteMoveZAxis(-10.0, 30.0);
     }
 
     else if(m_printerBedMeasurements->count() == 7){
 
         //moves the printerbed back down to 10mm away from the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) - 10.0, 3600.0);
+        m_motorController->absoluteMoveZAxis(10.0, 3600.0);
         //moves the printerhead to the middle of the x-axis
         m_motorController->absoluteMoveXAxis((qreal)(XAXIS_LENGTH) / 2.0, (qreal)(XAXIS_LENGTH) / (2.0 / 60.0));
         //slowly moves the bed towards the printerhead, it's designed to hit the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) + 10.0, 30.0);
+        m_motorController->absoluteMoveZAxis(-10.0, 30.0);
     }
 
     else if(m_printerBedMeasurements->count() == 8){
 
         //moves the printerbed back down to 10mm away from the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) - 10.0, 3600.0);
+        m_motorController->absoluteMoveZAxis(10.0, 3600.0);
         //moves the printerhead to the end of the x-axis
         m_motorController->absoluteMoveXAxis((qreal)(XAXIS_LENGTH), (qreal)(XAXIS_LENGTH) / (2.0 / 60.0));
         //slowly moves the bed towards the printerhead, it's designed to hit the printerhead
-        m_motorController->absoluteMoveZAxis((qreal)(ZAXIS_LENGTH) + 10.0, 30.0);
+        m_motorController->absoluteMoveZAxis(-10.0, 30.0);
     }
 
     else if(m_printerBedMeasurements->count() == 9){

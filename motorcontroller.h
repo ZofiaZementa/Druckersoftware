@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QUrl>
 #include <QSettings>
+#include <QTimer>
 
 struct CommandBuffer {
 
@@ -134,7 +135,6 @@ private:
     qint32 *m_desiredExtruderMotorPosition;
     CommandBuffer *m_commandBuffer;
     QSettings *m_settings;
-
 };
 
 #endif // MOTORCONTROLLER_H
