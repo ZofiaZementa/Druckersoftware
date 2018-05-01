@@ -8,12 +8,12 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setOrganizationName("P-Seminar 3D-Drucker");
     QCoreApplication::setApplicationName("DruckerSoftware");
-    QCoreApplication::setApplicationVersion("v0.2");
+    QCoreApplication::setApplicationVersion("v0.2.12");
 
     ControlWindow w;
     MachineController c;
 
-    QObject::connect(&c, SIGNAL(error(QString)), &w, SLOT(dislpayErrorMessage(QString)));
+    QObject::connect(&c, SIGNAL(error(QString)), &w, SLOT(displayErrorMessage(QString)));
 
     w.show();
 

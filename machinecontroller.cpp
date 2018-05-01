@@ -91,18 +91,23 @@ bool MachineController::g0(qreal x, qreal y, qreal z, qreal e, int s)
     y = y + (qSin(*m_printerBedYAxisTilt) * z);
     z = qCos(*m_printerBedYAxisTilt) * z;
 
-    qreal xSpeed = x / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
-    qreal ySpeed = y / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
-    qreal zSpeed = z / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
-    qreal eSpeed = e / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
-
     if(*m_positioningMode == MachineController::AbsolutePositioning){
+
+        qreal xSpeed = (x - m_motorController->currentXAxisPosition()) / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
+        qreal ySpeed = (y - m_motorController->currentXAxisPosition())/ (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
+        qreal zSpeed = (z - m_motorController->currentXAxisPosition()) / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
+        qreal eSpeed = (e - m_motorController->currentExtruderPosition()) / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
 
         m_motorController->absoluteMove(x, y, z, e, xSpeed, ySpeed, zSpeed, eSpeed);
         return true;
     }
 
     else if(*m_positioningMode == MachineController::RelativePositioning){
+
+        qreal xSpeed = x / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
+        qreal ySpeed = y / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
+        qreal zSpeed = z / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
+        qreal eSpeed = e / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
 
         m_motorController->relativeMove(x, y, z, e, xSpeed, ySpeed, zSpeed, eSpeed);
         return true;
@@ -126,18 +131,24 @@ bool MachineController::g1(qreal x, qreal y, qreal z, qreal e, qreal f, int s)
     y = y + (qSin(*m_printerBedYAxisTilt) * z);
     z = qCos(*m_printerBedYAxisTilt) * z;
 
-    qreal xSpeed = x / (qSqrt((x * x) + (y * y) + (z * z)) / f);
-    qreal ySpeed = y / (qSqrt((x * x) + (y * y) + (z * z)) / f);
-    qreal zSpeed = z / (qSqrt((x * x) + (y * y) + (z * z)) / f);
-    qreal eSpeed = e / (qSqrt((x * x) + (y * y) + (z * z)) / f);
-
     if(*m_positioningMode == MachineController::AbsolutePositioning){
+
+        qreal xSpeed = (x - m_motorController->currentXAxisPosition()) / (qSqrt((x * x) + (y * y) + (z * z)) / f);
+        qreal ySpeed = (y - m_motorController->currentYAxisPosition()) / (qSqrt((x * x) + (y * y) + (z * z)) / f);
+        qreal zSpeed = (z - m_motorController->currentZAxisPosition()) / (qSqrt((x * x) + (y * y) + (z * z)) / f);
+        qreal eSpeed = (e - m_motorController->currentExtruderPosition()) / (qSqrt((x * x) + (y * y) + (z * z)) / f);
 
         m_motorController->absoluteMove(x, y, z, e, xSpeed, ySpeed, zSpeed, eSpeed);
         return true;
     }
 
     else if(*m_positioningMode == MachineController::RelativePositioning){
+
+
+        qreal xSpeed = x / (qSqrt((x * x) + (y * y) + (z * z)) / f);
+        qreal ySpeed = y / (qSqrt((x * x) + (y * y) + (z * z)) / f);
+        qreal zSpeed = z / (qSqrt((x * x) + (y * y) + (z * z)) / f);
+        qreal eSpeed = e / (qSqrt((x * x) + (y * y) + (z * z)) / f);
 
         m_motorController->relativeMove(x, y, z, e, xSpeed, ySpeed, zSpeed, eSpeed);
         return true;
