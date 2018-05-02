@@ -579,15 +579,17 @@ bool MotorController::relativeMove(qreal x, qreal y, qreal z, qreal e, qreal xSp
 
     qreal t1 = *m_defaultPrintingAcceleration / m_settings->value("motorsettings/maximum_acceleration_change", MAXIMUM_ACCELERATION_CHANGE).toReal();
     qreal vt1 = m_settings->value("motorsettings/maximum_acceleration_change", MAXIMUM_ACCELERATION_CHANGE).toReal() * t1 * t1;
-    qreal vxt1 = x / qSqrt((x * x) + (y * y) + (z * z)) / vt1;
+    qreal vmax = x / qSqrt((x * x) + (y * y) + (z * z)) / xSpeed;
+
+    qreal vxt1 = (vt1 / vmax) * xSpeed;
     qreal aChangeXmax = vxt1 / t1 / t1;
     qreal axmax = t1 * aChangeXmax;
 
-    qreal vyt1 = y / qSqrt((x * x) + (y * y) + (z * z)) / vt1;
+    qreal vyt1 = (vt1 / vmax) * ySpeed;
     qreal aChangeYmax = vyt1 / t1 / t1;
     qreal aymax = t1 * aChangeYmax;
 
-    qreal vzt1 = z / qSqrt((x * x) + (y * y) + (z * z)) / vt1;
+    qreal vzt1 = (vt1 / vmax) * zSpeed;
     qreal aChangeZmax = vzt1 / t1 / t1;
     qreal azmax = t1 * aChangeZmax;
 
@@ -625,16 +627,17 @@ bool MotorController::relativeMove(qreal x, qreal y, qreal z, qreal e, qreal xSp
 
     qreal dt1 = MAXIMUM_DECCELERATION / m_settings->value("motorsettings/maximum_decceleration_change", MAXIMUM_DECCELERATION_CHANGE).toReal();
     qreal dvt1 = m_settings->value("motorsettings/maximum_decceleration_change", MAXIMUM_DECCELERATION_CHANGE).toReal() * t1 * t1;
+    qreal dvmax = x / qSqrt((x * x) + (y * y) + (z * z)) / xSpeed;
 
-    qreal dvxt1 = x / qSqrt((x * x) + (y * y) + (z * z)) / dvt1;
+    qreal dvxt1 = (dvt1 / dvmax) * xSpeed;
     qreal daChangeXmax = dvxt1 / t1 / t1;
     qreal daxmax = t1 * daChangeXmax;
 
-    qreal dvyt1 = y / qSqrt((x * x) + (y * y) + (z * z)) / dvt1;
+    qreal dvyt1 = (dvt1 / dvmax) * ySpeed;
     qreal daChangeYmax = dvyt1 / t1 / t1;
     qreal daymax = dt1 * daChangeYmax;
 
-    qreal dvzt1 = z / qSqrt((x * x) + (y * y) + (z * z)) / dvt1;
+    qreal dvzt1 = (dvt1 / dvmax) * zSpeed;
     qreal daChangeZmax = dvzt1 / dt1 / dt1;
     qreal dazmax = dt1 * daChangeZmax;
 
