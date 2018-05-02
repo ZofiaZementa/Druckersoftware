@@ -22,7 +22,14 @@
 #define YAXIS_MIN_STEPFREQUENCY 100    //holds the minimal step frequency of the y-axis in Hz, see nanotec programming manual, page 53
 #define ZAXIS_MIN_STEPFREQUENCY 100    //holds the minimal step frequency of the z-axis in Hz, see nanotec programming manual, page 53
 #define EXTRUDER_MIN_STEPFREQUENCY 100    //holds the minimal step frequency of the extruder in Hz, see nanotec programming manual, page 53
-#define MAXIMUM_DECCELERATION 500.0    //holds the maximum decceleration during braking in Hz/millisecond, see nanotec programming manual, page 55
+#define XAXIS_MAXIMUM_FEEDRATE 100.0    //holds the maximum feedrate of the x-axis in mm/min
+#define YAXIS_MAXIMUM_FEEDRATE 100.0    //holds the maximum feedrate of the y-axis in mm/min
+#define ZAXIS_MAXIMUM_FEEDRATE 100.0    //holds the maximum feedrate of the z-axis in mm/min
+#define EXTRUDER_MAXIMUM_FEEDRATE 100.0    //holds the maximum feedrate of the extruder in mm/min
+#define MAXIMUM_PRINTING_ACCELERATION 100.0    //holds the maximum acceleration during printing in mm/s^2
+#define MAXIMUM_TRAVEL_ACCELERATION 100.0    //holds the maximum acceleration during travel in mm/s^2
+#define MAXIMUM_PRINTING_DECCELERATION 500.0    //holds the maximum decceleration during braking during printing in mm/s^2
+#define MAXIMUM_TRAVEL_DECCELERATION 500.0   //holds the maximum decceleration during braking during travel in mm/s^2
 #define MAXIMUM_ACCELERATION_CHANGE 100.0    //holds the maximum change of the acceleration during accelerating in mm/second/second/second
 #define MAXIMUM_DECCELERATION_CHANGE 100.0    //holds the maximum change of the decceleration during braking in mm/second/second/second
 
@@ -31,20 +38,6 @@ MotorController::MotorController(QObject *parent) : QObject(parent)
     //defining pointers
 
     m_motorState = new MotorState;    //holds the current state of the motors
-    m_xAxisMaxPrintingAcceleration = new int;    //holds the maximum acceleration for the x-axis during printing in mm/s^2
-    m_xAxisMaxTravelAcceleration = new int;    //holds the maximum acceleration for the x-axis during travel in mm/s^2
-    m_yAxisMaxPrintingAcceleration = new int;    //holds the maximum acceleration for the y-axis during printing in mm/s^2
-    m_yAxisMaxTravelAcceleration = new int;    //holds the maximum acceleration for the y-axis during travel in mm/s^2
-    m_zAxisMaxPrintingAcceleration = new int;    //holds the maximum acceleration for the z-axis during printing in mm/s^2
-    m_zAxisMaxTravelAcceleration = new int;    //holds the maximum acceleration for the z-axis during travel in mm/s^2
-    m_extruderMaxPrintingAcceleration = new int;    //holds the maximum acceleration for the extruder during printing in mm/s^2
-    m_extruderMaxTravelAcceleration = new int;    //holds the maximum acceleration for the extruder during travel in mm/s^2
-    m_xAxisMaxFeedrate = new qreal;    //holds the maximum feedrate during movement on the x-axis in mm/min
-    m_yAxisMaxFeedrate = new qreal;    //holds the maximum feedrate during movement on the y-axis in mm/min
-    m_zAxisMaxFeedrate = new qreal;    //holds the maximum feedrate during movement on the z-axis in mm/min
-    m_extruderMaxFeedrate = new qreal;    //holds the maximum feedrate during movement on the extruder in mm/min
-    m_defaultPrintingAcceleration = new int;    //holds the default acceleration during printing for all axes including the extruder in mm/s^2
-    m_defaultTravelAcceleration = new int;    //holds the default acceleration during travel for all axes including the extruder in mm/s^2
     m_currentXAxisPosition = new qreal;    //holds the current position on the x-axis
     m_currentYAxisPosition = new qreal;    //holds the current position on the y-axis
     m_currentZAxisPosition = new qreal;    //holds the current position on the z-axis
@@ -67,20 +60,6 @@ MotorController::MotorController(QObject *parent) : QObject(parent)
     //initialising variables
 
     *m_motorState = MotorController::Idle;
-    *m_xAxisMaxPrintingAcceleration = 0;
-    *m_xAxisMaxTravelAcceleration = 0;
-    *m_yAxisMaxPrintingAcceleration = 0;
-    *m_yAxisMaxTravelAcceleration = 0;
-    *m_zAxisMaxPrintingAcceleration = 0;
-    *m_zAxisMaxTravelAcceleration = 0;
-    *m_extruderMaxPrintingAcceleration = 0;
-    *m_extruderMaxTravelAcceleration = 0;
-    *m_xAxisMaxFeedrate = 0.0;
-    *m_yAxisMaxFeedrate = 0.0;
-    *m_zAxisMaxFeedrate = 0.0;
-    *m_extruderMaxFeedrate = 0.0;
-    *m_defaultPrintingAcceleration = 0;
-    *m_defaultTravelAcceleration = 0;
     *m_currentXAxisPosition = 0.0;
     *m_currentYAxisPosition = 0.0;
     *m_currentZAxisPosition = 0.0;
@@ -108,20 +87,6 @@ MotorController::~MotorController()
     //deleting pointers
 
     delete m_motorState;
-    delete m_xAxisMaxPrintingAcceleration;
-    delete m_xAxisMaxTravelAcceleration;
-    delete m_yAxisMaxPrintingAcceleration;
-    delete m_yAxisMaxTravelAcceleration;
-    delete m_zAxisMaxPrintingAcceleration;
-    delete m_zAxisMaxTravelAcceleration;
-    delete m_extruderMaxPrintingAcceleration;
-    delete m_extruderMaxTravelAcceleration;
-    delete m_xAxisMaxFeedrate;
-    delete m_yAxisMaxFeedrate;
-    delete m_zAxisMaxFeedrate;
-    delete m_extruderMaxFeedrate;
-    delete m_defaultPrintingAcceleration;
-    delete m_defaultTravelAcceleration;
     delete m_currentXAxisPosition;
     delete m_currentYAxisPosition;
     delete m_currentZAxisPosition;
@@ -143,20 +108,6 @@ MotorController::~MotorController()
     //setting the pointers to NULL
 
     m_motorState = NULL;
-    m_xAxisMaxPrintingAcceleration = NULL;
-    m_xAxisMaxTravelAcceleration = NULL;
-    m_yAxisMaxPrintingAcceleration = NULL;
-    m_yAxisMaxTravelAcceleration = NULL;
-    m_zAxisMaxPrintingAcceleration = NULL;
-    m_zAxisMaxTravelAcceleration = NULL;
-    m_extruderMaxPrintingAcceleration = NULL;
-    m_extruderMaxTravelAcceleration = NULL;
-    m_xAxisMaxFeedrate = NULL;
-    m_yAxisMaxFeedrate = NULL;
-    m_zAxisMaxFeedrate = NULL;
-    m_extruderMaxFeedrate = NULL;
-    m_defaultPrintingAcceleration = NULL;
-    m_defaultTravelAcceleration = NULL;
     m_currentXAxisPosition = NULL;
     m_currentYAxisPosition = NULL;
     m_currentZAxisPosition = NULL;
@@ -192,7 +143,7 @@ bool MotorController::relativeMoveXAxis(qreal value, qreal speed)
     m_commandBuffer->bufferInfo.append(0);
 
     //converts acceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
-    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(m_settings->value("motorsettings/xaxis/motoradress", XAXIS_MOTORADRESS).toInt()).arg((qint32)((qreal)(*m_defaultTravelAcceleration) * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
+    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(m_settings->value("motorsettings/xaxis/motoradress", XAXIS_MOTORADRESS).toInt()).arg((qint32)(m_settings->value("motorsettings/maximum_travel_acceleration", MAXIMUM_TRAVEL_ACCELERATION).toReal() * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
     m_commandBuffer->bufferInfo.append(0);
 
     //converts the x-axis maximum acceleration change from mm/s^3 to steps/second/millisecond/millisecond and appends it to the buffer
@@ -200,7 +151,7 @@ bool MotorController::relativeMoveXAxis(qreal value, qreal speed)
     m_commandBuffer->bufferInfo.append(0);
 
     //converts x-axis decceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
-    m_commandBuffer->buffer.append(QString("#%1B%2\r").arg(m_settings->value("motorsettings/xaxis/motoradress", XAXIS_MOTORADRESS).toInt()).arg((qint32)(MAXIMUM_DECCELERATION * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
+    m_commandBuffer->buffer.append(QString("#%1B%2\r").arg(m_settings->value("motorsettings/xaxis/motoradress", XAXIS_MOTORADRESS).toInt()).arg((qint32)(m_settings->value("motorsettings/maximum_travel_decceleration", MAXIMUM_TRAVEL_DECCELERATION).toReal() * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
     m_commandBuffer->bufferInfo.append(0);
 
     //converts the x-axis maximum decceleration change from mm/s^3 to steps/second/millisecond/millisecond and appends it to the buffer
@@ -284,7 +235,7 @@ bool MotorController::relativeMoveYAxis(qreal value, qreal speed)
     m_commandBuffer->bufferInfo.append(0);
 
     //converts acceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
-    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(m_settings->value("motorsettings/yaxis/motoradress", YAXIS_MOTORADRESS).toInt()).arg((qint32)((qreal)(*m_defaultTravelAcceleration) * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
+    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(m_settings->value("motorsettings/yaxis/motoradress", YAXIS_MOTORADRESS).toInt()).arg((qint32)(m_settings->value("motorsettings/maximum_travel_acceleration", MAXIMUM_TRAVEL_ACCELERATION).toReal() * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
     m_commandBuffer->bufferInfo.append(0);
 
     //converts the y-axis maximum acceleration change from mm/s^3 to steps/second/millisecond/millisecond and appends it to the buffer
@@ -292,7 +243,7 @@ bool MotorController::relativeMoveYAxis(qreal value, qreal speed)
     m_commandBuffer->bufferInfo.append(0);
 
     //converts y-axis decceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
-    m_commandBuffer->buffer.append(QString("#%1B%2\r").arg(m_settings->value("motorsettings/yaxis/motoradress", YAXIS_MOTORADRESS).toInt()).arg((qint32)(MAXIMUM_DECCELERATION * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
+    m_commandBuffer->buffer.append(QString("#%1B%2\r").arg(m_settings->value("motorsettings/yaxis/motoradress", YAXIS_MOTORADRESS).toInt()).arg((qint32)(m_settings->value("motorsettings/maximum_travel_decceleration", MAXIMUM_TRAVEL_DECCELERATION).toReal() * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
     m_commandBuffer->bufferInfo.append(0);
 
     //converts the y-axis maximum decceleration change from mm/s^3 to steps/second/millisecond/millisecond and appends it to the buffer
@@ -376,7 +327,7 @@ bool MotorController::relativeMoveZAxis(qreal value, qreal speed)
     m_commandBuffer->bufferInfo.append(0);
 
     //converts acceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
-    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(m_settings->value("motorsettings/zaxis/motoradress", ZAXIS_MOTORADRESS).toInt()).arg((qint32)((qreal)(*m_defaultTravelAcceleration) * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
+    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(m_settings->value("motorsettings/zaxis/motoradress", ZAXIS_MOTORADRESS).toInt()).arg((qint32)(m_settings->value("motorsettings/maximum_travel_acceleration", MAXIMUM_TRAVEL_ACCELERATION).toReal() * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
     m_commandBuffer->bufferInfo.append(0);
 
     //converts the z-axis maximum acceleration change from mm/s^3 to steps/second/millisecond/millisecond and appends it to the buffer
@@ -384,7 +335,7 @@ bool MotorController::relativeMoveZAxis(qreal value, qreal speed)
     m_commandBuffer->bufferInfo.append(0);
 
     //converts z-axis decceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
-    m_commandBuffer->buffer.append(QString("#%1B%2\r").arg(m_settings->value("motorsettings/zaxis/motoradress", ZAXIS_MOTORADRESS).toInt()).arg((qint32)(MAXIMUM_DECCELERATION * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
+    m_commandBuffer->buffer.append(QString("#%1B%2\r").arg(m_settings->value("motorsettings/zaxis/motoradress", ZAXIS_MOTORADRESS).toInt()).arg((qint32)(m_settings->value("motorsettings/maximum_travel_decceleration", MAXIMUM_TRAVEL_DECCELERATION).toReal() * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
     m_commandBuffer->bufferInfo.append(0);
 
     //converts the z-axis maximum decceleration change from mm/s^3 to steps/second/millisecond/millisecond and appends it to the buffer
@@ -468,7 +419,7 @@ bool MotorController::relativeMoveExtruder(qreal value, qreal speed)
     m_commandBuffer->bufferInfo.append(0);
 
     //converts acceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
-    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(m_settings->value("motorsettings/extruder/motoradress", EXTRUDER_MOTORADRESS).toInt()).arg((qint32)((qreal)(*m_defaultTravelAcceleration) * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
+    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(m_settings->value("motorsettings/extruder/motoradress", EXTRUDER_MOTORADRESS).toInt()).arg((qint32)(m_settings->value("motorsettings/maximum_travel_acceleration", MAXIMUM_TRAVEL_ACCELERATION).toReal() * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
     m_commandBuffer->bufferInfo.append(0);
 
     //converts the extruder maximum acceleration change from mm/s^3 to steps/second/millisecond/millisecond and appends it to the buffer
@@ -476,7 +427,7 @@ bool MotorController::relativeMoveExtruder(qreal value, qreal speed)
     m_commandBuffer->bufferInfo.append(0);
 
     //converts extruder decceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
-    m_commandBuffer->buffer.append(QString("#%1B%2\r").arg(m_settings->value("motorsettings/extruder/motoradress", EXTRUDER_MOTORADRESS).toInt()).arg((qint32)(MAXIMUM_DECCELERATION * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal()/ m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
+    m_commandBuffer->buffer.append(QString("#%1B%2\r").arg(m_settings->value("motorsettings/extruder/motoradress", EXTRUDER_MOTORADRESS).toInt()).arg((qint32)(m_settings->value("motorsettings/maximum_travel_decceleration", MAXIMUM_TRAVEL_DECCELERATION).toReal() * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal()/ m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
     m_commandBuffer->bufferInfo.append(0);
 
     //converts the extruder maximum decceleration change from mm/s^3 to steps/second/millisecond/millisecond and appends it to the buffer
@@ -577,7 +528,7 @@ bool MotorController::relativeMove(qreal x, qreal y, qreal z, qreal e, qreal xSp
     m_commandBuffer->bufferInfo.append(0);
 
 
-    qreal t1 = *m_defaultPrintingAcceleration / m_settings->value("motorsettings/maximum_acceleration_change", MAXIMUM_ACCELERATION_CHANGE).toReal();
+    qreal t1 = m_settings->value("motorsettings/maximum_printing_acceleration", MAXIMUM_PRINTING_ACCELERATION).toReal() / m_settings->value("motorsettings/maximum_acceleration_change", MAXIMUM_ACCELERATION_CHANGE).toReal();
     qreal vt1 = m_settings->value("motorsettings/maximum_acceleration_change", MAXIMUM_ACCELERATION_CHANGE).toReal() * t1 * t1;
     qreal vmax = x / qSqrt((x * x) + (y * y) + (z * z)) / xSpeed;
 
@@ -605,7 +556,7 @@ bool MotorController::relativeMove(qreal x, qreal y, qreal z, qreal e, qreal xSp
     m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(m_settings->value("motorsettings/zaxis/motoradress", ZAXIS_MOTORADRESS).toInt()).arg((qint32)(azmax * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
     m_commandBuffer->bufferInfo.append(0);
     //converts extruder acceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
-    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(m_settings->value("motorsettings/extruder/motoradress", EXTRUDER_MOTORADRESS).toInt()).arg((qint32)(*m_defaultPrintingAcceleration * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal()/ m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
+    m_commandBuffer->buffer.append(QString("#%1b%2\r").arg(m_settings->value("motorsettings/extruder/motoradress", EXTRUDER_MOTORADRESS).toInt()).arg((qint32)(m_settings->value("motorsettings/maximum_printing_acceleration", MAXIMUM_PRINTING_ACCELERATION).toReal() * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal()/ m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
     m_commandBuffer->bufferInfo.append(0);
 
     //sets all the acceleration changes
@@ -625,7 +576,7 @@ bool MotorController::relativeMove(qreal x, qreal y, qreal z, qreal e, qreal xSp
 
     //calculates all the values for the deccelerationcurve
 
-    qreal dt1 = MAXIMUM_DECCELERATION / m_settings->value("motorsettings/maximum_decceleration_change", MAXIMUM_DECCELERATION_CHANGE).toReal();
+    qreal dt1 = m_settings->value("motorsettings/maximum_printing_decceleration", MAXIMUM_PRINTING_DECCELERATION).toReal() / m_settings->value("motorsettings/maximum_decceleration_change", MAXIMUM_DECCELERATION_CHANGE).toReal();
     qreal dvt1 = m_settings->value("motorsettings/maximum_decceleration_change", MAXIMUM_DECCELERATION_CHANGE).toReal() * t1 * t1;
     qreal dvmax = x / qSqrt((x * x) + (y * y) + (z * z)) / xSpeed;
 
@@ -653,7 +604,7 @@ bool MotorController::relativeMove(qreal x, qreal y, qreal z, qreal e, qreal xSp
     m_commandBuffer->buffer.append(QString("#%1B%2\r").arg(m_settings->value("motorsettings/zaxis/motoradress", ZAXIS_MOTORADRESS).toInt()).arg((qint32)(dazmax * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
     m_commandBuffer->bufferInfo.append(0);
     //converts extruder decceleration from mm/s^2 to steps/second/millisecond and appends it to the buffer
-    m_commandBuffer->buffer.append(QString("#%1B%2\r").arg(m_settings->value("motorsettings/extruder/motoradress", EXTRUDER_MOTORADRESS).toInt()).arg((qint32)(MAXIMUM_DECCELERATION * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal()/ m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
+    m_commandBuffer->buffer.append(QString("#%1B%2\r").arg(m_settings->value("motorsettings/extruder/motoradress", EXTRUDER_MOTORADRESS).toInt()).arg((qint32)(m_settings->value("motorsettings/maximum_printing_decceleration", MAXIMUM_PRINTING_DECCELERATION).toReal() * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal()/ m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0)));
     m_commandBuffer->bufferInfo.append(0);
 
     //sets all the acceleration changes
@@ -836,183 +787,72 @@ bool MotorController::relativeMove(qreal x, qreal y, qreal z, qreal e, qreal xSp
     return true;
 }
 
-//sets *m_xAxisMaxPrintingAcceleration to xAxisMaxPrintingAcceleration
-void MotorController::setXAxisMaxPrintingAcceleration(int xAxisMaxPrintingAcceleration)
-{
-
-    *m_xAxisMaxPrintingAcceleration = xAxisMaxPrintingAcceleration;
-}
-
-//returns m_xAxisMaxPrintingAcceleration
-int MotorController::xAxisMaxPrintingAcceleration()
-{
-
-    return *m_xAxisMaxPrintingAcceleration;
-}
-
-//sets *m_xAxisMaxTravelAcceleration to xAxisMaxTravelAcceleration
-void MotorController::setXAxisMaxTravelAcceleration(int xAxisMaxTravelAcceleration)
-{
-
-    *m_xAxisMaxTravelAcceleration = xAxisMaxTravelAcceleration;
-}
-
-//returns m_xAxisMaxTravelAcceleration
-int MotorController::xAxisMaxTravelAcceleration()
-{
-
-    return *m_xAxisMaxTravelAcceleration;
-}
-
-//sets *m_yAxisMaxPrintingAcceleration to yAxisMaxPrintingAcceleration
-void MotorController::setYAxisMaxPrintingAcceleration(int yAxisMaxPrintingAcceleration)
-{
-
-    *m_yAxisMaxPrintingAcceleration = yAxisMaxPrintingAcceleration;
-}
-
-//returns m_yAxisMaxPrintingAcceleration
-int MotorController::yAxisMaxPrintingAcceleration()
-{
-
-    return *m_yAxisMaxPrintingAcceleration;
-}
-
-//sets *m_yAxisMaxTravelAcceleration to yAxisMaxTravelAcceleration
-void MotorController::setYAxisMaxTravelAcceleration(int yAxisMaxTravelAcceleration)
-{
-
-    *m_yAxisMaxTravelAcceleration = yAxisMaxTravelAcceleration;
-}
-
-//returns m_yAxisMaxTravelAcceleration
-int MotorController::yAxisMaxTravelAcceleration()
-{
-
-    return *m_yAxisMaxTravelAcceleration;
-}
-
-//sets *m_zAxisMaxPrintingAcceleration to zAxisMaxPrintingAcceleration
-void MotorController::setZAxisMaxPrintingAcceleration(int zAxisMaxPrintingAcceleration)
-{
-
-    *m_zAxisMaxPrintingAcceleration = zAxisMaxPrintingAcceleration;
-}
-
-//returns m_zAxisMaxPrintingAcceleration
-int MotorController::zAxisMaxPrintingAcceleration()
-{
-
-    return *m_zAxisMaxPrintingAcceleration;
-}
-
-//sets *m_zAxisMaxTravelAcceleration to zAxisMaxTravelAcceleration
-void MotorController::setZAxisMaxTravelAcceleration(int zAxisMaxTravelAcceleration)
-{
-
-    *m_zAxisMaxTravelAcceleration = zAxisMaxTravelAcceleration;
-}
-
-//returns m_zAxisMaxTravelAcceleration
-int MotorController::zAxisMaxTravelAcceleration()
-{
-
-    return *m_zAxisMaxTravelAcceleration;
-}
-
-//sets *m_extruderMaxPrintingAcceleration to extruderMaxPrintingAcceleration
-void MotorController::setExtruderMaxPrintingAcceleration(int extruderMaxPrintingAcceleration)
-{
-
-    *m_extruderMaxPrintingAcceleration = extruderMaxPrintingAcceleration;
-}
-
-//returns m_extruderMaxPrintingAcceleration
-int MotorController::extruderMaxPrintingAcceleration()
-{
-
-    return *m_extruderMaxPrintingAcceleration;
-}
-//sets *m_extruderMaxTravelAcceleration to extruderMaxTravelAcceleration
-void MotorController::setExtruderMaxTravelAcceleration(int extruderMaxTravelAcceleration)
-{
-
-    *m_extruderMaxTravelAcceleration = extruderMaxTravelAcceleration;
-}
-
-//returns m_extruderMaxTravelAcceleration
-int MotorController::extruderMaxTravelAcceleration()
-{
-
-    return *m_extruderMaxTravelAcceleration;
-}
-
 //sets m_xAxisMaxFeedrate to xAxisMaxFeedrate
 void MotorController::setXAxisMaxFeedrate(qreal xAxisMaxFeedrate)
 {
 
-    *m_xAxisMaxFeedrate = xAxisMaxFeedrate;
+    m_settings->setValue("motorsettings/xaxis/maximum_feedrate", xAxisMaxFeedrate);
 }
 
 //returns m_xAxisMaxFeedrate
 int MotorController::xAxisMaxFeedrate()
 {
 
-    return *m_xAxisMaxFeedrate;
+    return m_settings->value("motorsettings/xaxis/maximum_feedrate", XAXIS_MAXIMUM_FEEDRATE).toInt();
 }
 
 //sets m_yAxisMaxFeedrate to yAxisMaxFeedrate
 void MotorController::setYAxisMaxFeedrate(qreal yAxisMaxFeedrate)
 {
 
-    *m_yAxisMaxFeedrate = yAxisMaxFeedrate;
+    m_settings->setValue("motorsettings/yaxis/maximum_feedrate", yAxisMaxFeedrate);
 }
 
 //returns m_yAxisMaxFeedrate
 int MotorController::yAxisMaxFeedrate()
 {
 
-    return *m_yAxisMaxFeedrate;
+    return m_settings->value("motorsettings/yaxis/maximum_feedrate", YAXIS_MAXIMUM_FEEDRATE).toInt();
 }
 
 //sets m_zAxisMaxFeedrate to zAxisMaxFeedrate
 void MotorController::setZAxisMaxFeedrate(qreal zAxisMaxFeedrate)
 {
 
-    *m_zAxisMaxFeedrate = zAxisMaxFeedrate;
+    m_settings->setValue("motorsettings/zaxis/maximum_feedrate", zAxisMaxFeedrate);
 }
 
 //returns m_zAxisMaxFeedrate
 int MotorController::zAxisMaxFeedrate()
 {
 
-    return *m_zAxisMaxFeedrate;
+    return m_settings->value("motorsettings/zaxis/maximum_feedrate", ZAXIS_MAXIMUM_FEEDRATE).toInt();
 }
 
 //sets m_extruderMaxFeedrate to extruderMaxFeedrate
 void MotorController::setExtruderMaxFeedrate(qreal extruderMaxFeedrate)
 {
 
-    *m_extruderMaxFeedrate = extruderMaxFeedrate;
+    m_settings->setValue("motorsettings/extruder/maximum_feedrate", extruderMaxFeedrate);
 }
 
 //returns m_extruderMaxFeedrate
 int MotorController::extruderMaxFeedrate()
 {
 
-    return *m_extruderMaxFeedrate;
+    return m_settings->value("motorsettings/extruder/maximum_feedrate", EXTRUDER_MAXIMUM_FEEDRATE).toInt();
 }
 
-//sets *m_defaultPrintingAcceleration to defaultPrintingAcceleration
+//sets the value at "motorsettings/maximum_printing_acceleration" to defaultPrintingAcceleration
 void MotorController::setDefaultPrintingAcceleration(int defaultPrintingAcceleration)
 {
 
     //checks if defaultPrintingAcceleration is too high or low
     //executed if it is
-    if((qint32)((qreal)(*m_defaultTravelAcceleration) * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(*m_defaultTravelAcceleration) * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
-            (qint32)((qreal)(*m_defaultTravelAcceleration) * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(*m_defaultTravelAcceleration) * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
-            (qint32)((qreal)(*m_defaultTravelAcceleration) * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(*m_defaultTravelAcceleration) * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
-            (qint32)((qreal)(*m_defaultTravelAcceleration) * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(*m_defaultTravelAcceleration) * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1){
+    if((qint32)((qreal)(defaultPrintingAcceleration) * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(defaultPrintingAcceleration) * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
+            (qint32)((qreal)(defaultPrintingAcceleration) * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(defaultPrintingAcceleration) * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
+            (qint32)((qreal)(defaultPrintingAcceleration) * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(defaultPrintingAcceleration) * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
+            (qint32)((qreal)(defaultPrintingAcceleration) * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(defaultPrintingAcceleration) * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1){
 
         emit error(QString("PrintingAcceleration set too high/low"));
         return;
@@ -1021,7 +861,7 @@ void MotorController::setDefaultPrintingAcceleration(int defaultPrintingAccelera
     //executed if it isn't
     else{
 
-        *m_defaultPrintingAcceleration = defaultPrintingAcceleration;
+       m_settings->setValue("motorsettings/maximum_printing_acceleration", defaultPrintingAcceleration);
     }
 }
 
@@ -1029,21 +869,35 @@ void MotorController::setDefaultPrintingAcceleration(int defaultPrintingAccelera
 int MotorController::defaultPrintingAcceleration()
 {
 
-    return *m_defaultPrintingAcceleration;
+    return m_settings->value("motorsettings/maximum_printing_acceleration", MAXIMUM_PRINTING_ACCELERATION).toInt();
 }
 
-//sets *m_defaultTravelAcceleration to defaultTravelAcceleration
+//sets "motorsettings/maximum_travel_acceleration" to defaultTravelAcceleration
 void MotorController::setDefaultTravelAcceleration(int defaultTravelAcceleration)
 {
 
-    *m_defaultTravelAcceleration = defaultTravelAcceleration;
-}
+    //checks if defaultTravelAcceleration is too high or low
+    //executed if it is
+    if((qint32)((qreal)(defaultTravelAcceleration) * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(defaultTravelAcceleration) * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
+            (qint32)((qreal)(defaultTravelAcceleration) * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(defaultTravelAcceleration) * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
+            (qint32)((qreal)(defaultTravelAcceleration) * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(defaultTravelAcceleration) * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
+            (qint32)((qreal)(defaultTravelAcceleration) * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(defaultTravelAcceleration) * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1){
+
+        emit error(QString("PrintingAcceleration set too high/low"));
+        return;
+    }
+
+    //executed if it isn't
+    else{
+
+       m_settings->setValue("motorsettings/maximum_travel_acceleration", defaultTravelAcceleration);
+    }}
 
 //returns m_defaultTravelAcceleration
 int MotorController::defaultTravelAcceleration()
 {
 
-    return *m_defaultTravelAcceleration;
+    return m_settings->value("motorsettings/maximum_travel_acceleration", MAXIMUM_TRAVEL_ACCELERATION).toInt();
 }
 
 //returns m_currentXAxisPosition
@@ -1159,21 +1013,6 @@ void MotorController::receive(QString text)
 //clears all the values
 void MotorController::clear()
 {
-
-    *m_xAxisMaxPrintingAcceleration = 0;
-    *m_xAxisMaxTravelAcceleration = 0;
-    *m_yAxisMaxPrintingAcceleration = 0;
-    *m_yAxisMaxTravelAcceleration = 0;
-    *m_zAxisMaxPrintingAcceleration = 0;
-    *m_zAxisMaxTravelAcceleration = 0;
-    *m_extruderMaxPrintingAcceleration = 0;
-    *m_extruderMaxTravelAcceleration = 0;
-    *m_xAxisMaxFeedrate = 0.0;
-    *m_yAxisMaxFeedrate = 0.0;
-    *m_zAxisMaxFeedrate = 0.0;
-    *m_extruderMaxFeedrate = 0.0;
-    *m_defaultPrintingAcceleration = 0;
-    *m_defaultTravelAcceleration = 0;
     *m_currentXAxisPosition = 0.0;
     *m_currentYAxisPosition = 0.0;
     *m_currentZAxisPosition = 0.0;

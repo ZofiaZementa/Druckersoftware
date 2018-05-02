@@ -131,6 +131,9 @@ bool MachineController::g1(qreal x, qreal y, qreal z, qreal e, qreal f, int s)
     y = y + (qSin(*m_printerBedYAxisTilt) * z);
     z = qCos(*m_printerBedYAxisTilt) * z;
 
+    //changing the unit of f from mm/min to mm/sec
+    f = f / 60;
+
     if(*m_positioningMode == MachineController::AbsolutePositioning){
 
         qreal xSpeed = (x - m_motorController->currentXAxisPosition()) / (qSqrt((x * x) + (y * y) + (z * z)) / f);
@@ -355,10 +358,10 @@ bool MachineController::m200(int d)
 void MachineController::m201(int x, int y, int z, int e)
 {
 
-    m_motorController->setXAxisMaxPrintingAcceleration(x);
-    m_motorController->setYAxisMaxPrintingAcceleration(y);
-    m_motorController->setZAxisMaxPrintingAcceleration(z);
-    m_motorController->setExtruderMaxPrintingAcceleration(e);
+//    m_motorController->setXAxisMaxPrintingAcceleration(x);
+//    m_motorController->setYAxisMaxPrintingAcceleration(y);
+//    m_motorController->setZAxisMaxPrintingAcceleration(z);
+//    m_motorController->setExtruderMaxPrintingAcceleration(e);
 }
 
 //set max travel acceleration
@@ -366,10 +369,10 @@ void MachineController::m201(int x, int y, int z, int e)
 void MachineController::m202(int x, int y, int z, int e)
 {
 
-    m_motorController->setXAxisMaxTravelAcceleration(x);
-    m_motorController->setYAxisMaxTravelAcceleration(y);
-    m_motorController->setZAxisMaxTravelAcceleration(z);
-    m_motorController->setExtruderMaxTravelAcceleration(e);
+//    m_motorController->setXAxisMaxTravelAcceleration(x);
+//    m_motorController->setYAxisMaxTravelAcceleration(y);
+//    m_motorController->setZAxisMaxTravelAcceleration(z);
+//    m_motorController->setExtruderMaxTravelAcceleration(e);
 }
 
 //set max feedrate
