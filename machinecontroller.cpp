@@ -468,7 +468,8 @@ void MachineController::reset()
 void MachineController::print(QUrl filePath)
 {
     measurePrinterBedTilt();
-    m_gCodeReader->read(filePath);
+    m_gCodeReader->setFilePath(filePath);
+    m_gCodeReader->nextLine();
 }
 
 //triggered whzen overheating, turns off all heaters and motors,
