@@ -32,7 +32,8 @@ SOURCES += \
     motorcontroller.cpp \
     heatingcontroller.cpp \
     sensorlistener.cpp \
-    fancontroller.cpp
+    fancontroller.cpp \
+    iocontroller.cpp
 
 HEADERS += \
         controlwindow.h \
@@ -42,7 +43,8 @@ HEADERS += \
     motorcontroller.h \
     heatingcontroller.h \
     sensorlistener.h \
-    fancontroller.h
+    fancontroller.h \
+    iocontroller.h
 
 FORMS += \
         controlwindow.ui

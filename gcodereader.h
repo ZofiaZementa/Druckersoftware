@@ -28,7 +28,7 @@ signals:
 public slots:
 
     void nextLine();
-    void puaseReading();
+    void pauseReading();
     void continueReading();
     void clear();
 

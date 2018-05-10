@@ -1,5 +1,6 @@
 #include "controlwindow.h"
 #include "machinecontroller.h"
+#include "iocontroller.h"
 #include <QApplication>
 #include <QThread>
 #include <QDebug>
@@ -12,15 +13,21 @@ int main(int argc, char *argv[])
     QCoreApplication::setApplicationName("DruckerSoftware");
     QCoreApplication::setApplicationVersion("v0.2.15");
 
-    QThread *sys = new QThread;
+    QThread *sysThread = new QThread;
+    QThread *ioThread = new QThread;
     MachineController c;
+    IOController io;
     ControlWindow w;
 
-    c.moveToThread(sys);
+    c.moveToThread(sysThread);
+    io.moveToThread(ioThread);
 
     QObject::connect(&c, SIGNAL(error(QString)), &w, SLOT(displayErrorMessage(QString)));
+    QObject::connect(&io, SIGNAL(error(QString)), &w, SLOT(displayErrorMessage(QString)));
+    QObject::connect(ioThread, SIGNAL(started()), &io, SLOT(mainLoop()));
 
-    sys->start();
+    sysThread->start();
+    ioThread->start();
     w.show();
 
     return a.exec();
