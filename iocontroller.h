@@ -50,7 +50,9 @@ public slots:
 
 private:
 
+    void checkPins();
     void pinSetup();
+    void emitPinChanged(int pin);
 
     QList<int> *m_pinValues;
     QSettings *m_settings;
