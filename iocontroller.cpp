@@ -28,45 +28,60 @@ IOController::~IOController()
 void IOController::setPinValue(int pin, int value)
 {
 
-    if(m_settings->value("io/pinModes").toList().at(pin).toInt() == 0){
+    if(pin >= 2 && pin <= 27){
 
-        if(value == 0){
+        if(m_settings->value("io/pinModes").toList().at(pin).toInt() == 0){
 
-            //digitalWrite(m_translationMatrix[pin], LOW);
+            if(value == 0){
+
+                //digitalWrite(m_translationMatrix[pin], LOW);
+            }
+
+            else if(value == 1){
+
+                //digitalWrite(m_translationMatrix[pin], HIGH);
+            }
         }
+    }
 
-        else if(value == 1){
+    else{
 
-            //digitalWrite(m_translationMatrix[pin], HIGH);
-        }
+        emit error(QString("Pin does not exist"));
     }
 }
 
 int IOController::pinValue(int pin)
 {
 
+    if(pin >= 2 && pin <= 27){
 
-//    if(digitalRead(m_translationMatrix[pin]) == LOW){
+        if(digitalRead(m_translationMatrix[pin]) == LOW){
 
-//        if(m_pinValues->at(pin) != 0){
+            if(m_pinValues->at(pin) != 0){
 
-//            (*m_pinValues)[pin] = 0;
-//            emitPinChanged(pin);
-//        }
+                (*m_pinValues)[pin] = 0;
+                emitPinChanged(pin);
+            }
 
-//        return 0;
-//    }
+            return 0;
+        }
 
-//    else if(digitalRead(m_translationMatrix[pin]) == HIGH){
+        else if(digitalRead(m_translationMatrix[pin]) == HIGH){
 
-//        if(m_pinValues->at(pin) != 1){
+            if(m_pinValues->at(pin) != 1){
 
-//            (*m_pinValues)[pin] = 1;
-//            emitPinChanged(pin);
-//        }
+                (*m_pinValues)[pin] = 1;
+                emitPinChanged(pin);
+            }
 
-//        return 1;
-//    }
+            return 1;
+        }
+    }
+
+    else{
+
+        emit error(QString("Pin does not exist"));
+    }
 }
 
 void IOController::mainLoop()
@@ -280,6 +295,11 @@ void IOController::emitPinChanged(int pin)
 
         emit pin27ValueChanged(m_pinValues->at(pin));
         break;
+    }
+
+    default:{
+
+        emit error(QString("Pin does not exist"));
     }
 
     }

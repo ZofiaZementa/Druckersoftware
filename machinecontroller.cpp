@@ -115,6 +115,7 @@ bool MachineController::g0(qreal x, qreal y, qreal z, qreal e, int s)
 
     else{
 
+        emit error(QString("Invalid PoisitioningMode"));
         return false;
     }
 }
@@ -159,6 +160,7 @@ bool MachineController::g1(qreal x, qreal y, qreal z, qreal e, qreal f, int s)
 
     else{
 
+        emit error(QString("Invalid PoisitioningMode"));
         return false;
     }
 }

@@ -95,6 +95,7 @@ bool SerialInterface::setBaudRate(qint32 baudRate)
         //executed if it wasn't
         else{
 
+            emit error(QString("Baudrate couldn't be changed"));
             return false;
         }
     }
@@ -114,6 +115,7 @@ bool SerialInterface::setBaudRate(qint32 baudRate)
         //executed if it wasn't
         else{
 
+            emit error(QString("Baudrate couldn't be changed"));
             return false;
         }
     }
