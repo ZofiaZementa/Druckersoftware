@@ -153,33 +153,33 @@ int CommandlineUI::checkCommands()
 
             for(int n = i;n < input.count();n++){
 
-                if(input.at(n).at(0) == QChar("X") || input.at(n).at(0) == QChar("x")){
+                if(input.at(n).at(0) == QString("X") || input.at(n).at(0) == QString("x")){
 
-                    input.at(n).remove(0, 1);
+                    input[n].remove(0, 1);
                     x = input.at(n).toDouble();
                 }
 
-                else if(input.at(n).at(0) == QChar("Y") || input.at(n).at(0) == QChar("y")){
+                else if(input.at(n).at(0) == QString("Y") || input.at(n).at(0) == QString("y")){
 
-                    input.at(n).remove(0, 1);
+                    input[n].remove(0, 1);
                     y = input.at(n).toDouble();
                 }
 
-                else if(input.at(n).at(0) == QChar("Z") || input.at(n).at(0) == QChar("z")){
+                else if(input.at(n).at(0) == QString("Z") || input.at(n).at(0) == QString("z")){
 
-                    input.at(n).remove(0, 1);
+                    input[n].remove(0, 1);
                     z = input.at(n).toDouble();
                 }
 
-                else if(input.at(n).at(0) == QChar("E") || input.at(n).at(0) == QChar("e")){
+                else if(input.at(n).at(0) == QString("E") || input.at(n).at(0) == QString("e")){
 
-                    input.at(n).remove(0, 1);
+                    input[n].remove(0, 1);
                     e = input.at(n).toDouble();
                 }
 
-                else if(input.at(n).at(0) == QChar("S") || input.at(n).at(0) == QChar("s")){
+                else if(input.at(n).at(0) == QString("S") || input.at(n).at(0) == QString("s")){
 
-                    input.at(n).remove(0, 1);
+                    input[n].remove(0, 1);
                     s = input.at(n).toInt();
                 }
 
