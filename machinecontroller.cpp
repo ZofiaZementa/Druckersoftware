@@ -417,6 +417,30 @@ MachineController::ExtruderMode MachineController::extruderMode()
     return *m_extruderMode;
 }
 
+void MachineController::setFilePath(QUrl filePath)
+{
+
+    m_gCodeReader->setFilePath(filePath);
+}
+
+QUrl MachineController::filePath()
+{
+
+    return m_gCodeReader->filePath();
+}
+
+void MachineController::setLine(int line)
+{
+
+    m_gCodeReader->setLineNumber(line);
+}
+
+int MachineController::line()
+{
+
+    return m_gCodeReader->lineNumber();
+}
+
 void MachineController::errorOccured(QString errorMessage)
 {
 
@@ -449,13 +473,13 @@ void MachineController::heatingFinished()
 }
 
 //pauses the machine
-void MachineController::pause()
+bool MachineController::pause()
 {
 
 }
 
 //continues the machine
-void MachineController::play()
+bool MachineController::play()
 {
 
 }
@@ -467,11 +491,19 @@ void MachineController::reset()
 }
 
 //prints the file at filePath
-void MachineController::print(QUrl filePath)
+bool MachineController::print()
 {
-    measurePrinterBedTilt();
-    m_gCodeReader->setFilePath(filePath);
-    m_gCodeReader->nextLine();
+
+    if(m_gCodeReader->filePath().isEmpty() == false && m_serialInterface->status() == SerialInterface::Connected){
+
+        measurePrinterBedTilt();
+        return true;
+    }
+
+    else{
+
+        return false;
+    }
 }
 
 //triggered whzen overheating, turns off all heaters and motors,

@@ -7,6 +7,8 @@ GCodeReader::GCodeReader(QObject *parent) : QObject(parent)
 
     m_lineNumber = new int;
     m_filePath = new QUrl;
+
+    m_lineNumber = 0;
 }
 
 GCodeReader::~GCodeReader()

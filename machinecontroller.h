@@ -60,6 +60,10 @@ public:
     void m400();    //wait for current moves to finish
     PositioningMode positioningMode();    //returns the PrintingMode
     ExtruderMode extruderMode();    //returns the ExtruderModes
+    void setFilePath(QUrl filePath);
+    QUrl filePath();
+    void setLine(int line);
+    int line();
 
 public slots:
 
@@ -68,10 +72,10 @@ public slots:
     void calibrateBed();
     void movementFinished();
     void heatingFinished();
-    void pause();
-    void play();
+    bool pause();
+    bool play();
     void reset();
-    void print(QUrl filePath);
+    bool print();
     void overheat();
     void xAxisPositiveEndstopHit();
     void xAxisNegativeEndstopHit();
