@@ -29,6 +29,9 @@ int main(int argc, char *argv[])
     QThread *ioThread = new QThread;
     MachineController c;
     IOController io;
+    ControlWindow w;
+    QThread *cmdThread = new QThread;
+    CommandlineUI cmd;
 
 
     c.moveToThread(sysThread);
@@ -36,20 +39,16 @@ int main(int argc, char *argv[])
 
     QObject::connect(ioThread, SIGNAL(started()), &io, SLOT(mainLoop()));
 
-    if(gui == true){
+    qDebug() << gui;
 
-        ControlWindow w;
+    if(gui == true){
 
         QObject::connect(&c, SIGNAL(error(QString)), &w, SLOT(displayErrorMessage(QString)));
         QObject::connect(&io, SIGNAL(error(QString)), &w, SLOT(displayErrorMessage(QString)));
-
         w.show();
     }
 
     else{
-
-        QThread *cmdThread = new QThread;
-        CommandlineUI cmd;
 
         cmd.setMachineController(&c);
 
