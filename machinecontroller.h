@@ -29,6 +29,15 @@ public:
 
     //defining methods
 
+    PositioningMode positioningMode();    //returns the PrintingMode
+    ExtruderMode extruderMode();    //returns the ExtruderModes
+    void setFilePath(QUrl filePath);
+    QUrl filePath();
+    void setLine(int line);
+    int line();
+
+public slots:
+
     bool g0(qreal x, qreal y, qreal z, qreal e, int s);    //rapid linear move
     bool g1(qreal x, qreal y, qreal z, qreal e, qreal f, int s);    //linear move
     bool g2(qreal x, qreal y, qreal i, qreal j, qreal e, qreal f);    //clockwise arc
@@ -58,15 +67,6 @@ public:
     void m203(qreal x, qreal y, qreal z, qreal e);    //set max feedrate
     void m204(int p, int t);    //set default acceleration
     void m400();    //wait for current moves to finish
-    PositioningMode positioningMode();    //returns the PrintingMode
-    ExtruderMode extruderMode();    //returns the ExtruderModes
-    void setFilePath(QUrl filePath);
-    QUrl filePath();
-    void setLine(int line);
-    int line();
-
-public slots:
-
     void errorOccured(QString errorMessage);
     void calibratePosition();
     void calibrateBed();

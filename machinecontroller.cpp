@@ -53,6 +53,38 @@ MachineController::MachineController(QObject *parent) : QObject(parent)
     QObject::connect(m_motorController, SIGNAL(movementFinished()), this, SLOT(movementFinished()));
     QObject::connect(m_serialInterface, SIGNAL(dataReceived(QString)), m_motorController, SLOT(receive(QString)));
     QObject::connect(m_motorController, SIGNAL(send(QString)), m_serialInterface, SLOT(send(QString)));
+
+    //connecting the GCodeReader
+
+    QObject::connect(m_gCodeReader, SIGNAL(g0(qreal, qreal, qreal, qreal, int)), this, SLOT(g0(qreal, qreal, qreal, qreal, int)));
+    QObject::connect(m_gCodeReader, SIGNAL(g1(qreal, qreal, qreal, qreal, qreal, int)), this, SLOT(g1(qreal, qreal, qreal, qreal, qreal, int)));
+    QObject::connect(m_gCodeReader, SIGNAL(g2(qreal, qreal, qreal, qreal, qreal, qreal)), this, SLOT(g2(qreal, qreal, qreal, qreal, qreal, qreal)));
+    QObject::connect(m_gCodeReader, SIGNAL(g3(qreal, qreal, qreal, qreal, qreal, qreal)), this, SLOT(g3(qreal, qreal, qreal, qreal, qreal, qreal)));
+    QObject::connect(m_gCodeReader, SIGNAL(g4(int)), this, SLOT(g4(int)));
+    QObject::connect(m_gCodeReader, SIGNAL(g10(qreal)), this, SLOT(g10(qreal)));
+    QObject::connect(m_gCodeReader, SIGNAL(g11(qreal)), this, SLOT(g11(qreal)));
+    QObject::connect(m_gCodeReader, SIGNAL(g28(bool,bool,bool)), this, SLOT(g28(bool,bool,bool)));
+    QObject::connect(m_gCodeReader, SIGNAL(g90()), this, SLOT(g90()));
+    QObject::connect(m_gCodeReader, SIGNAL(g91()), this, SLOT(g91()));
+    QObject::connect(m_gCodeReader, SIGNAL(g92(qreal,qreal,qreal,qreal)), this, SLOT(g92(qreal,qreal,qreal,qreal)));
+    QObject::connect(m_gCodeReader, SIGNAL(m0(int, int)), this, SLOT(m0(int, int)));
+    QObject::connect(m_gCodeReader, SIGNAL(m1()),this, SLOT(m1()));
+    QObject::connect(m_gCodeReader, SIGNAL(m82()), this, SLOT(m82()));
+    QObject::connect(m_gCodeReader, SIGNAL(m83()), this, SLOT(m82()));
+    QObject::connect(m_gCodeReader, SIGNAL(m104(int)), this, SLOT(m104(int)));
+    QObject::connect(m_gCodeReader, SIGNAL(m106(int,int)), this, SLOT(m106(int,int)));
+    QObject::connect(m_gCodeReader, SIGNAL(m107()), this, SLOT(m107()));
+    QObject::connect(m_gCodeReader, SIGNAL(m109(int,int)), this, SLOT(m109(int,int)));
+    QObject::connect(m_gCodeReader, SIGNAL(m110(int)), this, SLOT(m110(int)));
+    QObject::connect(m_gCodeReader, SIGNAL(m112()), this, SLOT(m112()));
+    QObject::connect(m_gCodeReader, SIGNAL(m116(int,int)), this, SLOT(m116(int,int)));
+    QObject::connect(m_gCodeReader, SIGNAL(m190(int)), this, SLOT(m190(int)));
+    QObject::connect(m_gCodeReader, SIGNAL(m200(int)), this, SLOT(m200(int)));
+    QObject::connect(m_gCodeReader, SIGNAL(m201(int,int,int,int)), this, SLOT(m201(int,int,int,int)));
+    QObject::connect(m_gCodeReader, SIGNAL(m202(int,int,int,int)), this, SLOT(m202(int,int,int,int)));
+    QObject::connect(m_gCodeReader, SIGNAL(m203(qreal,qreal,qreal,qreal)), this, SLOT(m203(qreal,qreal,qreal,qreal)));
+    QObject::connect(m_gCodeReader, SIGNAL(m204(int,int)), this, SLOT(m204(int,int)));
+    QObject::connect(m_gCodeReader, SIGNAL(m400()), this, SLOT(m400()));
 }
 
 MachineController::~MachineController()
@@ -76,6 +108,44 @@ MachineController::~MachineController()
     m_printerBedXAxisTilt = NULL;
     m_printerBedYAxisTilt = NULL;
 
+}
+
+//returns m_positioningMode
+MachineController::PositioningMode MachineController::positioningMode()
+{
+
+    return *m_positioningMode;
+}
+
+//returns m_extruderMode
+MachineController::ExtruderMode MachineController::extruderMode()
+{
+
+    return *m_extruderMode;
+}
+
+void MachineController::setFilePath(QUrl filePath)
+{
+
+    m_gCodeReader->setFilePath(filePath);
+}
+
+QUrl MachineController::filePath()
+{
+
+    return m_gCodeReader->filePath();
+}
+
+void MachineController::setLine(int line)
+{
+
+    m_gCodeReader->setLineNumber(line);
+}
+
+int MachineController::line()
+{
+
+    return m_gCodeReader->lineNumber();
 }
 
 //rapid linear move
@@ -401,44 +471,6 @@ void MachineController::m204(int p, int t)
 void MachineController::m400()
 {
 
-}
-
-//returns m_positioningMode
-MachineController::PositioningMode MachineController::positioningMode()
-{
-
-    return *m_positioningMode;
-}
-
-//returns m_extruderMode
-MachineController::ExtruderMode MachineController::extruderMode()
-{
-
-    return *m_extruderMode;
-}
-
-void MachineController::setFilePath(QUrl filePath)
-{
-
-    m_gCodeReader->setFilePath(filePath);
-}
-
-QUrl MachineController::filePath()
-{
-
-    return m_gCodeReader->filePath();
-}
-
-void MachineController::setLine(int line)
-{
-
-    m_gCodeReader->setLineNumber(line);
-}
-
-int MachineController::line()
-{
-
-    return m_gCodeReader->lineNumber();
 }
 
 void MachineController::errorOccured(QString errorMessage)

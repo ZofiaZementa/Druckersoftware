@@ -39,8 +39,6 @@ int main(int argc, char *argv[])
 
     QObject::connect(ioThread, SIGNAL(started()), &io, SLOT(mainLoop()));
 
-    qDebug() << gui;
-
     if(gui == true){
 
         QObject::connect(&c, SIGNAL(error(QString)), &w, SLOT(displayErrorMessage(QString)));
