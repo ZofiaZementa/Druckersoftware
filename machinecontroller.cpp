@@ -66,7 +66,7 @@ MachineController::MachineController(QObject *parent) : QObject(parent)
     QObject::connect(m_gCodeReader, SIGNAL(g28(bool,bool,bool)), this, SLOT(g28(bool,bool,bool)));
     QObject::connect(m_gCodeReader, SIGNAL(g90()), this, SLOT(g90()));
     QObject::connect(m_gCodeReader, SIGNAL(g91()), this, SLOT(g91()));
-    QObject::connect(m_gCodeReader, SIGNAL(g92(qreal,qreal,qreal,qreal)), this, SLOT(g92(qreal,qreal,qreal,qreal)));
+    QObject::connect(m_gCodeReader, SIGNAL(g92(bool, bool, bool, bool, qreal, qreal, qreal, qreal)), this, SLOT(g92(bool, bool, bool, bool, qreal, qreal, qreal, qreal)));
     QObject::connect(m_gCodeReader, SIGNAL(m0(int, int)), this, SLOT(m0(int, int)));
     QObject::connect(m_gCodeReader, SIGNAL(m1()),this, SLOT(m1()));
     QObject::connect(m_gCodeReader, SIGNAL(m82()), this, SLOT(m82()));
@@ -80,10 +80,10 @@ MachineController::MachineController(QObject *parent) : QObject(parent)
     QObject::connect(m_gCodeReader, SIGNAL(m116(int,int)), this, SLOT(m116(int,int)));
     QObject::connect(m_gCodeReader, SIGNAL(m190(int)), this, SLOT(m190(int)));
     QObject::connect(m_gCodeReader, SIGNAL(m200(int)), this, SLOT(m200(int)));
-    QObject::connect(m_gCodeReader, SIGNAL(m201(int,int,int,int)), this, SLOT(m201(int,int,int,int)));
-    QObject::connect(m_gCodeReader, SIGNAL(m202(int,int,int,int)), this, SLOT(m202(int,int,int,int)));
+    QObject::connect(m_gCodeReader, SIGNAL(m201(qreal,qreal,qreal,qreal)), this, SLOT(m201(qreal,qreal,qreal,qreal)));
+    QObject::connect(m_gCodeReader, SIGNAL(m202(qreal,qreal,qreal,qreal)), this, SLOT(m202(qreal,qreal,qreal,qreal)));
     QObject::connect(m_gCodeReader, SIGNAL(m203(qreal,qreal,qreal,qreal)), this, SLOT(m203(qreal,qreal,qreal,qreal)));
-    QObject::connect(m_gCodeReader, SIGNAL(m204(int,int)), this, SLOT(m204(int,int)));
+    QObject::connect(m_gCodeReader, SIGNAL(m204(qreal,qreal)), this, SLOT(m204(qreal,qreal)));
     QObject::connect(m_gCodeReader, SIGNAL(m400()), this, SLOT(m400()));
 }
 
@@ -325,13 +325,28 @@ void MachineController::g91()
 //sets position
 //x = new x-axis position, y = new y-axis position, z = new z-axis position, e = new extruder position
 //this method doesnt trigger any physical motion
-bool MachineController::g92(qreal x, qreal y, qreal z, qreal e)
+bool MachineController::g92(bool xB, bool yB, bool zB, bool eB, qreal x, qreal y, qreal z, qreal e)
 {
 
-    m_motorController->setCurrentXAxisPosition(x);
-    m_motorController->setCurrentYAxisPosition(y);
-    m_motorController->setCurrentZAxisPosition(z);
-    m_motorController->setCurrentExtruderPosition(e);
+    if(xB){
+
+        m_motorController->setCurrentXAxisPosition(x);
+    }
+
+    if(yB){
+
+        m_motorController->setCurrentYAxisPosition(y);
+    }
+
+    if(zB){
+
+        m_motorController->setCurrentZAxisPosition(z);
+    }
+
+    if(eB){
+
+        m_motorController->setCurrentExtruderPosition(e);
+    }
 }
 
 //stop
@@ -394,6 +409,7 @@ void MachineController::m110(int n)
 {
 
     m_gCodeReader->setLineNumber(n);
+    m_gCodeReader->nextLine();
 }
 
 //emergency stop
@@ -427,7 +443,7 @@ bool MachineController::m200(int d)
 
 //set max printing acceleration
 //x = acceleration for x-axis, y = acceleration for y-axis, z = acceleration for z-axis, e = acceleration for all extruders
-void MachineController::m201(int x, int y, int z, int e)
+void MachineController::m201(qreal x, qreal y, qreal z, qreal e)
 {
 
 //    m_motorController->setXAxisMaxPrintingAcceleration(x);
@@ -438,7 +454,7 @@ void MachineController::m201(int x, int y, int z, int e)
 
 //set max travel acceleration
 //x = acceleration for x-axis, y = acceleration for y-axis, z = acceleration for z-axis, e = acceleration for all extruders
-void MachineController::m202(int x, int y, int z, int e)
+void MachineController::m202(qreal x, qreal y, qreal z, qreal e)
 {
 
 //    m_motorController->setXAxisMaxTravelAcceleration(x);
@@ -460,7 +476,7 @@ void MachineController::m203(qreal x, qreal y, qreal z, qreal e)
 
 //set default acceleration
 //p = acceleration for printing moves, t = acceleration for travel moves
-void MachineController::m204(int p, int t)
+void MachineController::m204(qreal p, qreal t)
 {
 
     m_motorController->setDefaultPrintingAcceleration(p);

@@ -32,7 +32,7 @@ signals:
     void g28(bool x, bool y, bool z);    //moves to origin/home
     void g90();    //sets absolute positioning
     void g91();    //sets relative positioning
-    void g92(qreal x, qreal y, qreal z, qreal e);    //set position
+    void g92(bool xB, bool yB, bool zB, bool eB, qreal x, qreal y, qreal z, qreal e);    //set position
     void m0(int p, int s);    //stop
     void m1();    //sleep
     void m82();    //sets extruder to absolut mode
@@ -46,10 +46,10 @@ signals:
     void m116(int p, int h);    //wait until heating/cooling finished
     void m190(int s);    //wait for bed temperature to reach target temperature
     void m200(int d);    //set filament diameter
-    void m201(int x, int y, int z, int e);    //set max printing acceleration
-    void m202(int x, int y, int z, int e);    //set max travel acceleration
+    void m201(qreal x, qreal y, qreal z, qreal e);    //set max printing acceleration
+    void m202(qreal x, qreal y, qreal z, qreal e);    //set max travel acceleration
     void m203(qreal x, qreal y, qreal z, qreal e);    //set max feedrate
-    void m204(int p, int t);    //set default acceleration
+    void m204(qreal p, qreal t);    //set default acceleration
     void m400();    //wait for current moves to finish
     void lineNumberChanged(int lineNumber);
     void filePathChanged(QUrl filePath);
@@ -67,6 +67,7 @@ private:
     bool readline(int lineNumber);
     QStringList breakUpString(QString string);
 
+    qreal *m_unit;
     int *m_lineNumber;
     QUrl *m_filePath;
 };

@@ -866,10 +866,10 @@ void MotorController::setXAxisMaxFeedrate(qreal xAxisMaxFeedrate)
 }
 
 //returns m_xAxisMaxFeedrate
-int MotorController::xAxisMaxFeedrate()
+qreal MotorController::xAxisMaxFeedrate()
 {
 
-    return m_settings->value("motorsettings/xaxis/maximum_feedrate", XAXIS_MAXIMUM_FEEDRATE).toInt();
+    return m_settings->value("motorsettings/xaxis/maximum_feedrate", XAXIS_MAXIMUM_FEEDRATE).toReal();
 }
 
 //sets m_yAxisMaxFeedrate to yAxisMaxFeedrate
@@ -880,10 +880,10 @@ void MotorController::setYAxisMaxFeedrate(qreal yAxisMaxFeedrate)
 }
 
 //returns m_yAxisMaxFeedrate
-int MotorController::yAxisMaxFeedrate()
+qreal MotorController::yAxisMaxFeedrate()
 {
 
-    return m_settings->value("motorsettings/yaxis/maximum_feedrate", YAXIS_MAXIMUM_FEEDRATE).toInt();
+    return m_settings->value("motorsettings/yaxis/maximum_feedrate", YAXIS_MAXIMUM_FEEDRATE).toReal();
 }
 
 //sets m_zAxisMaxFeedrate to zAxisMaxFeedrate
@@ -894,10 +894,10 @@ void MotorController::setZAxisMaxFeedrate(qreal zAxisMaxFeedrate)
 }
 
 //returns m_zAxisMaxFeedrate
-int MotorController::zAxisMaxFeedrate()
+qreal MotorController::zAxisMaxFeedrate()
 {
 
-    return m_settings->value("motorsettings/zaxis/maximum_feedrate", ZAXIS_MAXIMUM_FEEDRATE).toInt();
+    return m_settings->value("motorsettings/zaxis/maximum_feedrate", ZAXIS_MAXIMUM_FEEDRATE).toReal();
 }
 
 //sets m_extruderMaxFeedrate to extruderMaxFeedrate
@@ -908,22 +908,22 @@ void MotorController::setExtruderMaxFeedrate(qreal extruderMaxFeedrate)
 }
 
 //returns m_extruderMaxFeedrate
-int MotorController::extruderMaxFeedrate()
+qreal MotorController::extruderMaxFeedrate()
 {
 
     return m_settings->value("motorsettings/extruder/maximum_feedrate", EXTRUDER_MAXIMUM_FEEDRATE).toInt();
 }
 
 //sets the value at "motorsettings/maximum_printing_acceleration" to defaultPrintingAcceleration
-void MotorController::setDefaultPrintingAcceleration(int defaultPrintingAcceleration)
+void MotorController::setDefaultPrintingAcceleration(qreal defaultPrintingAcceleration)
 {
 
     //checks if defaultPrintingAcceleration is too high or low
     //executed if it is
-    if((qint32)((qreal)(defaultPrintingAcceleration) * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(defaultPrintingAcceleration) * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
-            (qint32)((qreal)(defaultPrintingAcceleration) * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(defaultPrintingAcceleration) * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
-            (qint32)((qreal)(defaultPrintingAcceleration) * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(defaultPrintingAcceleration) * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
-            (qint32)((qreal)(defaultPrintingAcceleration) * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(defaultPrintingAcceleration) * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1){
+    if((qint32)(defaultPrintingAcceleration * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)(defaultPrintingAcceleration * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
+            (qint32)(defaultPrintingAcceleration * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)(defaultPrintingAcceleration * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
+            (qint32)(defaultPrintingAcceleration * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)(defaultPrintingAcceleration * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
+            (qint32)(defaultPrintingAcceleration * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)(defaultPrintingAcceleration * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1){
 
         emit error(QString("PrintingAcceleration set too high/low"));
         return;
@@ -937,22 +937,22 @@ void MotorController::setDefaultPrintingAcceleration(int defaultPrintingAccelera
 }
 
 //returns m_defaultPrintingAcceleration
-int MotorController::defaultPrintingAcceleration()
+qreal MotorController::defaultPrintingAcceleration()
 {
 
-    return m_settings->value("motorsettings/maximum_printing_acceleration", MAXIMUM_PRINTING_ACCELERATION).toInt();
+    return m_settings->value("motorsettings/maximum_printing_acceleration", MAXIMUM_PRINTING_ACCELERATION).toReal();
 }
 
 //sets "motorsettings/maximum_travel_acceleration" to defaultTravelAcceleration
-void MotorController::setDefaultTravelAcceleration(int defaultTravelAcceleration)
+void MotorController::setDefaultTravelAcceleration(qreal defaultTravelAcceleration)
 {
 
     //checks if defaultTravelAcceleration is too high or low
     //executed if it is
-    if((qint32)((qreal)(defaultTravelAcceleration) * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(defaultTravelAcceleration) * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
-            (qint32)((qreal)(defaultTravelAcceleration) * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(defaultTravelAcceleration) * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
-            (qint32)((qreal)(defaultTravelAcceleration) * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(defaultTravelAcceleration) * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
-            (qint32)((qreal)(defaultTravelAcceleration) * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)((qreal)(defaultTravelAcceleration) * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1){
+    if((qint32)(defaultTravelAcceleration * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)(defaultTravelAcceleration * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
+            (qint32)(defaultTravelAcceleration * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)(defaultTravelAcceleration * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
+            (qint32)(defaultTravelAcceleration * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)(defaultTravelAcceleration * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1 ||
+            (qint32)(defaultTravelAcceleration * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) > 65535 || (qint32)(defaultTravelAcceleration * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() / m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0) < 1){
 
         emit error(QString("PrintingAcceleration set too high/low"));
         return;
@@ -965,10 +965,10 @@ void MotorController::setDefaultTravelAcceleration(int defaultTravelAcceleration
     }}
 
 //returns m_defaultTravelAcceleration
-int MotorController::defaultTravelAcceleration()
+qreal MotorController::defaultTravelAcceleration()
 {
 
-    return m_settings->value("motorsettings/maximum_travel_acceleration", MAXIMUM_TRAVEL_ACCELERATION).toInt();
+    return m_settings->value("motorsettings/maximum_travel_acceleration", MAXIMUM_TRAVEL_ACCELERATION).toReal();
 }
 
 //returns m_currentXAxisPosition
