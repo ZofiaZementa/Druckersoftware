@@ -60,6 +60,7 @@ public slots:
     void m110(int n);    //set current line number
     void m112();    //emergency stop
     bool m116(int p, int h);    //wait until heating/cooling finished
+    void m140(int s);    //set bed temperature
     bool m190(int s);    //wait for bed temperature to reach target temperature
     bool m200(int d);    //set filament diameter
     void m201(qreal x, qreal y, qreal z, qreal e);    //set max printing acceleration

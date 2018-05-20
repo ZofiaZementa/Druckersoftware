@@ -73,7 +73,7 @@ void GCodeReader::clear()
 {
 
     *m_lineNumber = 0;
-    *m_filePath->clear();
+    m_filePath->clear();
     *m_unit = 1;
 }
 
@@ -101,67 +101,7 @@ bool GCodeReader::readline(int lineNumber)
         qreal y = 0.0;
         qreal z = 0.0;
         qreal e = 0.0;
-        int s = 0;
-
-        if(lineParts.count() > 1){
-
-            for(int i = 1;i < lineParts.count();i++){
-
-                if(lineParts.at(i).at(0) == QString("X") || lineParts.at(i).at(0) == QString("x")){
-
-                    lineParts[i].remove(0, 1);
-                    x = lineParts.at(i).toDouble();
-                }
-
-                else if(lineParts.at(i).at(0) == QString("Y") || lineParts.at(i).at(0) == QString("y")){
-
-                    lineParts[i].remove(0, 1);
-                    y = lineParts.at(i).toDouble();
-                }
-
-                else if(lineParts.at(i).at(0) == QString("Z") || lineParts.at(i).at(0) == QString("z")){
-
-                    lineParts[i].remove(0, 1);
-                    z = lineParts.at(i).toDouble();
-                }
-
-                else if(lineParts.at(i).at(0) == QString("E") || lineParts.at(i).at(0) == QString("e")){
-
-                    lineParts[i].remove(0, 1);
-                    e = lineParts.at(i).toDouble();
-                }
-
-                else if(lineParts.at(i).at(0) == QString("S") || lineParts.at(i).at(0) == QString("s")){
-
-                    lineParts[i].remove(0, 1);
-                    s = lineParts.at(i).toInt();
-                }
-
-                else{
-
-                    emit error(QString("Invalid command in line %1").arg(lineNumber));
-                    return false;
-                }
-            }
-        }
-
-        else{
-
-            emit error(QString("Invalid command in line %1").arg(lineNumber));
-            return false;
-        }
-
-        emit g0((x **m_unit), (y * *m_unit), (z * *m_unit), (e * *m_unit), s);
-    }
-
-    //check if the command is g1
-    else if(lineParts.at(0) == QString("G1") || lineParts.at(0) == QString("g1")){
-
-        qreal x = 0.0;
-        qreal y = 0.0;
-        qreal z = 0.0;
-        qreal e = 0.0;
-        qreal f = 0.0;
+        qreal f = -1.0;
         int s = 0;
 
         if(lineParts.count() > 1){
@@ -202,6 +142,89 @@ bool GCodeReader::readline(int lineNumber)
 
                     lineParts[i].remove(0, 1);
                     s = lineParts.at(i).toInt();
+                }
+
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
+                }
+
+                else{
+
+                    emit error(QString("Invalid command in line %1").arg(lineNumber));
+                    return false;
+                }
+            }
+        }
+
+        else{
+
+            emit error(QString("Invalid command in line %1").arg(lineNumber));
+            return false;
+        }
+
+        emit g0((x **m_unit), (y * *m_unit), (z * *m_unit), (e * *m_unit), (f * *m_unit), s);
+    }
+
+    //check if the command is g1
+    else if(lineParts.at(0) == QString("G1") || lineParts.at(0) == QString("g1")){
+
+        qreal x = 0.0;
+        qreal y = 0.0;
+        qreal z = 0.0;
+        qreal e = 0.0;
+        qreal f = -1.0;
+        int s = 0;
+
+        if(lineParts.count() > 1){
+
+            for(int i = 1;i < lineParts.count();i++){
+
+                if(lineParts.at(i).at(0) == QString("X") || lineParts.at(i).at(0) == QString("x")){
+
+                    lineParts[i].remove(0, 1);
+                    x = lineParts.at(i).toDouble();
+                }
+
+                else if(lineParts.at(i).at(0) == QString("Y") || lineParts.at(i).at(0) == QString("y")){
+
+                    lineParts[i].remove(0, 1);
+                    y = lineParts.at(i).toDouble();
+                }
+
+                else if(lineParts.at(i).at(0) == QString("Z") || lineParts.at(i).at(0) == QString("z")){
+
+                    lineParts[i].remove(0, 1);
+                    z = lineParts.at(i).toDouble();
+                }
+
+                else if(lineParts.at(i).at(0) == QString("E") || lineParts.at(i).at(0) == QString("e")){
+
+                    lineParts[i].remove(0, 1);
+                    e = lineParts.at(i).toDouble();
+                }
+
+                else if(lineParts.at(i).at(0) == QString("F") || lineParts.at(i).at(0) == QString("f")){
+
+                    lineParts[i].remove(0, 1);
+                    f = lineParts.at(i).toDouble();
+                }
+
+                else if(lineParts.at(i).at(0) == QString("S") || lineParts.at(i).at(0) == QString("s")){
+
+                    lineParts[i].remove(0, 1);
+                    s = lineParts.at(i).toInt();
+                }
+
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
                 }
 
                 else{
@@ -271,6 +294,14 @@ bool GCodeReader::readline(int lineNumber)
                     f = lineParts.at(n).toDouble();
                 }
 
+                else if(lineParts.at(n).at(0) == QString(";")){
+
+                    for(int k = n;k < lineParts.count();k++){
+
+                        lineParts.removeAt(n + k);
+                    }
+                }
+
                 else{
 
                     emit error(QString("Invalid command in line %1").arg(lineNumber));
@@ -338,6 +369,14 @@ bool GCodeReader::readline(int lineNumber)
                     f = lineParts.at(n).toDouble();
                 }
 
+                else if(lineParts.at(n).at(0) == QString(";")){
+
+                    for(int k = n;k < lineParts.count();k++){
+
+                        lineParts.removeAt(n + k);
+                    }
+                }
+
                 else{
 
                     emit error(QString("Invalid command in line %1").arg(lineNumber));
@@ -368,6 +407,14 @@ bool GCodeReader::readline(int lineNumber)
 
                     lineParts[i].remove(0, 1);
                     p = lineParts.at(i).toInt();
+                }
+
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
                 }
 
                 else{
@@ -402,6 +449,14 @@ bool GCodeReader::readline(int lineNumber)
                     s = lineParts.at(i).toDouble();
                 }
 
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
+                }
+
                 else{
 
                     emit error(QString("Invalid command in line %1").arg(lineNumber));
@@ -432,6 +487,14 @@ bool GCodeReader::readline(int lineNumber)
 
                     lineParts[i].remove(0, 1);
                     s = lineParts.at(i).toDouble();
+                }
+
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
                 }
 
                 else{
@@ -491,6 +554,20 @@ bool GCodeReader::readline(int lineNumber)
                 else if(lineParts.at(1).at(0) == QString("Z") || lineParts.at(1).at(0) == QString("z")){
 
                     z = true;
+                }
+
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
+                }
+
+                else{
+
+                    emit error(QString("Invalid command in line %1").arg(lineNumber));
+                    return false;
                 }
             }
         }
@@ -559,6 +636,14 @@ bool GCodeReader::readline(int lineNumber)
                     eB = true;
                 }
 
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
+                }
+
                 else{
 
                     emit error(QString("Invalid command in line %1").arg(lineNumber));
@@ -590,6 +675,14 @@ bool GCodeReader::readline(int lineNumber)
 
                     lineParts[i].remove(0, 1);
                     s = lineParts.at(i).toInt();
+                }
+
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
                 }
 
                 else{
@@ -636,6 +729,14 @@ bool GCodeReader::readline(int lineNumber)
                     s = lineParts.at(i).toInt();
                 }
 
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
+                }
+
                 else{
 
                     emit error(QString("Invalid command in line %1").arg(lineNumber));
@@ -673,6 +774,14 @@ bool GCodeReader::readline(int lineNumber)
 
                     lineParts[i].remove(0, 1);
                     s = lineParts.at(i).toInt();
+                }
+
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
                 }
 
                 else{
@@ -720,6 +829,14 @@ bool GCodeReader::readline(int lineNumber)
                     r = lineParts.at(i).toInt();
                 }
 
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
+                }
+
                 else{
 
                     emit error(QString("Invalid command in line %1").arg(lineNumber));
@@ -750,6 +867,14 @@ bool GCodeReader::readline(int lineNumber)
 
                     lineParts[i].remove(0, 1);
                     n = lineParts.at(i).toInt();
+                }
+#
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
                 }
 
                 else{
@@ -797,6 +922,14 @@ bool GCodeReader::readline(int lineNumber)
                     h = lineParts.at(i).toInt();
                 }
 
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
+                }
+
                 else{
 
                     emit error(QString("Invalid command in line %1").arg(lineNumber));
@@ -806,6 +939,46 @@ bool GCodeReader::readline(int lineNumber)
         }
 
         emit m116(p, h);
+    }
+
+    //check if the command is m140
+    else if(lineParts.at(0) == QString("M140") || lineParts.at(0) == QString("m140")){
+
+        int s = 0;
+
+        if(lineParts.count() > 1){
+
+            for(int i = 1;i < lineParts.count();i++){
+
+                if(lineParts.at(i).at(0) == QString("S") || lineParts.at(i).at(0) == QString("s")){
+
+                    lineParts[i].remove(0, 1);
+                    s = lineParts.at(i).toInt();
+                }
+
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
+                }
+
+                else{
+
+                    emit error(QString("Invalid command in line %1").arg(lineNumber));
+                    return false;
+                }
+            }
+        }
+
+        else{
+
+            emit error(QString("Invalid command in line %1").arg(lineNumber));
+            return false;
+        }
+
+        emit m140(s);
     }
 
     //check if the command is m190
@@ -821,6 +994,14 @@ bool GCodeReader::readline(int lineNumber)
 
                     lineParts[i].remove(0, 1);
                     s = lineParts.at(i).toInt();
+                }
+
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
                 }
 
                 else{
@@ -853,6 +1034,14 @@ bool GCodeReader::readline(int lineNumber)
 
                     lineParts[i].remove(0, 1);
                     d = lineParts.at(i).toDouble();
+                }
+
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
                 }
 
                 else{
@@ -908,6 +1097,14 @@ bool GCodeReader::readline(int lineNumber)
                     e = lineParts.at(i).toDouble();
                 }
 
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
+                }
+
                 else{
 
                     emit error(QString("Invalid command in line %1").arg(lineNumber));
@@ -959,6 +1156,14 @@ bool GCodeReader::readline(int lineNumber)
 
                     lineParts[i].remove(0, 1);
                     e = lineParts.at(i).toDouble();
+                }
+
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
                 }
 
                 else{
@@ -1014,6 +1219,14 @@ bool GCodeReader::readline(int lineNumber)
                     e = lineParts.at(i).toDouble();
                 }
 
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
+                }
+
                 else{
 
                     emit error(QString("Invalid command in line %1").arg(lineNumber));
@@ -1053,6 +1266,14 @@ bool GCodeReader::readline(int lineNumber)
                     t = lineParts.at(i).toDouble();
                 }
 
+                else if(lineParts.at(i).at(0) == QString(";")){
+
+                    for(int n = i;n < lineParts.count();n++){
+
+                        lineParts.removeAt(i + n);
+                    }
+                }
+
                 else{
 
                     emit error(QString("Invalid command in line %1").arg(lineNumber));
@@ -1074,6 +1295,14 @@ bool GCodeReader::readline(int lineNumber)
     else if(lineParts.at(0) == QString("M400") || lineParts.at(0) == QString("m400")){
 
         emit m400();
+    }
+
+    else if(lineParts.at(0) == QString(";")){
+
+        for(int n = 0;n < lineParts.count();n++){
+
+            lineParts.removeAt(n);
+        }
     }
 
     else{

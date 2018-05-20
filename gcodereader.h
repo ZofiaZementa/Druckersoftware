@@ -22,7 +22,7 @@ public:
 
 signals:
 
-    void g0(qreal x, qreal y, qreal z, qreal e, int s);    //rapid linear move
+    void g0(qreal x, qreal y, qreal z, qreal e, qreal f, int s);    //rapid linear move
     void g1(qreal x, qreal y, qreal z, qreal e, qreal f, int s);    //linear move
     void g2(qreal x, qreal y, qreal i, qreal j, qreal e, qreal f);    //clockwise arc
     void g3(qreal x, qreal y, qreal i, qreal j, qreal e, qreal f);    //counter-clockwise arc
@@ -44,6 +44,7 @@ signals:
     void m110(int n);    //set current line number
     void m112();    //emergency stop
     void m116(int p, int h);    //wait until heating/cooling finished
+    void m140(int s);    //set bed temperature
     void m190(int s);    //wait for bed temperature to reach target temperature
     void m200(int d);    //set filament diameter
     void m201(qreal x, qreal y, qreal z, qreal e);    //set max printing acceleration
@@ -58,8 +59,6 @@ signals:
 public slots:
 
     void nextLine();
-    void pauseReading();
-    void continueReading();
     void clear();
 
 private:

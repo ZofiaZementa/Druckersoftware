@@ -56,7 +56,7 @@ MachineController::MachineController(QObject *parent) : QObject(parent)
 
     //connecting the GCodeReader
 
-    QObject::connect(m_gCodeReader, SIGNAL(g0(qreal, qreal, qreal, qreal, int)), this, SLOT(g0(qreal, qreal, qreal, qreal, int)));
+    QObject::connect(m_gCodeReader, SIGNAL(g0(qreal, qreal, qreal, qreal, qreal, int)), this, SLOT(g0(qreal, qreal, qreal, qreal, qreal, int)));
     QObject::connect(m_gCodeReader, SIGNAL(g1(qreal, qreal, qreal, qreal, qreal, int)), this, SLOT(g1(qreal, qreal, qreal, qreal, qreal, int)));
     QObject::connect(m_gCodeReader, SIGNAL(g2(qreal, qreal, qreal, qreal, qreal, qreal)), this, SLOT(g2(qreal, qreal, qreal, qreal, qreal, qreal)));
     QObject::connect(m_gCodeReader, SIGNAL(g3(qreal, qreal, qreal, qreal, qreal, qreal)), this, SLOT(g3(qreal, qreal, qreal, qreal, qreal, qreal)));
@@ -151,10 +151,15 @@ int MachineController::line()
 //rapid linear move
 //uses the fastest speed possible
 //x = the position to move to on the x axis in mm, y = the position to move to on the y axis in mm, z = the position to move to on the z axis in mm
-//e = the amount to extrude between the starting point and ending point in mm
+//e = the amount to extrude between the starting point and ending point in mm, f = the feedrate per minute of the move between the starting point and ending point
 //s = flag to check if an endstop was hit (0 to ignore, 1 to check, 2 to see note)
-bool MachineController::g0(qreal x, qreal y, qreal z, qreal e, int s)
+bool MachineController::g0(qreal x, qreal y, qreal z, qreal e, qreal f, int s)
 {
+
+    if(f == -1.0){
+
+        f = PRINTER_MAXSPEED;
+    }
 
     x = x + (qSin(*m_printerBedXAxisTilt) * z);
     z = qCos(*m_printerBedXAxisTilt) * z;
@@ -163,10 +168,10 @@ bool MachineController::g0(qreal x, qreal y, qreal z, qreal e, int s)
 
     if(*m_positioningMode == MachineController::AbsolutePositioning){
 
-        qreal xSpeed = (x - m_motorController->currentXAxisPosition()) / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
-        qreal ySpeed = (y - m_motorController->currentXAxisPosition())/ (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
-        qreal zSpeed = (z - m_motorController->currentXAxisPosition()) / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
-        qreal eSpeed = (e - m_motorController->currentExtruderPosition()) / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
+        qreal xSpeed = (x - m_motorController->currentXAxisPosition()) / (qSqrt((x * x) + (y * y) + (z * z)) / f);
+        qreal ySpeed = (y - m_motorController->currentXAxisPosition())/ (qSqrt((x * x) + (y * y) + (z * z)) / f);
+        qreal zSpeed = (z - m_motorController->currentXAxisPosition()) / (qSqrt((x * x) + (y * y) + (z * z)) / f);
+        qreal eSpeed = (e - m_motorController->currentExtruderPosition()) / (qSqrt((x * x) + (y * y) + (z * z)) / f);
 
         m_motorController->absoluteMove(x, y, z, e, xSpeed, ySpeed, zSpeed, eSpeed);
         return true;
@@ -174,10 +179,10 @@ bool MachineController::g0(qreal x, qreal y, qreal z, qreal e, int s)
 
     else if(*m_positioningMode == MachineController::RelativePositioning){
 
-        qreal xSpeed = x / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
-        qreal ySpeed = y / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
-        qreal zSpeed = z / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
-        qreal eSpeed = e / (qSqrt((x * x) + (y * y) + (z * z)) / PRINTER_MAXSPEED);
+        qreal xSpeed = x / (qSqrt((x * x) + (y * y) + (z * z)) / f);
+        qreal ySpeed = y / (qSqrt((x * x) + (y * y) + (z * z)) / f);
+        qreal zSpeed = z / (qSqrt((x * x) + (y * y) + (z * z)) / f);
+        qreal eSpeed = e / (qSqrt((x * x) + (y * y) + (z * z)) / f);
 
         m_motorController->relativeMove(x, y, z, e, xSpeed, ySpeed, zSpeed, eSpeed);
         return true;
@@ -196,6 +201,11 @@ bool MachineController::g0(qreal x, qreal y, qreal z, qreal e, int s)
 //s = flag to check if an endstop was hit (0 to ignore, 1 to check, 2 to see note)
 bool MachineController::g1(qreal x, qreal y, qreal z, qreal e, qreal f, int s)
 {
+
+    if(f == -1.0){
+
+        f = PRINTER_MAXSPEED;
+    }
 
     x = x + (qSin(*m_printerBedXAxisTilt) * z);
     z = qCos(*m_printerBedXAxisTilt) * z;
@@ -423,6 +433,13 @@ void MachineController::m112()
 //wait until heating/cooling finished
 //p = tool number, h = heater number
 bool MachineController::m116(int p, int h)
+{
+
+}
+
+//set bed temperature
+//s = temperature
+void MachineController::m140(int s)
 {
 
 }
