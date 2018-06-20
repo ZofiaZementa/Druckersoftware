@@ -734,7 +734,7 @@ void MachineController::measurePrinterBedTilt()
         //moves the printerbed back down to 10mm away from the printerhead
         m_motorController->absoluteMoveZAxis(10.0, 3600.0);
         //moves the printerhead to the beginning of the x-axis and the middle of the y-axis
-        g0(0.0, (qreal)(YAXIS_LENGTH) / 2.0, 0.0, 0.0, 1);
+        g0(0.0, (qreal)(YAXIS_LENGTH) / 2.0, 0.0, 0.0, -1.0, 1);
         //slowly moves the bed towards the printerhead, it's designed to hit the printerhead
         m_motorController->absoluteMoveZAxis(-10.0, 30.0);
     }
@@ -764,7 +764,7 @@ void MachineController::measurePrinterBedTilt()
         //moves the printerbed back down to 10mm away from the printerhead
         m_motorController->absoluteMoveZAxis(10.0, 3600.0);
         //moves the printerhead to the beginning of the x-axis and the end of the y-axis
-        g0(0.0, (qreal)(YAXIS_LENGTH), 0.0, 0.0, 0);
+        g0(0.0, (qreal)(YAXIS_LENGTH), 0.0, 0.0, -1.0, 0);
         //slowly moves the bed towards the printerhead, it's designed to hit the printerhead
         m_motorController->absoluteMoveZAxis(-10.0, 30.0);
     }

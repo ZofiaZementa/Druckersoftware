@@ -18,9 +18,9 @@ void CommandlineUI::mainLoop()
 
     while(true){
 
-        printf(">>>\n");
-        scanf("%400s", *m_input);
-        printf("\n");
+        printf(">>>");
+        scanf("%399s", *m_input);
+        printf("\r\n");
         check = checkCommands();
 
         if(check == 1){
@@ -79,14 +79,14 @@ int CommandlineUI::checkCommands()
         else if(input.at(i) == QString("setfile")){
 
             m_machineController->setFilePath(QUrl(input.at(i + 1)));
-            printf("Filepath set to %s\n", input.at(i + 1).toLatin1().data());
+            printf("Filepath set to %s\r\n", input.at(i + 1).toLatin1().data());
             return 0;
         }
 
         else if(input.at(i) == QString("setline")){
 
             m_machineController->setLine(input.at(i + 1).toInt());
-            printf("filepath set to %d\n", input.at(i + 1).toInt());
+            printf("filepath set to %d\r\n", input.at(i + 1).toInt());
             return 0;
         }
 
@@ -95,13 +95,13 @@ int CommandlineUI::checkCommands()
             if(m_machineController->print() == true){
 
                 m_machineController->print();
-                printf("printing...\n");
+                printf("printing...\r\n");
                 return 0;
             }
 
             else{
 
-                printf("print couldnt be started\n");
+                printf("print couldnt be started\r\n");
                 return 0;
             }
         }
@@ -110,13 +110,13 @@ int CommandlineUI::checkCommands()
 
             if(m_machineController->pause() == true){
 
-                printf("print paused\n");
+                printf("print paused\r\n");
                 return 0;
             }
 
             else{
 
-                printf("print couldn't be paused\n");
+                printf("print couldn't be paused\r\n");
                 return 0;
             }
         }
@@ -125,13 +125,13 @@ int CommandlineUI::checkCommands()
 
             if(m_machineController->play() == true){
 
-                printf("print continued\n");
+                printf("print continued\r\n");
                 return 0;
             }
 
             else{
 
-                printf("print couldn't be continued\n");
+                printf("print couldn't be continued\r\n");
                 return 0;
             }
         }
@@ -189,9 +189,9 @@ int CommandlineUI::checkCommands()
                 }
             }
 
-            m_machineController->g0(x, y, z, e, s);
+            m_machineController->g0(x, y, z, e, -1.0, s);
 
-            printf("drive to X%e Y%e Z%e E%e with the endstop behavior %d\n", (double)(x), (double)(y), (double)(z), (double)(e), s);
+            printf("drive to X%e Y%e Z%e E%e with the endstop behavior %d\r\n", (double)(x), (double)(y), (double)(z), (double)(e), s);
             return 0;
         }
 
@@ -208,19 +208,19 @@ int CommandlineUI::checkCommands()
 
 void CommandlineUI::printhelp()
 {
-    printf("commands for the Printersoftware:\n\n");
+    printf("commands for the Printersoftware:\r\n\n");
 
-    printf("settings:\n\n");
-    printf("\tsetfile   \t<filepath> sets the filepath\n");
-    printf("\tsetline   \t<linenumber> sets the linenumber at which to start\n");
+    printf("settings:\r\n\n");
+    printf("\tsetfile   \t<filepath> sets the filepath\r\n");
+    printf("\tsetline   \t<linenumber> sets the linenumber at which to start\r\n");
 
-    printf("controls:\n\n");
-    printf("\texit      \texits the Printersoftware and goes back to the terminal\n");
-    printf("\tprint     \tstarts the print with the given parameters\n");
-    printf("\tpause     \tpauses the print\n");
-    printf("\tplay      \tcontinues the print\n");
-    printf("\treset     \tresets all set values\n");
+    printf("controls:\r\n\n");
+    printf("\texit      \texits the Printersoftware and goes back to the terminal\r\n");
+    printf("\tprint     \tstarts the print with the given parameters\r\n");
+    printf("\tpause     \tpauses the print\r\n");
+    printf("\tplay      \tcontinues the print\r\n");
+    printf("\treset     \tresets all set values\r\n");
 
     printf("gcode commands:\n\n");
-    printf("\tg0        \t[X<xvalue>] [Y<yvalue>] [Z<zvalue>] [E<evalue>] [S<svalue>] drives to the given position with top speed\n");
+    printf("\tg0        \t[X<xvalue>] [Y<yvalue>] [Z<zvalue>] [E<evalue>] [S<svalue>] drives to the given position with top speed\r\n");
 }

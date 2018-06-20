@@ -43,6 +43,8 @@ int main(int argc, char *argv[])
 
         QObject::connect(&c, SIGNAL(error(QString)), &w, SLOT(displayErrorMessage(QString)));
         QObject::connect(&io, SIGNAL(error(QString)), &w, SLOT(displayErrorMessage(QString)));
+        QObject::connect(&w, SIGNAL(destroyed()), sysThread, SLOT(quit()));
+        QObject::connect(&w, SIGNAL(destroyed()), ioThread, SLOT(quit()));
         w.show();
     }
 
@@ -52,6 +54,8 @@ int main(int argc, char *argv[])
 
         cmd.moveToThread(cmdThread);
         QObject::connect(cmdThread, SIGNAL(started()), &cmd, SLOT(mainLoop()));
+        QObject::connect(cmdThread, SIGNAL(finished()), ioThread, SLOT(quit()));
+        QObject::connect(cmdThread, SIGNAL(finished()), sysThread, SLOT(quit()));
         cmdThread->start();
     }
 

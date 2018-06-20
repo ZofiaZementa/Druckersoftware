@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QUrl>
+#include <QBuffer>
+#include <QFile>
 
 class GCodeReader : public QObject
 {
@@ -58,6 +60,7 @@ signals:
 
 public slots:
 
+    bool startReading();
     void nextLine();
     void clear();
 
@@ -69,6 +72,9 @@ private:
     qreal *m_unit;
     int *m_lineNumber;
     QUrl *m_filePath;
+    QByteArray *m_file;
+    QBuffer *m_buffer;
+    qint64 *m_pos;
 };
 
 #endif // GCODEREADER_H

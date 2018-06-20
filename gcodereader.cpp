@@ -1,5 +1,4 @@
 #include "gcodereader.h"
-#include <QFile>
 
 GCodeReader::GCodeReader(QObject *parent) : QObject(parent)
 {
@@ -9,6 +8,8 @@ GCodeReader::GCodeReader(QObject *parent) : QObject(parent)
     m_lineNumber = new int;
     m_filePath = new QUrl;
     m_unit = new qreal;
+    m_file = new QByteArray;
+    m_buffer = new QBuffer;
 
     *m_lineNumber = 0;
     *m_unit = 1.0;
@@ -17,17 +18,23 @@ GCodeReader::GCodeReader(QObject *parent) : QObject(parent)
 GCodeReader::~GCodeReader()
 {
 
+    m_file->clear();
+
     //deleting pointers
 
     delete m_lineNumber;
     delete m_filePath;
     delete m_unit;
+    delete m_file;
+    delete m_buffer;
 
     //setting the pointers to NULL
 
     m_lineNumber = NULL;
     m_filePath = NULL;
     m_unit = NULL;
+    m_file = NULL;
+    m_buffer = NULL;
 }
 
 void GCodeReader::setLineNumber(int lineNumber)
@@ -62,6 +69,22 @@ QUrl GCodeReader::filePath()
     return *m_filePath;
 }
 
+bool GCodeReader::startReading()
+{
+    QFile file(m_filePath->toString());
+
+    if(file.open(QIODevice::ReadOnly) == false){
+
+        emit error(QString("File doesn't exist or is open in another program"));
+        return false;
+    }
+
+    *m_file = file.readAll();
+    file.close();
+
+    m_buffer->setBuffer(m_file);
+}
+
 void GCodeReader::nextLine()
 {
 
@@ -79,20 +102,15 @@ void GCodeReader::clear()
 
 bool GCodeReader::readline(int lineNumber)
 {
-    QFile file(m_filePath->toString());
 
-    if(file.open(QIODevice::ReadOnly) == false){
+    m_buffer->open(QIODevice::ReadOnly);
 
-        emit error(QString("File doesn't exist or is open in another program"));
-        return false;
-    }
+    if(m_buffer->seek(lineNumber) == true);
 
-    file.seek(lineNumber);
-
-    QByteArray line = file.readLine();
+    QByteArray line = m_buffer->readLine();
     QStringList lineParts = breakUpString(QString(line));
 
-    file.close();
+    m_buffer->close();
 
     //check if the command is g0
     if(lineParts.at(0) == QString("G0") || lineParts.at(0) == QString("g0")){

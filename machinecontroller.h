@@ -38,7 +38,7 @@ public:
 
 public slots:
 
-    bool g0(qreal x, qreal y, qreal z, qreal e, int s);    //rapid linear move
+    bool g0(qreal x, qreal y, qreal z, qreal e, qreal f, int s);    //rapid linear move
     bool g1(qreal x, qreal y, qreal z, qreal e, qreal f, int s);    //linear move
     bool g2(qreal x, qreal y, qreal i, qreal j, qreal e, qreal f);    //clockwise arc
     bool g3(qreal x, qreal y, qreal i, qreal j, qreal e, qreal f);    //counter-clockwise arc
