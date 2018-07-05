@@ -89,6 +89,7 @@ public slots:
 signals:
 
     void error(QString errorMessage);
+    void logEntry(QString logMessage, QString code);
 
 private:
 

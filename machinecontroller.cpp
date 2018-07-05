@@ -85,6 +85,9 @@ MachineController::MachineController(QObject *parent) : QObject(parent)
     QObject::connect(m_gCodeReader, SIGNAL(m203(qreal,qreal,qreal,qreal)), this, SLOT(m203(qreal,qreal,qreal,qreal)));
     QObject::connect(m_gCodeReader, SIGNAL(m204(qreal,qreal)), this, SLOT(m204(qreal,qreal)));
     QObject::connect(m_gCodeReader, SIGNAL(m400()), this, SLOT(m400()));
+
+    bool ok;
+    emit logEntry("MachineController succesfully started", QString("0x000001").toInt(&ok, 16));
 }
 
 MachineController::~MachineController()
@@ -108,6 +111,7 @@ MachineController::~MachineController()
     m_printerBedXAxisTilt = NULL;
     m_printerBedYAxisTilt = NULL;
 
+    emit logEntry("MachineController exited successfully", 0);
 }
 
 //returns m_positioningMode

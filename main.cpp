@@ -1,7 +1,7 @@
-#include "controlwindow.h"
+#include "UI/controlwindow.h"
 #include "machinecontroller.h"
 #include "iocontroller.h"
-#include "commandlineui.h"
+#include "UI/commandlineui.h"
 #include <QApplication>
 #include <QThread>
 #include <QDebug>

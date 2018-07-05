@@ -24,7 +24,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        controlwindow.cpp \
     machinecontroller.cpp \
     gcodereader.cpp \
     serialinterface.cpp \
@@ -33,10 +32,12 @@ SOURCES += \
     sensorlistener.cpp \
     fancontroller.cpp \
     iocontroller.cpp \
-    commandlineui.cpp
+    Logging/logfile.cpp \
+    Logging/logger.cpp \
+    UI/commandlineui.cpp \
+    UI/controlwindow.cpp
 
 HEADERS += \
-        controlwindow.h \
     machinecontroller.h \
     gcodereader.h \
     serialinterface.h \
@@ -45,7 +46,10 @@ HEADERS += \
     sensorlistener.h \
     fancontroller.h \
     iocontroller.h \
-    commandlineui.h
+    Logging/logfile.h \
+    Logging/logger.h \
+    UI/commandlineui.h \
+    UI/controlwindow.h
 
 FORMS += \
-        controlwindow.ui
+    UI/controlwindow.ui
