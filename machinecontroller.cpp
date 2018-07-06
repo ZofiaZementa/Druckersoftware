@@ -87,7 +87,7 @@ MachineController::MachineController(QObject *parent) : QObject(parent)
     QObject::connect(m_gCodeReader, SIGNAL(m400()), this, SLOT(m400()));
 
     bool ok;
-    emit logEntry("MachineController succesfully started", QString("0x000001").toInt(&ok, 16));
+    emit logEntry("MachineController started successfully", QString("0x000001").toInt(&ok, 16));
 }
 
 MachineController::~MachineController()
@@ -588,7 +588,10 @@ void MachineController::xAxisPositiveEndstopHit()
     //stops motors from moving
     m_motorController->stop();
 
+    bool ok;
+    emit logEntry(QString("Positive endstop on the x-axis hit"), QString("0x00FFFF").toInt(&ok, 16));
     emit error(QString("Positive endstop on the x-axis hit"));
+
     return;
 }
 
@@ -607,7 +610,10 @@ void MachineController::xAxisNegativeEndstopHit()
 
     else{
 
+        bool ok;
+        emit logEntry(QString("Negative endstop on the x-axis hit"), QString("0x00FFFE").toInt(&ok, 16));
         emit error(QString("Negative endstop on the x-axis hit"));
+
         return;
     }
 }
@@ -618,7 +624,10 @@ void MachineController::yAxisPositiveEndstopHit()
     //stops motors from moving
     m_motorController->stop();
 
+    bool ok;
+    emit logEntry(QString("Positive enstop on the y-axis hit"), QString("0x00FFFD").toInt(&ok, 16));
     emit error(QString("Positive enstop on the y-axis hit"));
+
     return;
 }
 
@@ -637,7 +646,10 @@ void MachineController::yAxisNegativeEndstopHit()
 
     else{
 
+        bool ok;
+        emit logEntry(QString("Negative endstop on the y-axis hit"), QString("0x00FFFC").toInt(&ok, 16));
         emit error(QString("Negative endstop on the y-axis hit"));
+
         return;
     }
 }
@@ -648,7 +660,10 @@ void MachineController::zAxisPositiveEndstopHit()
     //stops motors from moving
     m_motorController->stop();
 
-        emit error(QString("Positive endstop on the z-axis hit"));
+    bool ok;
+    emit logEntry(QString("Positive endstop on the z-axis hit"), QString("0x00FFFB").toInt(&ok, 16));
+    emit error(QString("Positive endstop on the z-axis hit"));
+
     return;
 }
 
@@ -673,6 +688,8 @@ void MachineController::zAxisNegativeEndstopHit()
 
     else{
 
+        bool ok;
+        emit logEntry(QString("Negative endstop on the z-axis hit"), QString("0x00FFFA").toInt(&ok, 16));
         emit error(QString("Negative endstop on the z-axis hit"));
         return;
     }

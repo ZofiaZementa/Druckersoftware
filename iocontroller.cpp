@@ -3,304 +3,337 @@
 IOController::IOController(QObject *parent) : QObject(parent)
 {
 
-    m_pinValues = new QList<int>;
-    m_settings = new QSettings(this);
+    bool ok;
+    emit logEntry(QString("IOController started successfully"), QString("0x020001").toInt(&ok, 16));
+}
 
+int IOController::readVariableValue(QString pinName)
+{
 
-    for(int i = 0;i < 28;i++){
+    int rc;
+    SPIVariable sPiVariable;
+    SPIValue sPIValue;
+    uint8_t i8uValue;
+    uint16_t i16uValue;
+    uint32_t i32uValue;
+    QByteArray dat = pinName.toLatin1();
 
-        m_pinValues->append(0);
+    strncpy(sPiVariable.strVarName, dat.data(), sizeof(sPiVariable.strVarName));
+    rc = piControlGetVariableInfo(&sPiVariable);
+
+    if(rc < 0){
+
+        bool ok;
+        emit logEntry(QString("Cannot find pin name %1").arg(pinName), QString("0x02FFFF").toInt(&ok, 16));
+        emit error(QString("Cannot find pin name %1").arg(pinName));
+        return 0;
     }
 
-    //wiringPiSetup();
+    if (sPiVariable.i16uLength == 1) {
 
-    pinSetup();
-}
+        sPIValue.i16uAddress = sPiVariable.i16uAddress;
+        sPIValue.i8uBit = sPiVariable.i8uBit;
+        rc = piControlGetBitValue(&sPIValue);
 
-IOController::~IOController()
-{
+        if (rc < 0){
 
-    delete m_pinValues;
-
-    m_pinValues = NULL;
-}
-
-void IOController::setPinValue(int pin, int value)
-{
-
-//    if(pin >= 2 && pin <= 27){
-
-//        if(m_settings->value("io/pinModes").toList().at(pin).toInt() == 0){
-
-//            if(value == 0){
-
-//                //digitalWrite(m_translationMatrix[pin], LOW);
-//            }
-
-//            else if(value == 1){
-
-//                //digitalWrite(m_translationMatrix[pin], HIGH);
-//            }
-//        }
-//    }
-
-//    else{
-
-//        emit error(QString("Pin does not exist"));
-//    }
-}
-
-int IOController::pinValue(int pin)
-{
-
-//    if(pin >= 2 && pin <= 27){
-
-//        if(digitalRead(m_translationMatrix[pin]) == LOW){
-
-//            if(m_pinValues->at(pin) != 0){
-
-//                (*m_pinValues)[pin] = 0;
-//                emitPinChanged(pin);
-//            }
-
-//            return 0;
-//        }
-
-//        else if(digitalRead(m_translationMatrix[pin]) == HIGH){
-
-//            if(m_pinValues->at(pin) != 1){
-
-//                (*m_pinValues)[pin] = 1;
-//                emitPinChanged(pin);
-//            }
-
-//            return 1;
-//        }
-//    }
-
-//    else{
-
-//        emit error(QString("Pin does not exist"));
-//    }
-}
-
-void IOController::mainLoop()
-{
-
-    while(true){
-
-        checkPins();
-    }
-}
-
-void IOController::checkPins()
-{
-
-    for(int i = 2;i < 28;i++){
-
-        pinValue(i);
-    }
-}
-
-void IOController::pinSetup()
-{
-
-    QList<QVariant> pinModes = m_settings->value("io/pinModes").toList();
-
-    for(int i = 0;i < pinModes.count();i++){
-
-        if(pinModes.at(i).toInt() == 0 && m_translationMatrix[i] > -1){
-
-            //pinMode(m_translationMatrix[i], INPUT);
-        }
-
-        else if(pinModes.at(i).toInt() == 1 && m_translationMatrix[i] > -1){
-
-            //pinMode(m_translationMatrix[i], OUTPUT);
-        }
-
-        else if(pinModes.at(i).toInt() == 2 && m_translationMatrix[i] > -1){
-
-            //pinMode(m_translationMatrix[i], PWM_OUTPUT);
-        }
-
-        else if(pinModes.at(i).toInt() == 3 && m_translationMatrix[i] > -1){
-
-            //pinMode(m_translationMatrix[i], GPIO_CLOCK);
+            bool ok;
+            emit logEntry(QString("Set bit error"), QString("0x02FFFE").toInt(&ok, 16));
+            emit error(QString("Set bit error"));
+            return 0;
         }
 
         else{
 
-            emit error("Wrong pinMode");
-            return;
+            bool ok;
+            emit logEntry(QString("Read value %1 at pin %2").arg((int)sPIValue.i8uValue).arg(pinName), QString("0x020004").toInt(&ok, 16));
+            return (int)sPIValue.i8uValue;
+        }
+    }
+
+    else if (sPiVariable.i16uLength == 8) {
+
+        rc = piControlRead(sPiVariable.i16uAddress, 1, (uint8_t *) & i8uValue);
+
+        if(rc < 0){
+
+            bool ok;
+            emit logEntry(QString("Read error"), QString("0x02FFFC").toInt(&ok, 16));
+            emit error(QString("Read error"));
+            return 0;
+        }
+
+        else{
+
+            bool ok;
+            emit logEntry(QString("Read value %1 at pin %2").arg((int)i8uValue).arg(pinName), QString("0x020004").toInt(&ok, 16));
+            return (int)i8uValue;
+        }
+    }
+
+    else if(sPiVariable.i16uLength == 16){
+
+        rc = piControlRead(sPiVariable.i16uAddress, 2, (uint8_t *) & i16uValue);
+
+        if (rc < 0){
+
+            bool ok;
+            emit logEntry(QString("Read error"), QString("0x02FFFC").toInt(&ok, 16));
+            emit error(QString("Read error"));
+            return 0;
+        }
+
+        else{
+
+            bool ok;
+            emit logEntry(QString("Read value %1 at pin %2").arg((int)i16uValue).arg(pinName), QString("0x020004").toInt(&ok, 16));
+            return (int)i16uValue;
+        }
+    }
+
+    else if (sPiVariable.i16uLength == 32) {
+
+        rc = piControlRead(sPiVariable.i16uAddress, 4, (uint8_t *) & i32uValue);
+
+        if (rc < 0){
+
+            bool ok;
+            emit logEntry(QString("Read error"), QString("0x02FFFC").toInt(&ok, 16));
+            emit error(QString("Read error"));
+            return 0;
+        }
+
+        else{
+
+            bool ok;
+            emit logEntry(QString("Read value %1 at pin %2").arg((int)i32uValue).arg(pinName), QString("0x020004").toInt(&ok, 16));
+            return (int)i32uValue;
+        }
+    }
+
+    else{
+
+        bool ok;
+        emit logEntry(QString("Could not read variable %1. Internal Error").arg(pinName), QString("0x02FFFB").toInt(&ok, 16));
+        emit error(QString("Could not read variable %1. Internal Error").arg(pinName));
+        return 0;
+    }
+}
+
+bool IOController::writeVariableValue(QString pinName, int value)
+{
+
+    int rc;
+    SPIVariable sPiVariable;
+    SPIValue sPIValue;
+    uint8_t i8uValue;
+    uint16_t i16uValue;
+    QByteArray dat = pinName.toLatin1();
+
+    strncpy(sPiVariable.strVarName, dat.data(), sizeof(sPiVariable.strVarName));
+    rc = piControlGetVariableInfo(&sPiVariable);
+
+    if(rc < 0){
+
+        bool ok;
+        emit logEntry(QString("Cannot find pin name %1").arg(pinName), QString("0x02FFFF").toInt(&ok, 16));
+        emit error(QString("Cannot find pin name %1").arg(pinName));
+        return false;
+    }
+
+    if(sPiVariable.i16uLength == 1){
+
+        sPIValue.i16uAddress = sPiVariable.i16uAddress;
+        sPIValue.i8uBit = sPiVariable.i8uBit;
+        sPIValue.i8uValue = (uint8_t)(value);
+        rc = piControlSetBitValue(&sPIValue);
+
+        if(rc < 0){
+
+            bool ok;
+            emit logEntry(QString("Set bit error"), QString("0x02FFFE").toInt(&ok, 16));
+            emit error(QString("Set bit error"));
+            return false;
+        }
+
+        else{
+
+            bool ok;
+            emit logEntry(QString("Set bit %1 on byte at offset %2. Value %3").arg(sPIValue.i8uBit).arg(sPIValue.i16uAddress).arg(sPIValue.i8uValue), QString("0x0020002").toInt(&ok, 16));
+            return true;
+        }
+    }
+
+    else if(sPiVariable.i16uLength == 8){
+
+        i8uValue = (uint8_t)value;
+        rc = piControlWrite(sPiVariable.i16uAddress, 1, (uint8_t *) & i8uValue);
+
+        if(rc < 0){
+
+            bool ok;
+            emit logEntry(QString("Write error"), QString("0x02FFFD").toInt(&ok, 16));
+            emit error(QString("Write error"));
+            return false;
+        }
+
+        else{
+
+            bool ok;
+            emit logEntry(QString("Write value %1 dez to offset %3").arg(i8uValue).arg(i8uValue).arg(sPiVariable.i16uAddress), QString("0x0020003").toInt(&ok, 16));
+            return true;
+        }
+    }
+
+    else if(sPiVariable.i16uLength == 16){
+
+        i16uValue = (uint16_t)value;
+        rc = piControlWrite(sPiVariable.i16uAddress, 2, (uint8_t *) & i16uValue);
+
+        if(rc < 0){
+
+            bool ok;
+            emit logEntry(QString("Write error"), QString("0x02FFFD").toInt(&ok, 16));
+            emit error(QString("Write error"));
+            return false;
+        }
+
+        else{
+
+            bool ok;
+            emit logEntry(QString("Write value %1 dez to offset %3").arg(i16uValue).arg(i16uValue).arg(sPiVariable.i16uAddress), QString("0x0020003").toInt(&ok, 16));
+            return true;
+        }
+    }
+
+    else if(sPiVariable.i16uLength == 32){
+
+        uint32_t i32uValue = (uint32_t)value;
+        rc = piControlWrite(sPiVariable.i16uAddress, 4, (uint8_t *) & i32uValue);
+
+        if (rc < 0){
+
+            bool ok;
+            emit logEntry(QString("Write error"), QString("0x02FFFD").toInt(&ok, 16));
+            emit error(QString("Write error"));
+            return false;
+        }
+
+        else{
+
+            bool ok;
+            emit logEntry(QString("Write value %1 dez to offset %3").arg((uint32_t)value).arg((uint32_t)value).arg(sPiVariable.i16uAddress), QString("0x0020003").toInt(&ok, 16));
+            return true;
         }
     }
 }
 
-void IOController::emitPinChanged(int pin)
+int IOController::piControlGetVariableInfo(SPIVariable *pSpiVariable)
 {
-    switch(pin){
 
-    case 2:{
+    piControlOpen();
 
-        emit pin02ValueChanged(m_pinValues->at(pin));
-        break;
+    if (PiControlHandle_g < 0)
+    return -ENODEV;
+
+    if (ioctl(PiControlHandle_g, KB_FIND_VARIABLE, pSpiVariable) < 0)
+    return errno;
+
+    return 0;
+}
+
+int IOController::piControlGetBitValue(SPIValue *pSpiValue)
+{
+
+    piControlOpen();
+
+    if (PiControlHandle_g < 0)
+    return -ENODEV;
+
+    pSpiValue->i16uAddress += pSpiValue->i8uBit / 8;
+    pSpiValue->i8uBit %= 8;
+
+    if (ioctl(PiControlHandle_g, KB_GET_VALUE, pSpiValue) < 0)
+    return errno;
+
+    return 0;
+}
+
+int IOController::piControlRead(uint32_t Offset, uint32_t Length, uint8_t *pData)
+{
+
+    int BytesRead = 0;
+
+    piControlOpen();
+
+    if (PiControlHandle_g < 0)
+    return -ENODEV;
+
+    /* seek */
+    if (lseek(PiControlHandle_g, Offset, SEEK_SET) < 0)
+    {
+    return errno;
     }
 
-    case 3:{
-
-        emit pin03ValueChanged(m_pinValues->at(pin));
-        break;
+    /* read */
+    BytesRead = read(PiControlHandle_g, pData, Length);
+    if (BytesRead < 0)
+    {
+    return errno;
     }
 
-    case 4:{
+    return BytesRead;
+}
 
-        emit pin04ValueChanged(m_pinValues->at(pin));
-        break;
+int IOController::piControlWrite(uint32_t Offset, uint32_t Length, uint8_t *pData)
+{
+
+    int BytesWritten = 0;
+
+    piControlOpen();
+
+    if (PiControlHandle_g < 0)
+    return -ENODEV;
+
+    /* seek */
+    if (lseek(PiControlHandle_g, Offset, SEEK_SET) < 0)
+    {
+    return errno;
     }
 
-    case 5:{
-
-        emit pin05ValueChanged(m_pinValues->at(pin));
-        break;
+    /* Write */
+    BytesWritten = write(PiControlHandle_g, pData, Length);
+    if (BytesWritten < 0)
+    {
+    return errno;
     }
 
-    case 6:{
+    return BytesWritten;
+}
 
-        emit pin06ValueChanged(m_pinValues->at(pin));
-        break;
+void IOController::piControlOpen()
+{
+
+    /* open handle if needed */
+    if (PiControlHandle_g < 0){
+
+        PiControlHandle_g = open(PICONTROL_DEVICE, O_RDWR);
     }
+}
 
-    case 7:{
+int IOController::piControlSetBitValue(SPIValue *pSpiValue)
+{
 
-        emit pin07ValueChanged(m_pinValues->at(pin));
-        break;
-    }
+    piControlOpen();
 
-    case 8:{
+    if (PiControlHandle_g < 0)
+    return -ENODEV;
 
-        emit pin08ValueChanged(m_pinValues->at(pin));
-        break;
-    }
+    pSpiValue->i16uAddress += pSpiValue->i8uBit / 8;
+    pSpiValue->i8uBit %= 8;
 
-    case 9:{
+    if (ioctl(PiControlHandle_g, KB_SET_VALUE, pSpiValue) < 0)
+    return errno;
 
-        emit pin09ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 10:{
-
-        emit pin10ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 11:{
-
-        emit pin11ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 12:{
-
-        emit pin12ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 13:{
-
-        emit pin13ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 14:{
-
-        emit pin14ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 15:{
-
-        emit pin15ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 16:{
-
-        emit pin16ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 17:{
-
-        emit pin17ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 18:{
-
-        emit pin18ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 19:{
-
-        emit pin19ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 20:{
-
-        emit pin20ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 21:{
-
-        emit pin21ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 22:{
-
-        emit pin22ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 23:{
-
-        emit pin23ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 24:{
-
-        emit pin24ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 25:{
-
-        emit pin25ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 26:{
-
-        emit pin26ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    case 27:{
-
-        emit pin27ValueChanged(m_pinValues->at(pin));
-        break;
-    }
-
-    default:{
-
-        emit error(QString("Pin does not exist"));
-    }
-
-    }
+    return 0;
 }

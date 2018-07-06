@@ -49,7 +49,8 @@ HEADERS += \
     Logging/logfile.h \
     Logging/logger.h \
     UI/commandlineui.h \
-    UI/controlwindow.h
+    UI/controlwindow.h \
+    piControl.h
 
 FORMS += \
     UI/controlwindow.ui
