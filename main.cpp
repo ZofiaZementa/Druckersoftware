@@ -1,7 +1,12 @@
 #include "UI/controlwindow.h"
 #include "machinecontroller.h"
-#include "iocontroller.h"
+#include "IO/heatingcontroller.h"
+#include "IO/sensorlistener.h"
+#include "IO/fancontroller.h"
+#include "IO/iocontroller.h"
+#include "IO/iomainloop.h"
 #include "UI/commandlineui.h"
+#include "Logging/logger.h"
 #include <QApplication>
 #include <QThread>
 #include <QDebug>
@@ -29,15 +34,38 @@ int main(int argc, char *argv[])
     QThread *ioThread = new QThread;
     MachineController c;
     IOController io;
+    SensorListener sl;
+    HeatingController hc;
+    FanController fc;
     ControlWindow w;
     QThread *cmdThread = new QThread;
     CommandlineUI cmd;
-
+    Logger l;
+    IOMainLoop ioml;
 
     c.moveToThread(sysThread);
+    l.moveToThread(sysThread);
     io.moveToThread(ioThread);
+    sl.moveToThread(ioThread);
+    hc.moveToThread(ioThread);
+    fc.moveToThread(ioThread);
+    ioml.moveToThread(ioThread);
 
-    QObject::connect(ioThread, SIGNAL(started()), &io, SLOT(mainLoop()));
+    ioml.setFanController(&fc);
+    ioml.setHeatingController(&hc);
+    ioml.setSensorListener(&sl);
+    ioml.setIOController(&io);
+
+    QObject::connect(&sl, SIGNAL(logEntry(QString,int)), &l, SLOT(log(QString,int)));
+    QObject::connect(&io, SIGNAL(logEntry(QString,int)), &l, SLOT(log(QString,int)));
+    QObject::connect(&ioml, SIGNAL(logEntry(QString,int)), &l, SLOT(log(QString,int)));
+    QObject::connect(&c, SIGNAL(logEntry(QString, int)), &l, SLOT(log(QString,int)));
+    QObject::connect(&sl, SIGNAL(xAxisPositiveEndstopHit()), &c, SLOT(xAxisPositiveEndstopHit()));
+    QObject::connect(&sl, SIGNAL(xAxisNegativeEndstopHit()), &c, SLOT(xAxisNegativeEndstopHit()));
+    QObject::connect(&sl, SIGNAL(yAxisPositiveEndstopHit()), &c, SLOT(yAxisPositiveEndstopHit()));
+    QObject::connect(&sl, SIGNAL(yAxisNegativeEndstopHit()), &c, SLOT(yAxisNegativeEndstopHit()));
+    QObject::connect(&sl, SIGNAL(zAxisPositiveEndstopHit()), &c, SLOT(zAxisPositiveEndstopHit()));
+    QObject::connect(&sl, SIGNAL(zAxisNegativeEndstopHit()), &c, SLOT(zAxisNegativeEndstopHit()));
 
     if(gui == true){
 
@@ -51,7 +79,7 @@ int main(int argc, char *argv[])
     else{
 
         cmd.setMachineController(&c);
-
+        cmd.setIOController(&io);
         cmd.moveToThread(cmdThread);
         QObject::connect(cmdThread, SIGNAL(started()), &cmd, SLOT(mainLoop()));
         QObject::connect(cmdThread, SIGNAL(finished()), ioThread, SLOT(quit()));

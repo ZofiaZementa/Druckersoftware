@@ -30,7 +30,7 @@ signals:
 public slots:
 
     QStringList readFile(QString fileName) const;
-    void log(int code, QString logMessage);
+    void log(QString logMessage, int code);
 
 private:
 

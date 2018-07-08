@@ -2,12 +2,15 @@
 #define SENSORLISTENER_H
 
 #include <QObject>
+#include "iocontroller.h"
 
 class SensorListener : public QObject
 {
     Q_OBJECT
 public:
     explicit SensorListener(QObject *parent = nullptr);
+
+    void checkChanged(IOController *iOController);
 
 signals:
 
@@ -17,8 +20,12 @@ signals:
     void yAxisNegativeEndstopHit();
     void zAxisPositiveEndstopHit();
     void zAxisNegativeEndstopHit();
+    void logEntry(QString logMessage, int code);
 
-public slots:
+private:
+
+    QList<int> *m_values;
+
 };
 
 #endif // SENSORLISTENER_H

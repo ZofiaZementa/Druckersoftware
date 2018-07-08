@@ -11,6 +11,12 @@ void CommandlineUI::setMachineController(MachineController *machineController)
     m_machineController = machineController;
 }
 
+void CommandlineUI::setIOController(IOController *iOController)
+{
+
+    m_iOController = iOController;
+}
+
 void CommandlineUI::mainLoop()
 {
 
@@ -136,11 +142,48 @@ int CommandlineUI::checkCommands()
             }
         }
 
-        else if(input.at(i) == QString("play")){
+        else if(input.at(i) == QString("reset")){
 
             m_machineController->reset();
             printf("all values reset\n");
             return 0;
+        }
+
+        else if(input.at(i) == QString("write")){
+
+            if(input.count() == i + 3){
+
+                bool ok;
+
+                if(m_iOController->writeVariableValue(input.at(i), input.at(i).toInt(&ok, 10)) == true && ok == true){
+
+                    return 1;
+                }
+
+                else{
+
+                    return 2;
+                }
+            }
+
+            else{
+
+                return 2;
+            }
+        }
+
+        else if(input.at(i) == QString("read")){
+
+            if(input.count() == i + 2){
+
+                printf("value: %d\r\n", m_iOController->readVariableValue(input.at(i)));
+                return 1;
+            }
+
+            else{
+
+                return 2;
+            }
         }
 
         else if(input.at(i) == QString("g0")){
@@ -220,6 +263,10 @@ void CommandlineUI::printhelp()
     printf("\tpause     \tpauses the print\r\n");
     printf("\tplay      \tcontinues the print\r\n");
     printf("\treset     \tresets all set values\r\n");
+
+    printf("io controls:\r\n\n");
+    printf("\twrite     \t<pinName> <value>\r\n");
+    printf("\tread      \t<pinName>");
 
     printf("gcode commands:\n\n");
     printf("\tg0        \t[X<xvalue>] [Y<yvalue>] [Z<zvalue>] [E<evalue>] [S<svalue>] drives to the given position with top speed\r\n");

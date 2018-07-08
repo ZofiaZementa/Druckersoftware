@@ -6,11 +6,8 @@
 #include <QUrl>
 #include <QSettings>
 #include <QTimer>
-#include "fancontroller.h"
 #include "gcodereader.h"
 #include "motorcontroller.h"
-#include "heatingcontroller.h"
-#include "sensorlistener.h"
 #include "serialinterface.h"
 
 class MachineController : public QObject
@@ -106,11 +103,8 @@ private:
     QList<qreal> *m_printerBedMeasurements;
     qreal *m_printerBedXAxisTilt;
     qreal *m_printerBedYAxisTilt;
-    FanController *m_fanController;
     GCodeReader *m_gCodeReader;
     MotorController *m_motorController;
-    HeatingController *m_heatingController;
-    SensorListener *m_sensorListener;
     SerialInterface *m_serialInterface;
     QSettings *m_settings;
 

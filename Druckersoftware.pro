@@ -28,29 +28,31 @@ SOURCES += \
     gcodereader.cpp \
     serialinterface.cpp \
     motorcontroller.cpp \
-    heatingcontroller.cpp \
-    sensorlistener.cpp \
-    fancontroller.cpp \
-    iocontroller.cpp \
     Logging/logfile.cpp \
     Logging/logger.cpp \
     UI/commandlineui.cpp \
-    UI/controlwindow.cpp
+    UI/controlwindow.cpp \
+    IO/fancontroller.cpp \
+    IO/heatingcontroller.cpp \
+    IO/iocontroller.cpp \
+    IO/sensorlistener.cpp \
+    IO/iomainloop.cpp
 
 HEADERS += \
     machinecontroller.h \
     gcodereader.h \
     serialinterface.h \
     motorcontroller.h \
-    heatingcontroller.h \
-    sensorlistener.h \
-    fancontroller.h \
-    iocontroller.h \
     Logging/logfile.h \
     Logging/logger.h \
     UI/commandlineui.h \
     UI/controlwindow.h \
-    piControl.h
+    IO/fancontroller.h \
+    IO/heatingcontroller.h \
+    IO/iocontroller.h \
+    IO/piControl.h \
+    IO/sensorlistener.h \
+    IO/iomainloop.h
 
 FORMS += \
     UI/controlwindow.ui

@@ -20,11 +20,8 @@ MachineController::MachineController(QObject *parent) : QObject(parent)
     m_printerBedMeasurements = new QList<qreal>;    //holds the printerbed measurements used to calculate the printerbed tilt
     m_printerBedXAxisTilt = new qreal;    //holds the tilt of the printerbed in the x-axis direction in radiants
     m_printerBedYAxisTilt = new qreal;    //holds the tilt of the printerbed in the y-axis direction in radiants
-    m_fanController = new FanController(this);
     m_gCodeReader = new GCodeReader(this);
     m_motorController = new MotorController(this);
-    m_heatingController = new HeatingController(this);
-    m_sensorListener = new SensorListener(this);
     m_serialInterface = new SerialInterface(this);
     m_settings = new QSettings(this);
 
@@ -38,15 +35,6 @@ MachineController::MachineController(QObject *parent) : QObject(parent)
     *m_printerBedYAxisTilt = 0.0;    
 
     //Signals and Slots
-
-    //connecting the SensorListener
-
-    QObject::connect(m_sensorListener, SIGNAL(xAxisPositiveEndstopHit()), this, SLOT(xAxisPositiveEndstopHit()));
-    QObject::connect(m_sensorListener, SIGNAL(xAxisNegativeEndstopHit()), this, SLOT(xAxisNegativeEndstopHit()));
-    QObject::connect(m_sensorListener, SIGNAL(yAxisPositiveEndstopHit()), this, SLOT(yAxisPositiveEndstopHit()));
-    QObject::connect(m_sensorListener, SIGNAL(yAxisNegativeEndstopHit()), this, SLOT(yAxisNegativeEndstopHit()));
-    QObject::connect(m_sensorListener, SIGNAL(zAxisPositiveEndstopHit()), this, SLOT(zAxisPositiveEndstopHit()));
-    QObject::connect(m_sensorListener, SIGNAL(zAxisNegativeEndstopHit()), this, SLOT(zAxisNegativeEndstopHit()));
 
     //connecting the MotorController
 

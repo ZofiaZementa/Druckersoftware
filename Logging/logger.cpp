@@ -115,7 +115,7 @@ QStringList Logger::readFile(QString fileName) const
     return output;
 }
 
-void Logger::log(int code, QString logMessage)
+void Logger::log(QString logMessage, int code)
 {
 
     QList<QVariant> typesList = m_settings->value("logger/types").toList();
