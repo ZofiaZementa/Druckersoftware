@@ -56,6 +56,7 @@ signals:
     void m400();    //wait for current moves to finish
     void lineNumberChanged(int lineNumber);
     void filePathChanged(QUrl filePath);
+    void logEntry(QString logMessage, int code);
     void error(QString errorMessage);
 
 public slots:

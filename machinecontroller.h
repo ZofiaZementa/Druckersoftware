@@ -66,6 +66,7 @@ public slots:
     void m204(qreal p, qreal t);    //set default acceleration
     void m400();    //wait for current moves to finish
     void errorOccured(QString errorMessage);
+    void logEntryOccured(QString logMessage, int code);
     void calibratePosition();
     void calibrateBed();
     void movementFinished();

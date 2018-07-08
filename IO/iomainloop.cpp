@@ -32,6 +32,8 @@ void IOMainLoop::setIOController(IOController *iOController)
 void IOMainLoop::startMainLoop()
 {
 
+    bool ok;
+    emit logEntry(QString("Successfully started IOMainLoop"), QString("0x060002").toInt(&ok, 16));
     mainLoop();
 }
 

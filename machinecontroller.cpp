@@ -73,6 +73,7 @@ MachineController::MachineController(QObject *parent) : QObject(parent)
     QObject::connect(m_gCodeReader, SIGNAL(m203(qreal,qreal,qreal,qreal)), this, SLOT(m203(qreal,qreal,qreal,qreal)));
     QObject::connect(m_gCodeReader, SIGNAL(m204(qreal,qreal)), this, SLOT(m204(qreal,qreal)));
     QObject::connect(m_gCodeReader, SIGNAL(m400()), this, SLOT(m400()));
+    QObject::connect(m_gCodeReader, SIGNAL(logEntry(QString,int)), this, SLOT(logEntryOccured(QString,int)));
 
     bool ok;
     emit logEntry("MachineController started successfully", QString("0x000001").toInt(&ok, 16));
@@ -502,6 +503,12 @@ void MachineController::errorOccured(QString errorMessage)
 {
 
     emit error(errorMessage);
+}
+
+void MachineController::logEntryOccured(QString logMessage, int code)
+{
+
+    emit logEntry(logMessage, code);
 }
 
 void MachineController::calibratePosition()
