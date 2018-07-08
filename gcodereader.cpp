@@ -66,7 +66,7 @@ void GCodeReader::setFilePath(QUrl filePath)
 
         *m_filePath = filePath;
         bool ok;
-        emit logEntry(QString("Set filepath to %1").arg(filePath), QString("0x070002").toInt(&ok, 16));
+        emit logEntry(QString("Set filepath to %1").arg(filePath.toString()), QString("0x070002").toInt(&ok, 16));
         emit filePathChanged(*m_filePath);
     }
 }
