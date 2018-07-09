@@ -80,6 +80,7 @@ int main(int argc, char *argv[])
 
         cmd.setMachineController(&c);
         cmd.setIOController(&io);
+        cmd.setLogger(&l);
         cmd.moveToThread(cmdThread);
         QObject::connect(cmdThread, SIGNAL(started()), &cmd, SLOT(mainLoop()));
         QObject::connect(cmdThread, SIGNAL(finished()), ioThread, SLOT(quit()));

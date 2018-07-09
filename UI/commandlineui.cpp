@@ -17,6 +17,12 @@ void CommandlineUI::setIOController(IOController *iOController)
     m_iOController = iOController;
 }
 
+void CommandlineUI::setLogger(Logger *logger)
+{
+
+    m_logger = logger;
+}
+
 void CommandlineUI::mainLoop()
 {
 
@@ -186,6 +192,132 @@ int CommandlineUI::checkCommands()
             }
         }
 
+        else if(input.at(i) == QString("addlog")){
+
+            QList<int> types;
+            QString logName;
+            bool ok;
+
+            if(input.count() >= 3){
+
+                logName = input.at(1);
+
+                for(int n = 2;n < input.count();n++){
+
+                    types.append(input.at(n).toInt(&ok, 10));
+
+                    if(ok == false){
+
+                        return 2;
+                    }
+                }
+            }
+
+            else{
+
+                return 2;
+            }
+
+            m_logger->addLog(types, logName);
+        }
+
+        else if(input.at(i) == QString("editlog")){
+
+            QList<int> types;
+            QString logName;
+            bool ok;
+
+            if(input.count() >= 3){
+
+                logName = input.at(1);
+
+                for(int n = 2;n < input.count();n++){
+
+                    types.append(input.at(n).toInt(&ok, 10));
+
+                    if(ok == false){
+
+                        return 2;
+                    }
+                }
+            }
+
+            else{
+
+                return 2;
+            }
+
+            m_logger->editLog(types, logName);
+        }
+
+        else if(input.at(i) == QString("dellog")){
+
+            QString logName;
+
+            if(input.count() == 2){
+
+                logName = input.at(i);
+            }
+
+            else{
+
+                return 2;
+            }
+
+            m_logger->deleteLog(logName);
+        }
+
+        else if(input.at(i) == QString("setlfpath")){
+
+            QString folderPath;
+
+            if(input.count() == 2){
+
+                folderPath = input.at(i);
+            }
+
+            else{
+
+                return 2;
+            }
+
+            m_logger->setLogFolderPath(folderPath);
+        }
+
+        else if(input.at(i) == QString("chnglfpath")){
+
+            QString folderPath;
+
+            if(input.count() == 2){
+
+                folderPath = input.at(i);
+            }
+
+            else{
+
+                return 2;
+            }
+
+            m_logger->changeLogFolderPath(folderPath);
+        }
+
+        else if(input.at(i) == QString("lfpath")){
+
+            QByteArray output;
+
+            if(input.count() == 2){
+
+                output = m_logger->logFolderPath().toLatin1();
+            }
+
+            else{
+
+                return 2;
+            }
+
+            printf("log folder path: %s", output.data());
+        }
+
         else if(input.at(i) == QString("g0")){
 
             qreal x = 0.0;
@@ -251,23 +383,31 @@ int CommandlineUI::checkCommands()
 
 void CommandlineUI::printhelp()
 {
-    printf("commands for the Printersoftware:\r\n\n");
+    printf("commands for the Printersoftware:\r\n\n\n");
 
     printf("settings:\r\n\n");
     printf("\tsetfile   \t<filepath> sets the filepath\r\n");
     printf("\tsetline   \t<linenumber> sets the linenumber at which to start\r\n");
 
-    printf("controls:\r\n\n");
+    printf("\ncontrols:\r\n\n");
     printf("\texit      \texits the Printersoftware and goes back to the terminal\r\n");
     printf("\tprint     \tstarts the print with the given parameters\r\n");
     printf("\tpause     \tpauses the print\r\n");
     printf("\tplay      \tcontinues the print\r\n");
     printf("\treset     \tresets all set values\r\n");
 
-    printf("io controls:\r\n\n");
+    printf("\nio controls:\r\n\n");
     printf("\twrite     \t<pinName> <value>\r\n");
-    printf("\tread      \t<pinName>");
+    printf("\tread      \t<pinName>\r\n");
 
-    printf("gcode commands:\n\n");
+    printf("\nloggercontrols:\r\n\n");
+    printf("\taddlog    \t<logName> <type1> <type2> ...\r\n");
+    printf("\teditlog   \t<logName> <type1> <type2> ...\r\n");
+    printf("\tdellog    \t<logName>\r\n");
+    printf("\tsetlfpath \t<filePath>\r\n");
+    printf("\tchnglfpath\t<filePath>\r\n");
+    printf("\tlfpath    \tprints out the log folder path\r\n");
+
+    printf("\ngcode commands:\n\n");
     printf("\tg0        \t[X<xvalue>] [Y<yvalue>] [Z<zvalue>] [E<evalue>] [S<svalue>] drives to the given position with top speed\r\n");
 }

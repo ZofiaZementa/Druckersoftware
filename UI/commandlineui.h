@@ -3,6 +3,7 @@
 
 #include "machinecontroller.h"
 #include "IO/iocontroller.h"
+#include "Logging/logger.h"
 #include <QObject>
 
 class CommandlineUI : public QObject
@@ -13,6 +14,7 @@ public:
 
     void setMachineController(MachineController *machineController);
     void setIOController(IOController *iOController);
+    void setLogger(Logger *logger);
 
 signals:
 
@@ -29,6 +31,7 @@ private:
     char *m_input[400];
     MachineController *m_machineController;
     IOController *m_iOController;
+    Logger *m_logger;
 };
 
 #endif // COMMANDLINEUI_H
