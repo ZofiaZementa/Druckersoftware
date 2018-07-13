@@ -9,6 +9,7 @@ class SensorListener : public QObject
     Q_OBJECT
 public:
     explicit SensorListener(QObject *parent = nullptr);
+    ~SensorListener();
 
     void checkChanged(IOController *iOController);
 

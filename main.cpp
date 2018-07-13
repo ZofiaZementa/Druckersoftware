@@ -5,6 +5,7 @@
 #include "IO/fancontroller.h"
 #include "IO/iocontroller.h"
 #include "IO/iomainloop.h"
+#include "IO/lightingcontroller.h"
 #include "UI/commandlineui.h"
 #include "Logging/logger.h"
 #include <QApplication>
@@ -42,6 +43,7 @@ int main(int argc, char *argv[])
     CommandlineUI cmd;
     Logger l;
     IOMainLoop ioml;
+    LightingController lc;
 
     c.moveToThread(sysThread);
     l.moveToThread(sysThread);
@@ -50,16 +52,20 @@ int main(int argc, char *argv[])
     hc.moveToThread(ioThread);
     fc.moveToThread(ioThread);
     ioml.moveToThread(ioThread);
+    lc.moveToThread(ioThread);
 
     ioml.setFanController(&fc);
     ioml.setHeatingController(&hc);
     ioml.setSensorListener(&sl);
     ioml.setIOController(&io);
+    ioml.setLightingController(&lc);
 
     QObject::connect(&sl, SIGNAL(logEntry(QString,int)), &l, SLOT(log(QString,int)));
     QObject::connect(&io, SIGNAL(logEntry(QString,int)), &l, SLOT(log(QString,int)));
     QObject::connect(&ioml, SIGNAL(logEntry(QString,int)), &l, SLOT(log(QString,int)));
     QObject::connect(&c, SIGNAL(logEntry(QString, int)), &l, SLOT(log(QString,int)));
+    QObject::connect(&lc, SIGNAL(logEntry(QString,int)), &l, SLOT(log(QString,int)));
+    QObject::connect(&c, SIGNAL(setStatusLED(int,int)), &lc, SLOT(setStatusLED(int,int)));
     QObject::connect(&sl, SIGNAL(xAxisPositiveEndstopHit()), &c, SLOT(xAxisPositiveEndstopHit()));
     QObject::connect(&sl, SIGNAL(xAxisNegativeEndstopHit()), &c, SLOT(xAxisNegativeEndstopHit()));
     QObject::connect(&sl, SIGNAL(yAxisPositiveEndstopHit()), &c, SLOT(yAxisPositiveEndstopHit()));

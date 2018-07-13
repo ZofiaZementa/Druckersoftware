@@ -9,6 +9,7 @@
 #include "gcodereader.h"
 #include "motorcontroller.h"
 #include "serialinterface.h"
+#include "IO/lightingcontroller.h"
 
 class MachineController : public QObject
 {
@@ -88,6 +89,7 @@ signals:
 
     void error(QString errorMessage);
     void logEntry(QString logMessage, int code);
+    void setStatusLED(int a1, int a2);
 
 private:
 

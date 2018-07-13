@@ -77,6 +77,7 @@ MachineController::MachineController(QObject *parent) : QObject(parent)
 
     bool ok;
     emit logEntry("MachineController started successfully", QString("0x000001").toInt(&ok, 16));
+    emit setStatusLED(1, 0);
 }
 
 MachineController::~MachineController()
@@ -101,6 +102,7 @@ MachineController::~MachineController()
     m_printerBedYAxisTilt = NULL;
 
     emit logEntry("MachineController exited successfully", 0);
+    emit setStatusLED(0, 0);
 }
 
 //returns m_positioningMode

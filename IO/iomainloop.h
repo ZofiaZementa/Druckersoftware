@@ -6,6 +6,7 @@
 #include "fancontroller.h"
 #include "heatingcontroller.h"
 #include "iocontroller.h"
+#include "lightingcontroller.h"
 
 class IOMainLoop : public QObject
 {
@@ -17,6 +18,7 @@ public:
     void setFanController(FanController *fanController);
     void setHeatingController(HeatingController *heatingController);
     void setIOController(IOController *iOController);
+    void setLightingController(LightingController *lightingController);
 
 signals:
 
@@ -34,6 +36,7 @@ private:
     FanController *m_fanController;
     HeatingController *m_heatingController;
     IOController *m_iOController;
+    LightingController *m_lightingController;
 
 };
 

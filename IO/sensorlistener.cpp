@@ -3,6 +3,15 @@
 SensorListener::SensorListener(QObject *parent) : QObject(parent)
 {
 
+    m_values = new QList<int>;
+}
+
+SensorListener::~SensorListener()
+{
+
+    delete m_values;
+
+    m_values = NULL;
 }
 
 void SensorListener::checkChanged(IOController *iOController)

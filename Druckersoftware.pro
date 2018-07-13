@@ -36,7 +36,8 @@ SOURCES += \
     IO/heatingcontroller.cpp \
     IO/iocontroller.cpp \
     IO/sensorlistener.cpp \
-    IO/iomainloop.cpp
+    IO/iomainloop.cpp \
+    IO/lightingcontroller.cpp
 
 HEADERS += \
     machinecontroller.h \
@@ -52,7 +53,8 @@ HEADERS += \
     IO/iocontroller.h \
     IO/piControl.h \
     IO/sensorlistener.h \
-    IO/iomainloop.h
+    IO/iomainloop.h \
+    IO/lightingcontroller.h
 
 FORMS += \
     UI/controlwindow.ui

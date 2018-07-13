@@ -29,6 +29,12 @@ void IOMainLoop::setIOController(IOController *iOController)
     m_iOController = iOController;
 }
 
+void IOMainLoop::setLightingController(LightingController *lightingController)
+{
+
+    m_lightingController = lightingController;
+}
+
 void IOMainLoop::startMainLoop()
 {
 
@@ -45,5 +51,6 @@ void IOMainLoop::mainLoop()
         m_fanController->checkChanged(m_iOController);
         m_heatingController->checkChanged(m_iOController);
         m_sensorListener->checkChanged(m_iOController);
+        m_lightingController->checkChanged(m_iOController);
     }
 }
