@@ -30,14 +30,17 @@ SOURCES += \
     motorcontroller.cpp \
     Logging/logfile.cpp \
     Logging/logger.cpp \
-    UI/commandlineui.cpp \
     UI/controlwindow.cpp \
     IO/fancontroller.cpp \
     IO/heatingcontroller.cpp \
     IO/iocontroller.cpp \
     IO/sensorlistener.cpp \
     IO/iomainloop.cpp \
-    IO/lightingcontroller.cpp
+    IO/lightingcontroller.cpp \
+    UI/CMD/commandlineui.cpp \
+    UI/CMD/cmduiiocontrollerinterface.cpp \
+    UI/CMD/cmduiloggerinterface.cpp \
+    UI/CMD/cmduimachinecontrollerinterface.cpp
 
 HEADERS += \
     machinecontroller.h \
@@ -46,7 +49,6 @@ HEADERS += \
     motorcontroller.h \
     Logging/logfile.h \
     Logging/logger.h \
-    UI/commandlineui.h \
     UI/controlwindow.h \
     IO/fancontroller.h \
     IO/heatingcontroller.h \
@@ -54,7 +56,11 @@ HEADERS += \
     IO/piControl.h \
     IO/sensorlistener.h \
     IO/iomainloop.h \
-    IO/lightingcontroller.h
+    IO/lightingcontroller.h \
+    UI/CMD/commandlineui.h \
+    UI/CMD/cmduiiocontrollerinterface.h \
+    UI/CMD/cmduiloggerinterface.h \
+    UI/CMD/cmduimachinecontrollerinterface.h
 
 FORMS += \
     UI/controlwindow.ui

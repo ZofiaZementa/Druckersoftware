@@ -3,8 +3,23 @@
 IOController::IOController(QObject *parent) : QObject(parent)
 {
 
+    //logEntry
+
+    //there to make the conversion from QString to int work
     bool ok;
-    emit logEntry(QString("IOController started successfully"), QString("0x020001").toInt(&ok, 16));
+    //emitting the logEntry, which is connected to the Logger
+    emit logEntry(QString("IOController exited successfully"), QString("0x020001").toInt(&ok, 16));
+}
+
+IOController::~IOController()
+{
+
+    //logEntry
+
+    //there to make the conversion from QString to int work
+    bool ok;
+    //emitting the logEntry, which is connected to the Logger
+    emit logEntry(QString("IOController exited successfully"), QString("0x020000").toInt(&ok, 16));
 }
 
 int IOController::readVariableValue(QString pinName)
@@ -23,7 +38,11 @@ int IOController::readVariableValue(QString pinName)
 
     if(rc < 0){
 
+        //logEntry
+
+        //there to make the conversion from QString to int work
         bool ok;
+        //emitting the logEntry, which is connected to the Logger
         emit logEntry(QString("Cannot find pin name %1").arg(pinName), QString("0x02FFFF").toInt(&ok, 16));
         emit error(QString("Cannot find pin name %1").arg(pinName));
         return 0;
@@ -37,7 +56,11 @@ int IOController::readVariableValue(QString pinName)
 
         if (rc < 0){
 
+            //logEntry
+
+            //there to make the conversion from QString to int work
             bool ok;
+            //emitting the logEntry, which is connected to the Logger
             emit logEntry(QString("Set bit error"), QString("0x02FFFE").toInt(&ok, 16));
             emit error(QString("Set bit error"));
             return 0;
@@ -45,7 +68,11 @@ int IOController::readVariableValue(QString pinName)
 
         else{
 
+            //logEntry
+
+            //there to make the conversion from QString to int work
             bool ok;
+            //emitting the logEntry, which is connected to the Logger
             emit logEntry(QString("Read value %1 at pin %2").arg((int)sPIValue.i8uValue).arg(pinName), QString("0x020004").toInt(&ok, 16));
             return (int)sPIValue.i8uValue;
         }
@@ -57,7 +84,11 @@ int IOController::readVariableValue(QString pinName)
 
         if(rc < 0){
 
+            //logEntry
+
+            //there to make the conversion from QString to int work
             bool ok;
+            //emitting the logEntry, which is connected to the Logger
             emit logEntry(QString("Read error"), QString("0x02FFFC").toInt(&ok, 16));
             emit error(QString("Read error"));
             return 0;
@@ -65,7 +96,11 @@ int IOController::readVariableValue(QString pinName)
 
         else{
 
+            //logEntry
+
+            //there to make the conversion from QString to int work
             bool ok;
+            //emitting the logEntry, which is connected to the Logger
             emit logEntry(QString("Read value %1 at pin %2").arg((int)i8uValue).arg(pinName), QString("0x020004").toInt(&ok, 16));
             return (int)i8uValue;
         }
@@ -77,7 +112,11 @@ int IOController::readVariableValue(QString pinName)
 
         if (rc < 0){
 
+            //logEntry
+
+            //there to make the conversion from QString to int work
             bool ok;
+            //emitting the logEntry, which is connected to the Logger
             emit logEntry(QString("Read error"), QString("0x02FFFC").toInt(&ok, 16));
             emit error(QString("Read error"));
             return 0;
@@ -85,7 +124,11 @@ int IOController::readVariableValue(QString pinName)
 
         else{
 
+            //logEntry
+
+            //there to make the conversion from QString to int work
             bool ok;
+            //emitting the logEntry, which is connected to the Logger
             emit logEntry(QString("Read value %1 at pin %2").arg((int)i16uValue).arg(pinName), QString("0x020004").toInt(&ok, 16));
             return (int)i16uValue;
         }
@@ -97,7 +140,11 @@ int IOController::readVariableValue(QString pinName)
 
         if (rc < 0){
 
+            //logEntry
+
+            //there to make the conversion from QString to int work
             bool ok;
+            //emitting the logEntry, which is connected to the Logger
             emit logEntry(QString("Read error"), QString("0x02FFFC").toInt(&ok, 16));
             emit error(QString("Read error"));
             return 0;
@@ -105,7 +152,11 @@ int IOController::readVariableValue(QString pinName)
 
         else{
 
+            //logEntry
+
+            //there to make the conversion from QString to int work
             bool ok;
+            //emitting the logEntry, which is connected to the Logger
             emit logEntry(QString("Read value %1 at pin %2").arg((int)i32uValue).arg(pinName), QString("0x020004").toInt(&ok, 16));
             return (int)i32uValue;
         }
@@ -113,7 +164,11 @@ int IOController::readVariableValue(QString pinName)
 
     else{
 
+        //logEntry
+
+        //there to make the conversion from QString to int work
         bool ok;
+        //emitting the logEntry, which is connected to the Logger
         emit logEntry(QString("Could not read variable %1. Internal Error").arg(pinName), QString("0x02FFFB").toInt(&ok, 16));
         emit error(QString("Could not read variable %1. Internal Error").arg(pinName));
         return 0;
@@ -135,7 +190,11 @@ bool IOController::writeVariableValue(QString pinName, int value)
 
     if(rc < 0){
 
+        //logEntry
+
+        //there to make the conversion from QString to int work
         bool ok;
+        //emitting the logEntry, which is connected to the Logger
         emit logEntry(QString("Cannot find pin name %1").arg(pinName), QString("0x02FFFF").toInt(&ok, 16));
         emit error(QString("Cannot find pin name %1").arg(pinName));
         return false;
@@ -150,7 +209,11 @@ bool IOController::writeVariableValue(QString pinName, int value)
 
         if(rc < 0){
 
+            //logEntry
+
+            //there to make the conversion from QString to int work
             bool ok;
+            //emitting the logEntry, which is connected to the Logger
             emit logEntry(QString("Set bit error"), QString("0x02FFFE").toInt(&ok, 16));
             emit error(QString("Set bit error"));
             return false;
@@ -158,7 +221,11 @@ bool IOController::writeVariableValue(QString pinName, int value)
 
         else{
 
+            //logEntry
+
+            //there to make the conversion from QString to int work
             bool ok;
+            //emitting the logEntry, which is connected to the Logger
             emit logEntry(QString("Set bit %1 on byte at offset %2. Value %3").arg(sPIValue.i8uBit).arg(sPIValue.i16uAddress).arg(sPIValue.i8uValue), QString("0x0020002").toInt(&ok, 16));
             return true;
         }
@@ -171,7 +238,11 @@ bool IOController::writeVariableValue(QString pinName, int value)
 
         if(rc < 0){
 
+            //logEntry
+
+            //there to make the conversion from QString to int work
             bool ok;
+            //emitting the logEntry, which is connected to the Logger
             emit logEntry(QString("Write error"), QString("0x02FFFD").toInt(&ok, 16));
             emit error(QString("Write error"));
             return false;
@@ -179,7 +250,11 @@ bool IOController::writeVariableValue(QString pinName, int value)
 
         else{
 
+            //logEntry
+
+            //there to make the conversion from QString to int work
             bool ok;
+            //emitting the logEntry, which is connected to the Logger
             emit logEntry(QString("Write value %1 dez to offset %3").arg(i8uValue).arg(i8uValue).arg(sPiVariable.i16uAddress), QString("0x0020003").toInt(&ok, 16));
             return true;
         }
@@ -192,7 +267,11 @@ bool IOController::writeVariableValue(QString pinName, int value)
 
         if(rc < 0){
 
+            //logEntry
+
+            //there to make the conversion from QString to int work
             bool ok;
+            //emitting the logEntry, which is connected to the Logger
             emit logEntry(QString("Write error"), QString("0x02FFFD").toInt(&ok, 16));
             emit error(QString("Write error"));
             return false;
@@ -200,7 +279,11 @@ bool IOController::writeVariableValue(QString pinName, int value)
 
         else{
 
+            //logEntry
+
+            //there to make the conversion from QString to int work
             bool ok;
+            //emitting the logEntry, which is connected to the Logger
             emit logEntry(QString("Write value %1 dez to offset %3").arg(i16uValue).arg(i16uValue).arg(sPiVariable.i16uAddress), QString("0x0020003").toInt(&ok, 16));
             return true;
         }
@@ -213,7 +296,11 @@ bool IOController::writeVariableValue(QString pinName, int value)
 
         if (rc < 0){
 
+            //logEntry
+
+            //there to make the conversion from QString to int work
             bool ok;
+            //emitting the logEntry, which is connected to the Logger
             emit logEntry(QString("Write error"), QString("0x02FFFD").toInt(&ok, 16));
             emit error(QString("Write error"));
             return false;
@@ -221,7 +308,11 @@ bool IOController::writeVariableValue(QString pinName, int value)
 
         else{
 
+            //logEntry
+
+            //there to make the conversion from QString to int work
             bool ok;
+            //emitting the logEntry, which is connected to the Logger
             emit logEntry(QString("Write value %1 dez to offset %3").arg((uint32_t)value).arg((uint32_t)value).arg(sPiVariable.i16uAddress), QString("0x0020003").toInt(&ok, 16));
             return true;
         }

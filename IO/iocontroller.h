@@ -17,6 +17,7 @@ class IOController : public QObject
     Q_OBJECT
 public:
     explicit IOController(QObject *parent = nullptr);
+    ~IOController();
 
 public slots:
 

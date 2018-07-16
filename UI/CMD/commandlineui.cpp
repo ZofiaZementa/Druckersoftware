@@ -5,24 +5,6 @@ CommandlineUI::CommandlineUI(QObject *parent) : QObject(parent)
 
 }
 
-void CommandlineUI::setMachineController(MachineController *machineController)
-{
-
-    m_machineController = machineController;
-}
-
-void CommandlineUI::setIOController(IOController *iOController)
-{
-
-    m_iOController = iOController;
-}
-
-void CommandlineUI::setLogger(Logger *logger)
-{
-
-    m_logger = logger;
-}
-
 void CommandlineUI::mainLoop()
 {
 
@@ -90,23 +72,25 @@ int CommandlineUI::checkCommands()
 
         else if(input.at(i) == QString("setfile")){
 
-            m_machineController->setFilePath(QUrl(input.at(i + 1)));
+            emit machineControllerSetFilePath(QUrl(input.at(i + 1)));
             printf("Filepath set to %s\r\n", input.at(i + 1).toLatin1().data());
             return 0;
         }
 
         else if(input.at(i) == QString("setline")){
 
-            m_machineController->setLine(input.at(i + 1).toInt());
+            emit machineControllerSetLine(input.at(i + 1).toInt());
             printf("filepath set to %d\r\n", input.at(i + 1).toInt());
             return 0;
         }
 
         else if(input.at(i) == QString("print")){
 
-            if(m_machineController->print() == true){
+            bool ret;
+            emit machineControllerPrint(&ret);
 
-                m_machineController->print();
+            if(ret == true){
+
                 printf("printing...\r\n");
                 return 0;
             }
@@ -120,7 +104,10 @@ int CommandlineUI::checkCommands()
 
         else if(input.at(i) == QString("pause")){
 
-            if(m_machineController->pause() == true){
+            bool ret;
+            emit machineControllerPause(&ret);
+
+            if(ret == true){
 
                 printf("print paused\r\n");
                 return 0;
@@ -135,7 +122,10 @@ int CommandlineUI::checkCommands()
 
         else if(input.at(i) == QString("play")){
 
-            if(m_machineController->play() == true){
+            bool ret;
+            emit machineControllerPlay(&ret);
+
+            if(ret == true){
 
                 printf("print continued\r\n");
                 return 0;
@@ -150,7 +140,7 @@ int CommandlineUI::checkCommands()
 
         else if(input.at(i) == QString("reset")){
 
-            m_machineController->reset();
+            emit machineControllerReset();
             printf("all values reset\n");
             return 0;
         }
@@ -160,8 +150,10 @@ int CommandlineUI::checkCommands()
             if(input.count() == i + 3){
 
                 bool ok;
+                bool ret;
+                emit iOControllerWrite(input.at(i), input.at(i).toInt(&ok, 10), &ret);
 
-                if(m_iOController->writeVariableValue(input.at(i), input.at(i).toInt(&ok, 10)) == true && ok == true){
+                if(*ret == true && ok == true){
 
                     return 1;
                 }
@@ -182,7 +174,10 @@ int CommandlineUI::checkCommands()
 
             if(input.count() == i + 2){
 
-                printf("value: %d\r\n", m_iOController->readVariableValue(input.at(i)));
+                int ret;
+                emit iOControllerRead(input.at(i), &ret);
+
+                printf("value: %d\r\n", ret);
                 return 1;
             }
 
@@ -218,7 +213,7 @@ int CommandlineUI::checkCommands()
                 return 2;
             }
 
-            m_logger->addLog(types, logName);
+            emit addLog(types, logName);
         }
 
         else if(input.at(i) == QString("editlog")){
@@ -247,7 +242,7 @@ int CommandlineUI::checkCommands()
                 return 2;
             }
 
-            m_logger->editLog(types, logName);
+            emit loggerEditLog(types, logName);
         }
 
         else if(input.at(i) == QString("dellog")){
@@ -264,7 +259,7 @@ int CommandlineUI::checkCommands()
                 return 2;
             }
 
-            m_logger->deleteLog(logName);
+            emit loggerDeleteLog(logName);
         }
 
         else if(input.at(i) == QString("setlfpath")){
@@ -281,7 +276,7 @@ int CommandlineUI::checkCommands()
                 return 2;
             }
 
-            m_logger->setLogFolderPath(folderPath);
+            emit loggerSetLogFolderPath(folderPath);
         }
 
         else if(input.at(i) == QString("chnglfpath")){
@@ -298,7 +293,7 @@ int CommandlineUI::checkCommands()
                 return 2;
             }
 
-            m_logger->changeLogFolderPath(folderPath);
+            emit loggerChangeLogFolderPath(folderPath);
         }
 
         else if(input.at(i) == QString("lfpath")){
@@ -307,7 +302,9 @@ int CommandlineUI::checkCommands()
 
             if(input.count() == 2){
 
-                output = m_logger->logFolderPath().toLatin1();
+                QString ret;
+                emit loggerLogFolderPath(&ret);
+                output = ret.toLatin1();
             }
 
             else{
@@ -364,7 +361,7 @@ int CommandlineUI::checkCommands()
                 }
             }
 
-            m_machineController->g0(x, y, z, e, -1.0, s);
+            emit machineControllerG0(x, y, z, e, -1.0, s);
 
             printf("drive to X%e Y%e Z%e E%e with the endstop behavior %d\r\n", (double)(x), (double)(y), (double)(z), (double)(e), s);
             return 0;

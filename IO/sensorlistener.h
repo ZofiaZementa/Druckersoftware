@@ -11,21 +11,27 @@ public:
     explicit SensorListener(QObject *parent = nullptr);
     ~SensorListener();
 
+    //called by the loop in IOMainLoop, checks if the value of any sensor-related IO has been changed / has to be changed
     void checkChanged(IOController *iOController);
 
 signals:
 
+    //emitted when the XAxisPositiveEndstop is hit
     void xAxisPositiveEndstopHit();
+    //emitted when the XAxisNegativeEndstop is hit
     void xAxisNegativeEndstopHit();
+    //emitted when the YAxisPositiveEndstop is hit
     void yAxisPositiveEndstopHit();
+    //emitted when the YAxisNegativeEndstop is hit
     void yAxisNegativeEndstopHit();
+    //emitted when the ZAxisPositiveEndstop is hit
     void zAxisPositiveEndstopHit();
+    //emitted when the ZAxisNegativeEndstop is hit
     void zAxisNegativeEndstopHit();
+    //emitted to make a logEntry
     void logEntry(QString logMessage, int code);
 
 private:
-
-    QList<int> *m_values;
 
 };
 
