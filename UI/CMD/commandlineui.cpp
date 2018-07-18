@@ -153,7 +153,7 @@ int CommandlineUI::checkCommands()
                 bool ret;
                 emit iOControllerWrite(input.at(i), input.at(i).toInt(&ok, 10), &ret);
 
-                if(*ret == true && ok == true){
+                if(ret == true && ok == true){
 
                     return 1;
                 }
@@ -213,7 +213,7 @@ int CommandlineUI::checkCommands()
                 return 2;
             }
 
-            emit addLog(types, logName);
+            emit loggerAddLog(types, logName);
         }
 
         else if(input.at(i) == QString("editlog")){
