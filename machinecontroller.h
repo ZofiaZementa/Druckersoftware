@@ -33,6 +33,8 @@ public:
     QUrl filePath();
     void setLine(int line);
     int line();
+    void setPrinterBedMeasurements(QList<qreal> printerBedMeasurements);
+    QList<qreal> printerBedMeasurements();
 
 public slots:
 

@@ -143,6 +143,18 @@ int MachineController::line()
     return m_gCodeReader->lineNumber();
 }
 
+void MachineController::setPrinterBedMeasurements(QList<qreal> printerBedMeasurements)
+{
+
+    *m_printerBedMeasurements = printerBedMeasurements;
+}
+
+QList<qreal> MachineController::printerBedMeasurements()
+{
+
+    return *m_printerBedMeasurements;
+}
+
 //rapid linear move
 //uses the fastest speed possible
 //x = the position to move to on the x axis in mm, y = the position to move to on the y axis in mm, z = the position to move to on the z axis in mm
