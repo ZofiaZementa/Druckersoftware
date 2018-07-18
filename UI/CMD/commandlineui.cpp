@@ -5,56 +5,79 @@ CommandlineUI::CommandlineUI(QObject *parent) : QObject(parent)
 
 }
 
+//mainloop to provide a consistent commandline interface
 void CommandlineUI::mainLoop()
 {
 
+    //variable to check wether to print the help or not or shut down the software down or not
     int check;
 
+    //loop
     while(true){
 
+        //prints linestart
         printf(">>>");
+        //waits for user input
         scanf("%399s", *m_input);
+        //carriage return & new line feed
         printf("\r\n");
+        //checks for commands
         check = checkCommands();
 
+        //checks wether to print the help, shutdown the software or do nothing
+        //triggered if supposed to shut down the software
         if(check == 1){
 
             return;
         }
 
+        //triggered if supposed to print the help
         else if(check == 2){
 
+            //prints the help
             printhelp();
         }
     }
 }
 
+//breaks up String at the spaces
 QStringList CommandlineUI::breakUpString(QString string)
 {
 
+    //help-variable
     int help = -1;
-
+    //stringlist to return
     QStringList retString;
 
+    //loop to go through the single characters on by one
     for(int i = 0;i < string.count();i++){
 
+        //checks if the current position i is a space and if the word is longer than 1 character
+        //triggered if both is true
         if(string.at(i) == QString(" ") && i - help > 1){
 
+            //appeds the word to the outputlist
             retString.append(string.mid((help + 1), (i - help - 1)));
+            // sets help to i, so the search for the next word can begin
             help = i;
         }
 
+        //triggered if the current position is a space
         else if(string.at(i) == QString(" ")){
 
             help = i;
         }
     }
 
+    //checks if the string ends with a word or a space
+    //triggered if it ends with a word, appends that word to the outputlist
     if(string.count() - 1 - help > 1){
 
+        //appends the string to the outputlist
         retString.append(string.mid((help + 1), (string.count() - help - 1)));
     }
 
+    //returns the outputlist
     return retString;
 }
 
