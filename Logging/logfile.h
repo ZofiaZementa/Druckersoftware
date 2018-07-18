@@ -12,18 +12,23 @@ public:
     explicit LogFile(QObject *parent = nullptr);
     ~LogFile();
 
+    //returns the filepath of the logfile
     QString filePath() const;
+    //sets the filepath of the logfile
     void setFilePath(QString filePath);
 
 signals:
 
 public slots:
 
+    //makes a logentry
     void log(QString logMessage, QString origin, int code) const;
-    QStringList readAll() const;
+    //reads the whole file and returns it
+    QStringList readAll();
 
 private:
 
+    //stores the filepath of the file
     QString *m_filePath;
 };
 

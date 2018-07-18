@@ -14,7 +14,7 @@ public:
 
 signals:
 
-    void machineControllerG0(qreal x, qreal y, qreal z, qreal e, qreal f, int s);    //rapid linear move
+    void machineControllerG0(qreal x, qreal y, qreal z, qreal e, qreal f, int s);
     void machineControllerReset();
     void machineControllerPause(bool *ret);
     void machineControllerPlay(bool *ret);
@@ -35,14 +35,19 @@ signals:
 
 public slots:
 
+    //mainloop to provide a consistent commandline interface
     void mainLoop();
 
 private:
 
+    //breaks up String at the spaces
     QStringList breakUpString(QString string);
+    //checks the m_input for commands and executes them
     int checkCommands();
+    //prints the help
     void printhelp();
 
+    //the input
     char *m_input[400];
 };
 

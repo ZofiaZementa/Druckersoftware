@@ -28,6 +28,7 @@ void CommandlineUI::mainLoop()
         //triggered if supposed to shut down the software
         if(check == 1){
 
+            this->thread()->quit();
             return;
         }
 
@@ -38,6 +39,7 @@ void CommandlineUI::mainLoop()
             printhelp();
         }
     }
+
 }
 
 //breaks up String at the spaces
@@ -81,326 +83,480 @@ QStringList CommandlineUI::breakUpString(QString string)
     return retString;
 }
 
+//checks the m_input for commands and executes them
 int CommandlineUI::checkCommands()
 {
 
+    //breaks up the string
     QStringList input = breakUpString(QString(*m_input));
 
+    //loop to go through allthe different components of the input
     for(int i = 0;i < input.count();i++){
 
+        //checks the if it is a command
+        //triggered if it is exit
         if(input.at(i) == QString("exit")){
 
+            //returns a 1 so the loop knows it has to exit
             return 1;
         }
 
+        //triggered if it is setfile
         else if(input.at(i) == QString("setfile")){
 
+            //emits signal so that the MachineController sets the filepath to the given argument
             emit machineControllerSetFilePath(QUrl(input.at(i + 1)));
+            //prints that the filepath was set to ...
             printf("Filepath set to %s\r\n", input.at(i + 1).toLatin1().data());
             return 0;
         }
 
+        //triggered if it is setline
         else if(input.at(i) == QString("setline")){
 
+            //emits signal so that the MachineController sets the line to the given argument
             emit machineControllerSetLine(input.at(i + 1).toInt());
-            printf("filepath set to %d\r\n", input.at(i + 1).toInt());
+            //prints that the line was set to ...
+            printf("line set to %d\r\n", input.at(i + 1).toInt());
             return 0;
         }
 
+        //triggered if it is print
         else if(input.at(i) == QString("print")){
 
+            //there to hold the return of the execution of print
             bool ret;
+            //emits signal so that the MachineController starts printing
             emit machineControllerPrint(&ret);
 
+            //checks wether the return of the execution of print was true
+            //triggered if it is
             if(ret == true){
 
+                //prints that the printer is printing
                 printf("printing...\r\n");
                 return 0;
             }
 
+            //triggered if it isnt't
             else{
 
+                //prints that the printer couldn't print
                 printf("print couldnt be started\r\n");
                 return 0;
             }
         }
 
+        //triggered if it is pause
         else if(input.at(i) == QString("pause")){
 
+            //there to hold the return of the execution of pause
             bool ret;
+            //emits signal so that the MachineController pauses the print
             emit machineControllerPause(&ret);
 
+            //checks wether the return of the execution of pause was true
+            //triggered if it is
             if(ret == true){
 
+                //prints that the print was paused
                 printf("print paused\r\n");
                 return 0;
             }
 
+            //triggered if it isnt't
             else{
 
+                //prints that the print couldn't be paused
                 printf("print couldn't be paused\r\n");
                 return 0;
             }
         }
 
+        //triggered if it is play
         else if(input.at(i) == QString("play")){
 
+            //there to hold the return of the execution of play
             bool ret;
+            //emits signal so that the MachineController continues the print
             emit machineControllerPlay(&ret);
 
+            //checks wether the return of the execution of play was true
+            //triggered if it is
             if(ret == true){
 
+                //prints that the print was continued
                 printf("print continued\r\n");
                 return 0;
             }
 
+            //triggered if it isnt't
             else{
 
+                //prints that the print couldn't continued
                 printf("print couldn't be continued\r\n");
                 return 0;
             }
         }
 
+        //triggerd if it is reset
         else if(input.at(i) == QString("reset")){
 
+            //emits signal so that the MachineController resets
             emit machineControllerReset();
+            //prints that the values have been reset
             printf("all values reset\n");
             return 0;
         }
 
+        //triggered if it is write
         else if(input.at(i) == QString("write")){
 
+            //checks if all the arguments are there
+            //triggered if they are
             if(input.count() == i + 3){
 
+                //there for the conversion from string to int
                 bool ok;
+                //there to hold the return of the execution of write
                 bool ret;
+                //emits signal so that the IOController writes the values
                 emit iOControllerWrite(input.at(i), input.at(i).toInt(&ok, 10), &ret);
 
+                //checks wether the return of the execution of write and the conversion from string to int were true
+                //triggered if it is
                 if(ret == true && ok == true){
 
                     return 1;
                 }
 
+                //triggered if it is
                 else{
 
+                    //returns 2 so that the loop prints the help
                     return 2;
                 }
             }
 
+            //triggered if they aren't
             else{
 
+                //returns 2 so that the loop prints the help
                 return 2;
             }
         }
 
+        //triggered if it is read
         else if(input.at(i) == QString("read")){
 
+            //checks if all the arguments are there
+            //triggered if they are
             if(input.count() == i + 2){
 
+                //there to hold the return of the execution of read
                 int ret;
+                //emits signal so that the IOController reads the values
                 emit iOControllerRead(input.at(i), &ret);
 
+                //prints the value
                 printf("value: %d\r\n", ret);
                 return 1;
             }
 
+            //triggered if they aren't
             else{
 
+                //returns 2 so that the loop prints the help
                 return 2;
             }
         }
 
+        //triggered if it is addlog
         else if(input.at(i) == QString("addlog")){
 
+            //variable for the types of the log
             QList<int> types;
+            //variable for the logname which to add
             QString logName;
+            //there for the conversion from string to int
             bool ok;
 
+            //checks if there are enough arguments
+            //triggered if there are
             if(input.count() >= 3){
 
+                //sets the the logname to the first argument
                 logName = input.at(1);
 
+                //loop to add all the types to the typeslist
                 for(int n = 2;n < input.count();n++){
 
+                    //appends type at the current position n to the list
                     types.append(input.at(n).toInt(&ok, 10));
 
+                    //checks if the conversion from string to int was successfull
+                    //triggerd if it isn't
                     if(ok == false){
 
+                        //returns 2 so that the loop prints the help
                         return 2;
                     }
                 }
             }
 
+            //triggered if there aren't
             else{
 
+                //returns 2 so that the loop prints the help
                 return 2;
             }
 
+            //emits signal so that the Logger adds the log
             emit loggerAddLog(types, logName);
         }
 
+        //triggerd if it is editlog
         else if(input.at(i) == QString("editlog")){
 
+            //variable for the types of the log
             QList<int> types;
+            //variable for the logname which to edit
             QString logName;
+            //there for the conversion from string to int
             bool ok;
 
+            //checks if there are enough arguments
+            //triggered if there are
             if(input.count() >= 3){
 
+                //sets the the logname to the first argument
                 logName = input.at(1);
 
+                //loop to add all the types to the typeslist
                 for(int n = 2;n < input.count();n++){
 
+                    //appends type at the current position n to the list
                     types.append(input.at(n).toInt(&ok, 10));
 
+                    //checks if the conversion from string to int was successfull
+                    //triggerd if it isn't
                     if(ok == false){
 
+                        //returns 2 so that the loop prints the help
                         return 2;
                     }
                 }
             }
 
+            //triggered if there aren't
             else{
 
+                //returns 2 so that the loop prints the help
                 return 2;
             }
 
+            //emits signal so that the Logger edits the log
             emit loggerEditLog(types, logName);
         }
 
+        //triggerd if it is dellog
         else if(input.at(i) == QString("dellog")){
 
+            //variable for the logname which to delete
             QString logName;
 
+            //checks if all the arguments are there
+            //triggered if they are
             if(input.count() == 2){
 
+                //sets logName to the first argument
                 logName = input.at(i);
             }
 
+            //triggered if they aren't
             else{
 
+                //returns 2 so that the loop prints the help
                 return 2;
             }
 
+            //emits signal so that the Logger deletes the log
             emit loggerDeleteLog(logName);
         }
 
+        //triggerd if it is setlfpath
         else if(input.at(i) == QString("setlfpath")){
 
+            //variable for the folderpath which to set
             QString folderPath;
 
+            //checks if all the arguments are there
+            //triggered if they are
             if(input.count() == 2){
 
+                //sets folderpath to the first argument
                 folderPath = input.at(i);
             }
 
+            //triggered if they aren't
             else{
 
+                //returns 2 so that the loop prints the help
                 return 2;
             }
 
+            //emits signal so that the Logger sets the folderpath
             emit loggerSetLogFolderPath(folderPath);
         }
 
+        //triggerd if it is chnglfpath
         else if(input.at(i) == QString("chnglfpath")){
 
+            //variable for the folderpath which to change
             QString folderPath;
 
+            //checks if all the arguments are there
+            //triggered if they are
             if(input.count() == 2){
 
+                //sets folderpath to the first argument
                 folderPath = input.at(i);
             }
 
+            //triggered if they aren't
             else{
 
+                //returns 2 so that the loop prints the help
                 return 2;
             }
 
+            //emits signal so that the Logger changes the folderpath
             emit loggerChangeLogFolderPath(folderPath);
         }
 
+        //triggerd if it is lfpath
         else if(input.at(i) == QString("lfpath")){
 
+            //there for the output
             QByteArray output;
 
+            //checks if all the arguments are there
+            //triggered if they are
             if(input.count() == 2){
 
+                //there to hold the return of the execution of write
                 QString ret;
+                //emits signal so that the Logger returns the folderpath
                 emit loggerLogFolderPath(&ret);
+                //converts the returned string to a QByteArray
                 output = ret.toLatin1();
             }
 
+            //triggered if they aren't
             else{
 
+                //returns 2 so that the loop prints the help
                 return 2;
             }
 
+            //prints that the folder path is ...
             printf("log folder path: %s", output.data());
         }
 
+        //triggerd if it is g0
         else if(input.at(i) == QString("g0")){
 
+            //variable for the x-axis coordinate
             qreal x = 0.0;
+            //variable for the y-axis coordinate
             qreal y = 0.0;
+            //variable for the z-axis coordinate
             qreal z = 0.0;
+            //variable for the x-extruder coordinate
             qreal e = 0.0;
+            //variable for the enstop behavior
             int s = 0;
 
+            //loop to go through all the arguments
             for(int n = i;n < input.count();n++){
 
+                //checks what the argument is
+                //triggered if it is X
                 if(input.at(n).at(0) == QString("X") || input.at(n).at(0) == QString("x")){
 
+                    //removes the X from th argument
                     input[n].remove(0, 1);
+                    //converts the argument into a double and writes it into x
                     x = input.at(n).toDouble();
                 }
 
+                //triggered if it is Y
                 else if(input.at(n).at(0) == QString("Y") || input.at(n).at(0) == QString("y")){
 
+                    //removes the Y from th argument
                     input[n].remove(0, 1);
+                    //converts the argument into a double and writes it into y
                     y = input.at(n).toDouble();
                 }
 
+                //triggered if it is Z
                 else if(input.at(n).at(0) == QString("Z") || input.at(n).at(0) == QString("z")){
 
+                    //removes the Z from th argument
                     input[n].remove(0, 1);
+                    //converts the argument into a double and writes it into z
                     z = input.at(n).toDouble();
                 }
 
+                //triggered if it is E
                 else if(input.at(n).at(0) == QString("E") || input.at(n).at(0) == QString("e")){
 
+                    //removes the E from th argument
                     input[n].remove(0, 1);
+                    //converts the argument into a double and writes it into e
                     e = input.at(n).toDouble();
                 }
 
+                //triggered if it is S
                 else if(input.at(n).at(0) == QString("S") || input.at(n).at(0) == QString("s")){
 
+                    //removes the S from th argument
                     input[n].remove(0, 1);
+                    //converts the argument into a int and writes it into s
                     s = input.at(n).toInt();
                 }
 
+                //triggerd if it is none of the above
                 else{
 
+                    //returns 2 so that the loop prints the help
                     return 2;
                 }
             }
 
+            //emits signal so that the MachineController excutes the g0
             emit machineControllerG0(x, y, z, e, -1.0, s);
 
+            //prints that the MachineController executed g0 with the given arguments
             printf("drive to X%e Y%e Z%e E%e with the endstop behavior %d\r\n", (double)(x), (double)(y), (double)(z), (double)(e), s);
             return 0;
         }
 
+        //triggerd if it is none of the above
         else{
 
+            //returns 2 so that the loop prints the help
             return 2;
         }
 
 
     }
 
+    //returns 2 so that the loop prints the help
     return 2;
 }
 
+//prints the help
 void CommandlineUI::printhelp()
 {
     printf("commands for the Printersoftware:\r\n\n\n");
