@@ -5,6 +5,7 @@
 #include "IO/iocontroller.h"
 #include "Logging/logger.h"
 #include <QObject>
+#include <QThread>
 
 class CommandlineUI : public QObject
 {

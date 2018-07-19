@@ -79,6 +79,24 @@ QUrl GCodeReader::filePath()
 
 bool GCodeReader::startReading()
 {
+
+    if(m_file->isEmpty() ==false){
+
+        m_buffer->setBuffer(m_file);
+        bool ok;
+        emit logEntry(QString("Started reading file at %1 successfully").arg(m_filePath->toString()), QString("0x070003").toInt(&ok, 16));
+        return true;
+    }
+
+    else{
+
+        return false;
+    }
+}
+
+bool GCodeReader::load()
+{
+
     QFile file(m_filePath->toString());
 
     if(file.open(QIODevice::ReadOnly) == false){
@@ -92,9 +110,7 @@ bool GCodeReader::startReading()
     *m_file = file.readAll();
     file.close();
 
-    m_buffer->setBuffer(m_file);
-    bool ok;
-    emit logEntry(QString("Started reading file at %1 successfully").arg(m_filePath->toString()), QString("0x070003").toInt(&ok, 16));
+    return true;
 }
 
 void GCodeReader::nextLine()

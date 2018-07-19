@@ -165,7 +165,7 @@ bool MachineController::g0(qreal x, qreal y, qreal z, qreal e, qreal f, int s)
 
     if(f == -1.0){
 
-        f = PRINTER_MAXSPEED;
+        f = m_settings->value("motorsettings/maxFeedrate", PRINTER_MAXSPEED).toReal();
     }
 
     x = x + (qSin(*m_printerBedXAxisTilt) * z);
@@ -211,7 +211,7 @@ bool MachineController::g1(qreal x, qreal y, qreal z, qreal e, qreal f, int s)
 
     if(f == -1.0){
 
-        f = PRINTER_MAXSPEED;
+        f = m_settings->value("motorsettings/defaultFeedrate", PRINTER_MAXSPEED).toReal();
     }
 
     x = x + (qSin(*m_printerBedXAxisTilt) * z);
@@ -574,6 +574,8 @@ bool MachineController::print()
 
     if(m_gCodeReader->filePath().isEmpty() == false && m_serialInterface->status() == SerialInterface::Connected){
 
+        m_gCodeReader->load();
+        m_gCodeReader->startReading();
         measurePrinterBedTilt();
         return true;
     }

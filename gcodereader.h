@@ -62,6 +62,7 @@ signals:
 public slots:
 
     bool startReading();
+    bool load();
     void nextLine();
     void clear();
 
