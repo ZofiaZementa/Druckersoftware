@@ -121,14 +121,55 @@ void Logger::log(QString logMessage, int code)
     QList<QVariant> typesList = m_settings->value("logger/types").toList();
     QString origin;
 
+
     if(code / 65536 == 0){
 
         origin = QString("MachineController");
     }
 
+    else if(code / 65536 == 1){
+
+        origin = QString("MotorController");
+    }
+
+    else if(code / 65536 == 2){
+
+        origin = QString("IOController");
+    }
+
+    else if(code / 65536 == 3){
+
+        origin = QString("HeatingController");
+    }
+
+    else if(code / 65536 == 4){
+
+        origin = QString("SerialInterface");
+    }
+
+    else if(code / 65536 == 5){
+
+        origin = QString("SensorListener");
+    }
+
+    else if(code / 65536 == 6){
+
+        origin = QString("IOMainLoop");
+    }
+
+    else if(code / 65536 == 7){
+
+        origin = QString("SerialInterface");
+    }
+
+    else if(code / 65536 == 8){
+
+        origin = QString("GCodeReader");
+    }
+
     for(int i = 0;i < m_logFileList->count();i++){
 
-        if(typesList.at(i).toList().contains(qVariantFromValue(code / 65536))){
+        if(typesList.at(i).toList().contains(qVariantFromValue(-1)) == true || typesList.at(i).toList().contains(qVariantFromValue(code / 65536)) == true){
 
             m_logFileList->at(i).log(logMessage, origin, code);
             emit lineWritten(m_logFileList->at(i).filePath());

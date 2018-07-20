@@ -83,12 +83,12 @@ void IOMainLoop::mainLoop()
     //loop
     while(true){
 
-        //calls function to check the value of any fan-related IO has been changed / has to be changed, transfers a pointer to the IOController
-        m_fanController->checkChanged(m_iOController);
-        //calls function to check the value of any heating-related IO has been changed / has to be changed, transfers a pointer to the IOController
-        m_heatingController->checkChanged(m_iOController);
         //calls function to check the value of any sensor-related IO has been changed / has to be changed, transfers a pointer to the IOController
         m_sensorListener->checkChanged(m_iOController);
+        //calls function to check the value of any heating-related IO has been changed / has to be changed, transfers a pointer to the IOController
+        m_heatingController->checkChanged(m_iOController, m_sensorListener);
+        //calls function to check the value of any fan-related IO has been changed / has to be changed, transfers a pointer to the IOController
+        m_fanController->checkChanged(m_iOController);
         //calls function to check the value of any lighting-related IO has been changed / has to be changed, transfers a pointer to the IOController
         m_lightingController->checkChanged(m_iOController);
     }

@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     //sets general application-information
     QCoreApplication::setOrganizationName("P-Seminar 3D-Drucker");
     QCoreApplication::setApplicationName("DruckerSoftware");
-    QCoreApplication::setApplicationVersion("v0.2.39");
+    QCoreApplication::setApplicationVersion("v0.2.41");
 
     //checks if th -nG argument was supplied
     //if not, gui is set to true, if yes, gui is set to false

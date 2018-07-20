@@ -1,7 +1,13 @@
 #include "sensorlistener.h"
 
+#define VALUES_LENGTH 2
+
 SensorListener::SensorListener(QObject *parent) : QObject(parent)
 {
+
+    //initialising variables
+
+    initialiseVariables();
 
     //logEntry
 
@@ -13,6 +19,14 @@ SensorListener::SensorListener(QObject *parent) : QObject(parent)
 
 SensorListener::~SensorListener()
 {
+
+    //deleting pointers
+
+    delete m_values;
+
+    //setting pointers to null
+
+    m_values = NULL;
 
     //logEntry
 
@@ -103,5 +117,42 @@ void SensorListener::checkChanged(IOController *iOController)
         emit logEntry(QString("Negative endstop on the z-axis hit"), QString("0x05FFFA").toInt(&ok, 16));
         //emitting signal that the ZAxisNegativeEndstop
         emit zAxisNegativeEndstopHit();
+    }
+
+    if(iOController->readVariableValue(QString("hotEndTemp")) != m_values->at(0)){
+
+        (*m_values)[0] = iOController->readVariableValue(QString("hotEndTemp"));
+        emit hotEndTempChanged(m_values->at(0));
+    }
+
+    if(iOController->readVariableValue(QString("bedTemp")) != m_values->at(1)){
+
+        (*m_values)[1] = iOController->readVariableValue(QString("bedTemp"));
+        emit bedTempChanged(m_values->at(1));
+    }
+}
+
+int SensorListener::hotEndTemp()
+{
+
+    return m_values->at(0);
+}
+
+int SensorListener::bedTemp()
+{
+
+    return m_values->at(1);
+}
+
+void SensorListener::initialiseVariables()
+{
+
+    //initialising pointers
+
+    m_values = new QList<int>;
+
+    for(int i = 0;i < VALUES_LENGTH;i++){
+
+        m_values->append(0);
     }
 }
