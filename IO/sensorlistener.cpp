@@ -49,7 +49,7 @@ void SensorListener::checkChanged(IOController *iOController)
         //there to make the conversion from QString to int work
         bool ok;
         //emitting the logEntry, which is connected to the Logger
-        emit logEntry(QString("Positive endstop on the x-axis hit"), QString("0x05FFFF").toInt(&ok, 16));
+        emit logEntry(QString("Positive endstop on the x-axis hit"), QString("0x050002").toInt(&ok, 16));
         //emitting signal that the XAxisPositiveEndstop was hit
         emit xAxisPositiveEndstopHit();
     }
@@ -62,7 +62,7 @@ void SensorListener::checkChanged(IOController *iOController)
         //there to make the conversion from QString to int work
         bool ok;
         //emitting the logEntry, which is connected to the Logger
-        emit logEntry(QString("Negative endstop on the x-axis hit"), QString("0x05FFFE").toInt(&ok, 16));
+        emit logEntry(QString("Negative endstop on the x-axis hit"), QString("0x050003").toInt(&ok, 16));
         //emitting signal that the XAxisNegativeEndstop
         emit xAxisNegativeEndstopHit();
     }
@@ -75,7 +75,7 @@ void SensorListener::checkChanged(IOController *iOController)
         //there to make the conversion from QString to int work
         bool ok;
         //emitting the logEntry, which is connected to the Logger
-        emit logEntry(QString("Positive endstop on the y-axis hit"), QString("0x05FFFD").toInt(&ok, 16));
+        emit logEntry(QString("Positive endstop on the y-axis hit"), QString("0x050004").toInt(&ok, 16));
         //emitting signal that the YAxisPositiveEndstop
         emit yAxisPositiveEndstopHit();
     }
@@ -88,7 +88,7 @@ void SensorListener::checkChanged(IOController *iOController)
         //there to make the conversion from QString to int work
         bool ok;
         //emitting the logEntry, which is connected to the Logger
-        emit logEntry(QString("Negative endstop on the y-axis hit"), QString("0x05FFFC").toInt(&ok, 16));
+        emit logEntry(QString("Negative endstop on the y-axis hit"), QString("0x050005").toInt(&ok, 16));
         //emitting signal that the YAxisNegativeEndstop
         emit yAxisNegativeEndstopHit();
     }
@@ -101,7 +101,7 @@ void SensorListener::checkChanged(IOController *iOController)
         //there to make the conversion from QString to int work
         bool ok;
         //emitting the logEntry, which is connected to the Logger
-        emit logEntry(QString("Positive endstop on the z-axis hit"), QString("0x05FFFB").toInt(&ok, 16));
+        emit logEntry(QString("Positive endstop on the z-axis hit"), QString("0x050006").toInt(&ok, 16));
         //emitting signal that the ZAxisPositiveEndstop
         emit zAxisPositiveEndstopHit();
     }
@@ -114,7 +114,7 @@ void SensorListener::checkChanged(IOController *iOController)
         //there to make the conversion from QString to int work
         bool ok;
         //emitting the logEntry, which is connected to the Logger
-        emit logEntry(QString("Negative endstop on the z-axis hit"), QString("0x05FFFA").toInt(&ok, 16));
+        emit logEntry(QString("Negative endstop on the z-axis hit"), QString("0x050007").toInt(&ok, 16));
         //emitting signal that the ZAxisNegativeEndstop
         emit zAxisNegativeEndstopHit();
     }

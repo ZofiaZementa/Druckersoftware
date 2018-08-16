@@ -127,6 +127,21 @@ MotorController::~MotorController()
     m_commandBuffer = NULL;
 }
 
+bool MotorController::xAxisReferenceDrive()
+{
+
+}
+
+bool MotorController::yAxisReferenceDrive()
+{
+
+}
+
+bool MotorController::zAxisReferenceDrive()
+{
+
+}
+
 //absolutely moves x-axis to position in mm, speed = the speed the head is going to move in mm/min
 bool MotorController::absoluteMoveXAxis(qreal position, qreal speed)
 {

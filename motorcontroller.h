@@ -27,6 +27,9 @@ public:
 
     enum MotorState{Moving, Paused, Stopped, Idle};
 
+    bool xAxisReferenceDrive();
+    bool yAxisReferenceDrive();
+    bool zAxisReferenceDrive();
     bool absoluteMoveXAxis(qreal position, qreal speed);
     bool relativeMoveXAxis(qreal value, qreal speed);
     bool absoluteMoveYAxis(qreal position, qreal speed);

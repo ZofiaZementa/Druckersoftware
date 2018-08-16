@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
 {
 
     bool gui = true;
+    bool directprint = false;
 
     QApplication a(argc, argv);
 
@@ -31,7 +32,16 @@ int main(int argc, char *argv[])
     //if not, gui is set to true, if yes, gui is set to false
     for(int i = 1;i < argc;i++){
 
-        if(strcmp(argv[i], "-nG") == 0){
+        if(strcmp(argv[i], "-p") == 0 && i == 1){
+
+            if(argc == 2){
+
+                directprint = true;
+                break;
+            }
+        }
+
+        else if(strcmp(argv[i], "-nG") == 0){
 
             gui = false;
         }
@@ -130,7 +140,7 @@ int main(int argc, char *argv[])
 
     //checks a GUI should be displayed or not
     //triggered if it should
-    if(gui == true){
+    if(gui == true && directprint == false){
 
         //signals & slots
 
@@ -148,7 +158,7 @@ int main(int argc, char *argv[])
     }
 
     //triggered if it shouldn't
-    else{
+    else if(gui == false && directprint == false){
 
         //initialises the cmdThread
         cmdThread = new QThread;
@@ -237,6 +247,18 @@ int main(int argc, char *argv[])
     sysThread->start();
     //starts the ioThread
     ioThread->start();
+
+    if(directprint == true){
+
+        c.setFilePath(QUrl(QString(argv[2])));
+
+        if(c.print() == false){
+
+            sysThread->quit();
+            ioThread->quit();
+            printf("error. See logfiles for more information\r\n");
+        }
+    }
 
     return a.exec();
 }
