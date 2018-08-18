@@ -37,8 +37,8 @@ private:
     int piControlWrite(uint32_t Offset, uint32_t Length, uint8_t *pData);
     void piControlOpen();
     int piControlSetBitValue(SPIValue *pSpiValue);
-    int PiControlHandle_g = -1;
 
+    int PiControlHandle_g = -1;
 };
 
 #endif // IOCONTROLLER_H

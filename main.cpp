@@ -1,4 +1,4 @@
-#include "UI/controlwindow.h"
+#include "UI/GUI/controlwindow.h"
 #include "machinecontroller.h"
 #include "IO/heatingcontroller.h"
 #include "IO/sensorlistener.h"
@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
         QObject::connect(&w, SIGNAL(destroyed()), ioThread, SLOT(quit()));
 
         //shows the ControlWindow
-        w.show();
+        w.showFullScreen();
     }
 
     //triggered if it shouldn't

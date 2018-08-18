@@ -14,7 +14,7 @@ class SerialInterface : public QObject
     Q_PROPERTY(qint32 baudRate READ baudRate WRITE setBaudRate NOTIFY baudRateChanged)
 
 public:
-    explicit SerialInterface(QObject *parent = 0);
+    explicit SerialInterface(QObject *parent = nullptr);
     ~SerialInterface();
 
     enum Status{Connected, Disconnected, Error};
