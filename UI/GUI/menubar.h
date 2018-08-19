@@ -2,6 +2,7 @@
 #define MENUBAR_H
 
 #include <QWidget>
+#include <QtSvg/QSvgWidget>
 
 namespace Ui {
 class MenuBar;
@@ -14,6 +15,10 @@ class MenuBar : public QWidget
 public:
     explicit MenuBar(QWidget *parent = nullptr);
     ~MenuBar();
+
+public slots:
+
+    void setNetworkStatus(int status);
 
 signals:
 
@@ -35,6 +40,8 @@ private slots:
 
 private:
     Ui::MenuBar *ui;
+
+    QSvgWidget *m_networkStatus;
 };
 
 #endif // MENUBAR_H

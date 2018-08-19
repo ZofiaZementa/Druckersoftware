@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui serialport
+QT       += core gui serialport svg
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -41,7 +41,10 @@ SOURCES += \
     UI/CMD/cmduiloggerinterface.cpp \
     UI/CMD/cmduimachinecontrollerinterface.cpp \
     UI/GUI/controlwindow.cpp \
-    UI/GUI/menubar.cpp
+    UI/GUI/menubar.cpp \
+    UI/GUI/homescreen.cpp \
+    UI/GUI/infoscreen.cpp \
+    UI/GUI/infomotorscreen.cpp
 
 HEADERS += \
     machinecontroller.h \
@@ -62,8 +65,17 @@ HEADERS += \
     UI/CMD/cmduiloggerinterface.h \
     UI/CMD/cmduimachinecontrollerinterface.h \
     UI/GUI/controlwindow.h \
-    UI/GUI/menubar.h
+    UI/GUI/menubar.h \
+    UI/GUI/homescreen.h \
+    UI/GUI/infoscreen.h \
+    UI/GUI/infomotorscreen.h
 
 FORMS += \
     UI/GUI/controlwindow.ui \
-    UI/GUI/menubar.ui
+    UI/GUI/menubar.ui \
+    UI/GUI/homescreen.ui \
+    UI/GUI/infoscreen.ui \
+    UI/GUI/infomotorscreen.ui
+
+RESOURCES += \
+    icons.qrc

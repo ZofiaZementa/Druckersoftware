@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "UI/GUI/menubar.h"
+#include "UI/GUI/homescreen.h"
+#include "UI/GUI/infoscreen.h"
 
 namespace Ui {
 class ControlWindow;
@@ -20,6 +22,10 @@ public slots:
 
     void displayErrorMessage(QString errorMessage);
 
+signals:
+
+    void closed();
+
 private slots:
 
     void homeButtonPressed();
@@ -33,6 +39,8 @@ private:
     Ui::ControlWindow *ui;
 
     MenuBar *m_menuBar;
+    HomeScreen *m_homeScreen;
+    InfoScreen *m_infoScreen;
 };
 
 #endif // CONTROLWINDOW_H

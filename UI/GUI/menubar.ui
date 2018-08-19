@@ -41,8 +41,8 @@ QPushButton:pressed{
     <string/>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../Icons/sharp-home-24px.svg</normaloff>../Icons/sharp-home-24px.svg</iconset>
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/Icons/UI/Icons/sharp-home-24px.svg</normaloff>:/Icons/UI/Icons/sharp-home-24px.svg</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -92,8 +92,8 @@ QPushButton:pressed{
     <string/>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../Icons/sharp-play_arrow-24px.svg</normaloff>../Icons/sharp-play_arrow-24px.svg</iconset>
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/Icons/UI/Icons/sharp-play_arrow-24px.svg</normaloff>:/Icons/UI/Icons/sharp-play_arrow-24px.svg</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -143,8 +143,8 @@ QPushButton:pressed{
     <string/>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../Icons/sharp-info-24px.svg</normaloff>../Icons/sharp-info-24px.svg</iconset>
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/Icons/UI/Icons/sharp-info-24px.svg</normaloff>:/Icons/UI/Icons/sharp-info-24px.svg</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -178,8 +178,8 @@ QPushButton:pressed{
     <string/>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../Icons/sharp-format_align_justify-24px.svg</normaloff>../Icons/sharp-format_align_justify-24px.svg</iconset>
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/Icons/UI/Icons/sharp-format_align_justify-24px.svg</normaloff>:/Icons/UI/Icons/sharp-format_align_justify-24px.svg</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -213,8 +213,8 @@ QPushButton:pressed{
     <string/>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../Icons/sharp-settings-24px.svg</normaloff>../Icons/sharp-settings-24px.svg</iconset>
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/Icons/UI/Icons/sharp-settings-24px.svg</normaloff>:/Icons/UI/Icons/sharp-settings-24px.svg</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -248,8 +248,8 @@ QPushButton:pressed{
     <string/>
    </property>
    <property name="icon">
-    <iconset>
-     <normaloff>../Icons/sharp-power_settings_new-24px.svg</normaloff>../Icons/sharp-power_settings_new-24px.svg</iconset>
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/Icons/UI/Icons/sharp-power_settings_new-24px.svg</normaloff>:/Icons/UI/Icons/sharp-power_settings_new-24px.svg</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -339,6 +339,8 @@ QPushButton:pressed{
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

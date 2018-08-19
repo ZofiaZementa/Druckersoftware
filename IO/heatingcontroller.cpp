@@ -10,6 +10,9 @@ HeatingController::HeatingController(QObject *parent) : QObject(parent)
 
     *m_heatingState = HeatingState::Idle;
 
+    m_targetTemps->append(-1);
+    m_targetTemps->append(-1);
+
     //there to make the conversion from QString to int work
     bool ok;
     //emitting the logEntry, which is connected to the Logger

@@ -145,16 +145,18 @@ int main(int argc, char *argv[])
         //signals & slots
 
         //connects the error signal of the MachineController to the displayErrorMessage slot of the GUI
-        QObject::connect(&c, SIGNAL(error(QString)), &w, SLOT(displayErrorMessage(QString)));
+        //QObject::connect(&c, SIGNAL(error(QString)), &w, SLOT(displayErrorMessage(QString)));
         //connects the error signal of the IOController to the displayErrorMessage slot of the GUI
-        QObject::connect(&io, SIGNAL(error(QString)), &w, SLOT(displayErrorMessage(QString)));
-        //connects the destroyed signal of the GUI to the quit slot of the sysThread, so that the sysThread stops when the window gets closed
-        QObject::connect(&w, SIGNAL(destroyed()), sysThread, SLOT(quit()));
+        //QObject::connect(&io, SIGNAL(error(QString)), &w, SLOT(displayErrorMessage(QString)));
         //connects the destroyed signal of the GUI to the quit slot of the ioThread, so that the ioThread stops when the window gets closed
-        QObject::connect(&w, SIGNAL(destroyed()), ioThread, SLOT(quit()));
+        QObject::connect(&w, SIGNAL(closed()), ioThread, SLOT(quit()));
+        //connects the destroyed signal of the GUI to the quit slot of the sysThread, so that the sysThread stops when the window gets closed
+        QObject::connect(&w, SIGNAL(closed()), sysThread, SLOT(quit()));
+        QObject::connect(ioThread, SIGNAL(finished()), ioThread, SLOT(deleteLater()));
+        QObject::connect(sysThread, SIGNAL(finished()), sysThread, SLOT(deleteLater()));
 
         //shows the ControlWindow
-        w.showFullScreen();
+        w.show();
     }
 
     //triggered if it shouldn't

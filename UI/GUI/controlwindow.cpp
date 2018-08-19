@@ -11,21 +11,23 @@ ControlWindow::ControlWindow(QWidget *parent) :
     ui->setupUi(this);
 
     m_menuBar = new MenuBar(this);
+    m_homeScreen = new HomeScreen(this);
+    m_infoScreen = new InfoScreen(this);
 
     m_menuBar->move(0, 0);
+    m_homeScreen->move(61, 0);
+    m_infoScreen->move(61, 0);
+    m_homeScreen->setVisible(false);
 
 
-    QObject::connect(m_menuBar, SIGNAL(home), this, SLOT(on_homeButtonPressed()));
+    //QObject::connect(m_menuBar, SIGNAL(home), this, SLOT(on_homeButtonPressed()));
 }
 
 ControlWindow::~ControlWindow()
 {
     delete ui;
 
-    delete m_menuBar;
-
-    m_menuBar = NULL;
-
+    emit closed();
 }
 
 void ControlWindow::displayErrorMessage(QString errorMessage)

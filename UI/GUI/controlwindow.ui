@@ -13,6 +13,12 @@
   <property name="windowTitle">
    <string>ControlWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">ControlWindow{
+
+	background-color: #ffffff;
+}</string>
+  </property>
   <widget class="QWidget" name="centralWidget"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

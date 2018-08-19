@@ -63,7 +63,7 @@ void LightingController::setStatusLED(int a1, int a2)
 {
 
     //calculates the actual byte-value out of a1 and a2, which is to be written into the programmer
-    (*m_values)[1] = a1 + (a2 * 4);
+    (*m_values)[0] = a1 + (a2 * 4);
 
     //logEntry
 

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InfoScreen</class>
+ <widget class="QWidget" name="InfoScreen">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>739</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">backgound-color: #ffffff;</string>
+  </property>
+  <widget class="QPushButton" name="generalButton">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>122</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+
+	border: none;
+	background-color: #0097A7;
+}
+
+QPushButton:pressed{
+
+	background-color: #00838F;
+}</string>
+   </property>
+   <property name="text">
+    <string>General</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="motorButton">
+   <property name="geometry">
+    <rect>
+     <x>123</x>
+     <y>0</y>
+     <width>122</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+
+	border: none;
+	background-color: #0097A7;
+}
+
+QPushButton:pressed{
+
+	background-color: #00838F;
+}</string>
+   </property>
+   <property name="text">
+    <string>Motors</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="heatingButton">
+   <property name="geometry">
+    <rect>
+     <x>246</x>
+     <y>0</y>
+     <width>123</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+
+	border: none;
+	background-color: #0097A7;
+}
+
+QPushButton:pressed{
+
+	background-color: #00838F;
+}</string>
+   </property>
+   <property name="text">
+    <string>Heating</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ioButton">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>0</y>
+     <width>123</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+
+	border: none;
+	background-color: #0097A7;
+}
+
+QPushButton:pressed{
+
+	background-color: #00838F;
+}</string>
+   </property>
+   <property name="text">
+    <string>IO</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="serialButton">
+   <property name="geometry">
+    <rect>
+     <x>494</x>
+     <y>0</y>
+     <width>122</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+
+	border: none;
+	background-color: #0097A7;
+}
+
+QPushButton:pressed{
+
+	background-color: #00838F;
+}</string>
+   </property>
+   <property name="text">
+    <string>Serial</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="miscButton">
+   <property name="geometry">
+    <rect>
+     <x>617</x>
+     <y>0</y>
+     <width>122</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+
+	border: none;
+	background-color: #0097A7;
+}
+
+QPushButton:pressed{
+
+	background-color: #00838F;
+}</string>
+   </property>
+   <property name="text">
+    <string>Misc.</string>
+   </property>
+  </widget>
+  <widget class="Line" name="horizontalLine">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>40</y>
+     <width>739</width>
+     <height>1</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="verticalLine1">
+   <property name="geometry">
+    <rect>
+     <x>122</x>
+     <y>0</y>
+     <width>1</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="verticalLine2">
+   <property name="geometry">
+    <rect>
+     <x>245</x>
+     <y>0</y>
+     <width>1</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="verticalLine1_2">
+   <property name="geometry">
+    <rect>
+     <x>369</x>
+     <y>0</y>
+     <width>1</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="verticalLine1_3">
+   <property name="geometry">
+    <rect>
+     <x>493</x>
+     <y>0</y>
+     <width>1</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="verticalLine1_4">
+   <property name="geometry">
+    <rect>
+     <x>616</x>
+     <y>0</y>
+     <width>1</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

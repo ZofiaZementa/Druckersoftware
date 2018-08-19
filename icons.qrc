@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/Icons">
+        <file>UI/Icons/sharp-arrow_drop_down-24px.svg</file>
+        <file>UI/Icons/sharp-arrow_drop_up-24px.svg</file>
+        <file>UI/Icons/sharp-cake-24px.svg</file>
+        <file>UI/Icons/sharp-check_box-24px.svg</file>
+        <file>UI/Icons/sharp-check_box_outline_blank-24px.svg</file>
+        <file>UI/Icons/sharp-clear-24px.svg</file>
+        <file>UI/Icons/sharp-done-24px.svg</file>
+        <file>UI/Icons/sharp-eject-24px.svg</file>
+        <file>UI/Icons/sharp-error-24px.svg</file>
+        <file>UI/Icons/sharp-error_outline-24px.svg</file>
+        <file>UI/Icons/sharp-format_align_justify-24px.svg</file>
+        <file>UI/Icons/sharp-home-24px.svg</file>
+        <file>UI/Icons/sharp-info-24px.svg</file>
+        <file>UI/Icons/sharp-pause-24px.svg</file>
+        <file>UI/Icons/sharp-play_arrow-24px.svg</file>
+        <file>UI/Icons/sharp-power_settings_new-24px.svg</file>
+        <file>UI/Icons/sharp-settings-24px.svg</file>
+        <file>UI/Icons/sharp-signal_cellular_4_bar-24px.svg</file>
+        <file>UI/Icons/sharp-signal_cellular_connected_no_internet_0_bar-24px.svg</file>
+        <file>UI/Icons/sharp-signal_cellular_null-24px.svg</file>
+        <file>UI/Icons/sharp-stop-24px.svg</file>
+        <file>UI/Icons/sharp-warning-24px.svg</file>
+    </qresource>
+</RCC>

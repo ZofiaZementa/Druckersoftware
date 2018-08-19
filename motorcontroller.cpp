@@ -1061,7 +1061,7 @@ void MotorController::receive(QString text)
     }
     //checks what the message says
     //executed when the message contains the position of an motor
-    else if(text.at(1) == "C"){
+    else if(text.at(1) == QString("C")){
 
         //checks which motor the message is from
         //executed if the message is from the x-axis motor
