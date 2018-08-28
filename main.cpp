@@ -250,14 +250,22 @@ int main(int argc, char *argv[])
     //starts the ioThread
     ioThread->start();
 
+    //triggered if directprint is true
+    //there to print a file directly, without opening any UI, with
     if(directprint == true){
 
+        //sets the filpath in the MotorController to the given argument
         c.setFilePath(QUrl(QString(argv[2])));
 
+        //executes print() in MotorController and checks if it was successfull
+        //triggered if it isn't
         if(c.print() == false){
 
+            //ends the sysThread
             sysThread->quit();
+            //ends the ioThread
             ioThread->quit();
+            //prints out an errormessage
             printf("error. See logfiles for more information\r\n");
         }
     }

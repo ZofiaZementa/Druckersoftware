@@ -44,7 +44,12 @@ SOURCES += \
     UI/GUI/menubar.cpp \
     UI/GUI/homescreen.cpp \
     UI/GUI/infoscreen.cpp \
-    UI/GUI/infomotorscreen.cpp
+    UI/GUI/infomotorscreen.cpp \
+    UI/GUI/infoserialscreen.cpp \
+    UI/GUI/infoheatingscreen.cpp \
+    UI/GUI/infoioscreen.cpp \
+    UI/GUI/infogeneralscreen.cpp \
+    UI/GUI/infomiscscreen.cpp
 
 HEADERS += \
     machinecontroller.h \
@@ -68,14 +73,24 @@ HEADERS += \
     UI/GUI/menubar.h \
     UI/GUI/homescreen.h \
     UI/GUI/infoscreen.h \
-    UI/GUI/infomotorscreen.h
+    UI/GUI/infomotorscreen.h \
+    UI/GUI/infoserialscreen.h \
+    UI/GUI/infoheatingscreen.h \
+    UI/GUI/infoioscreen.h \
+    UI/GUI/infogeneralscreen.h \
+    UI/GUI/infomiscscreen.h
 
 FORMS += \
     UI/GUI/controlwindow.ui \
     UI/GUI/menubar.ui \
     UI/GUI/homescreen.ui \
     UI/GUI/infoscreen.ui \
-    UI/GUI/infomotorscreen.ui
+    UI/GUI/infomotorscreen.ui \
+    UI/GUI/infoserialscreen.ui \
+    UI/GUI/infoheatingscreen.ui \
+    UI/GUI/infoioscreen.ui \
+    UI/GUI/infogeneralscreen.ui \
+    UI/GUI/infomiscscreen.ui
 
 RESOURCES += \
     icons.qrc

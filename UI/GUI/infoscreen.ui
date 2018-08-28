@@ -217,7 +217,7 @@ QPushButton:pressed{
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="Line" name="verticalLine1_2">
+  <widget class="Line" name="verticalLine3">
    <property name="geometry">
     <rect>
      <x>369</x>
@@ -233,7 +233,7 @@ QPushButton:pressed{
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="Line" name="verticalLine1_3">
+  <widget class="Line" name="verticalLine4">
    <property name="geometry">
     <rect>
      <x>493</x>
@@ -249,7 +249,7 @@ QPushButton:pressed{
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="Line" name="verticalLine1_4">
+  <widget class="Line" name="verticalLine5">
    <property name="geometry">
     <rect>
      <x>616</x>

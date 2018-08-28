@@ -17,10 +17,11 @@ ControlWindow::ControlWindow(QWidget *parent) :
     m_menuBar->move(0, 0);
     m_homeScreen->move(61, 0);
     m_infoScreen->move(61, 0);
-    m_homeScreen->setVisible(false);
+    m_infoScreen->setVisible(false);
 
 
-    //QObject::connect(m_menuBar, SIGNAL(home), this, SLOT(on_homeButtonPressed()));
+    QObject::connect(m_menuBar, SIGNAL(homeButtonPressed()), this, SLOT(homeButtonPressed()));
+    QObject::connect(m_menuBar, SIGNAL(infoButtonPressed()), this, SLOT(infoButtonPressed()));
 }
 
 ControlWindow::~ControlWindow()
@@ -46,11 +47,15 @@ void ControlWindow::displayErrorMessage(QString errorMessage)
 void ControlWindow::homeButtonPressed()
 {
 
+    m_homeScreen->setVisible(true);
+    m_infoScreen->setVisible(false);
 }
 
 void ControlWindow::infoButtonPressed()
 {
 
+    m_infoScreen->setVisible(true);
+    m_homeScreen->setVisible(false);
 }
 
 void ControlWindow::startAPrintButtonPressed()

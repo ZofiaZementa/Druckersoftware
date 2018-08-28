@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InfoHeatingScreen</class>
+ <widget class="QWidget" name="InfoHeatingScreen">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>739</width>
+    <height>559</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLabel" name="hotEndLabel">
+   <property name="geometry">
+    <rect>
+     <x>145</x>
+     <y>28</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>HotEnd</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="hotEndCurrentTemperatureLabel">
+   <property name="geometry">
+    <rect>
+     <x>145</x>
+     <y>89</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Current Temperature:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="hotEndCurrentTemperatureValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>145</x>
+     <y>122</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Current Temperature</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="hotEndTargetTemperatureLabel">
+   <property name="geometry">
+    <rect>
+     <x>145</x>
+     <y>183</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Target Temperature:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="hotEndTargetTemperatureValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>145</x>
+     <y>216</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Target Temperature</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="hotEndWarningTemperatureLabel">
+   <property name="geometry">
+    <rect>
+     <x>145</x>
+     <y>277</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Warning Temperature:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="hotEndWarningTemperatureValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>145</x>
+     <y>310</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Warning Temperature</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="hotEndCriticalTemperatureLabel">
+   <property name="geometry">
+    <rect>
+     <x>145</x>
+     <y>371</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Critical Temperature:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="hotEndCriticalTemperatureValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>145</x>
+     <y>404</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Critical Temperature</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="hotEndStatusLabel">
+   <property name="geometry">
+    <rect>
+     <x>145</x>
+     <y>465</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Status:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="hotEndStatusValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>145</x>
+     <y>498</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Status</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="bedLabel">
+   <property name="geometry">
+    <rect>
+     <x>442</x>
+     <y>28</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Bed</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="bedCurrentTemperatureLabel">
+   <property name="geometry">
+    <rect>
+     <x>442</x>
+     <y>89</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Current Temperature:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="bedTargetTemperatureLabel">
+   <property name="geometry">
+    <rect>
+     <x>442</x>
+     <y>183</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Target Temperature:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="bedStatusLabel">
+   <property name="geometry">
+    <rect>
+     <x>442</x>
+     <y>465</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Status:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="bedStatusValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>442</x>
+     <y>498</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Status</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="bedCurrentTemperatureValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>442</x>
+     <y>122</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Current Temperature</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="bedWarningTemperatureValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>442</x>
+     <y>310</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Warning Temperature</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="bedTargetTemperatureValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>442</x>
+     <y>216</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Target Temperature</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="bedCriticalTemperatureLabel">
+   <property name="geometry">
+    <rect>
+     <x>442</x>
+     <y>371</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Critical Temperature:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="bedWarningTemperatureLabel">
+   <property name="geometry">
+    <rect>
+     <x>442</x>
+     <y>277</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Warning Temperature:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="bedCriticalTemperatureValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>442</x>
+     <y>404</y>
+     <width>152</width>
+     <height>33</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Critical Temperature</string>
+   </property>
+  </widget>
+  <widget class="Line" name="verticalLine1">
+   <property name="geometry">
+    <rect>
+     <x>369</x>
+     <y>28</y>
+     <width>1</width>
+     <height>503</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
