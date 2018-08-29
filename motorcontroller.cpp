@@ -1,4 +1,5 @@
 #include "motorcontroller.h"
+#include "math.h"
 #include <QDebug>
 #include <QtMath>
 
@@ -32,6 +33,7 @@
 #define MAXIMUM_TRAVEL_DECCELERATION 500.0   //holds the maximum decceleration during braking during travel in mm/s^2
 #define MAXIMUM_ACCELERATION_CHANGE 100.0    //holds the maximum change of the acceleration during accelerating in mm/second/second/second
 #define MAXIMUM_DECCELERATION_CHANGE 100.0    //holds the maximum change of the decceleration during braking in mm/second/second/second
+#define TEMPCHECKINTERVAL 1000   //holds the interval in which to check the temperature in milliseconds
 
 MotorController::MotorController(QObject *parent) : QObject(parent)
 {
@@ -54,6 +56,10 @@ MotorController::MotorController(QObject *parent) : QObject(parent)
     m_desiredYAxisMotorPosition = new qint32;    //holds the desired motorposition of the y-axis in microsteps
     m_desiredZAxisMotorPosition = new qint32;    //holds the desired motorposition of the z-axis in microsteps
     m_desiredExtruderMotorPosition = new qint32;    //holds the desired motorposition of the extruder in microsteps
+    m_currentXAxisTemp = new int;   //holds the current temperature of the x-axis
+    m_currentYAxisTemp = new int;   //holds the current temperature of the y-axis
+    m_currentZAxisTemp = new int;   //holds the current temperature of the z-axis
+    m_currentExtruderTemp = new int;   //holds the current temperature of the extruder
     m_commandBuffer = new CommandBuffer;    //holds all the commands that still need to be executed
     m_settings = new QSettings(this);
 
@@ -76,10 +82,15 @@ MotorController::MotorController(QObject *parent) : QObject(parent)
     *m_desiredYAxisMotorPosition = 0;
     *m_desiredZAxisMotorPosition = 0;
     *m_desiredExtruderMotorPosition = 0;
+    *m_currentXAxisTemp = 0;
+    *m_currentYAxisTemp = 0;
+    *m_currentZAxisTemp = 0;
+    *m_currentExtruderTemp = 0;
 
     //motorsetup
 
     motorSetup();
+    checkBuffer();
 }
 
 MotorController::~MotorController()
@@ -103,6 +114,10 @@ MotorController::~MotorController()
     delete m_desiredYAxisMotorPosition;
     delete m_desiredZAxisMotorPosition;
     delete m_desiredExtruderMotorPosition;
+    delete m_currentXAxisTemp;
+    delete m_currentYAxisTemp;
+    delete m_currentZAxisTemp;
+    delete m_currentExtruderTemp;
     delete m_commandBuffer;
 
     //setting the pointers to NULL
@@ -124,6 +139,10 @@ MotorController::~MotorController()
     m_desiredYAxisMotorPosition = NULL;
     m_desiredZAxisMotorPosition = NULL;
     m_desiredExtruderMotorPosition = NULL;
+    m_currentXAxisTemp = NULL;
+    m_currentYAxisTemp = NULL;
+    m_currentZAxisTemp = NULL;
+    m_currentExtruderTemp = NULL;
     m_commandBuffer = NULL;
 }
 
@@ -1050,6 +1069,30 @@ void MotorController::setCurrentExtruderPosition(qreal currentExtruderPosition)
     *m_currentExtruderPosition = currentExtruderPosition;
 }
 
+int MotorController::currentXAxisTemp()
+{
+
+    return *m_currentXAxisTemp;
+}
+
+int MotorController::currentYAxisTemp()
+{
+
+    return *m_currentYAxisTemp;
+}
+
+int MotorController::currentZAxisTemp()
+{
+
+    return *m_currentZAxisTemp;
+}
+
+int MotorController::currentExtruderTemp()
+{
+
+    return *m_currentExtruderTemp;
+}
+
 //executed when the serialinterface receives a message
 void MotorController::receive(QString text)
 {
@@ -1068,31 +1111,124 @@ void MotorController::receive(QString text)
         if(text.at(0) == QString("%1").arg(m_settings->value("motorsettings/xaxis/motoradress", XAXIS_MOTORADRESS).toInt())){
 
             //sets the value of the current motorposition of the x-axis to the actual motorposition of the x-axis
-            *m_currentXAxisMotorPosition = text.mid(1, text.indexOf("\r") - 2).toInt();
+            *m_currentXAxisMotorPosition = text.mid(2, text.indexOf("\r") - 2).toInt();
         }
 
         //executed if the message is from the y-axis motor
         else if(text.at(0) == QString("%1").arg(m_settings->value("motorsettings/yaxis/motoradress", YAXIS_MOTORADRESS).toInt())){
 
             //sets the value of the current motorposition of the y-axis to the actual motorposition of the y-axis
-            *m_currentYAxisMotorPosition = text.mid(1, text.indexOf("\r") - 2).toInt();
+            *m_currentYAxisMotorPosition = text.mid(2, text.indexOf("\r") - 2).toInt();
         }
 
         //executed if the message is from the z-axis motor
         else if(text.at(0) == QString("%1").arg(m_settings->value("motorsettings/zaxis/motoradress", ZAXIS_MOTORADRESS).toInt())){
 
             //sets the value of the current motorposition of the z-axis to the actual motorposition of the z-axis
-            *m_currentZAxisMotorPosition = text.mid(1, text.indexOf("\r") - 2).toInt();
+            *m_currentZAxisMotorPosition = text.mid(2, text.indexOf("\r") - 2).toInt();
         }
 
         //executed if the message is from the extruder motor
         else if(text.at(0) == QString("%1").arg(m_settings->value("motorsettings/extruder/motoradress", EXTRUDER_MOTORADRESS).toInt())){
 
             //sets the value of the current motorposition of the extruder to the actual motorposition of the extruder
-            *m_currentExtruderMotorPosition = text.mid(1, text.indexOf("\r") - 2).toInt();
+            *m_currentExtruderMotorPosition = text.mid(2, text.indexOf("\r") - 2).toInt();
         }
 
         calculateMovementChange();
+    }
+
+    else if(text.contains(QString(":temp_adc")) == true){
+
+        //taking the given value out of the text and writing it into tempRaw
+        int tempRaw = text.mid(10, text.indexOf("\r")).toDouble();
+        //calculating the temp in degrees celcius out of the raw value
+        int temp = (1266500.0 / (4250.0 + log10(0.33 * ((tempRaw / 1023.0) / (1.0 - (tempRaw / 1023.0)))) * 298.0)) - 273.0;
+
+        //checks which motor the message is from
+        //executed if the message is from the x-axis motor
+        if(text.at(0) == QString("%1").arg(m_settings->value("motorsettings/xaxis/motoradress", XAXIS_MOTORADRESS).toInt())){
+
+            //checks if the x-axis temperature has changed
+            //triggered if it has
+            if(temp != *m_currentXAxisTemp){
+
+                //sets the value of m_currentXAxisTemp to the value of temp
+                *m_currentXAxisTemp = temp;
+                //emits that the x-axis temperature has changed
+                emit currentXAxisTempChanged(*m_currentXAxisTemp);
+            }
+
+            //triggered if it hasn't
+            else{
+
+                //sets the value of m_currentXAxisTemp to the value of temp
+                *m_currentXAxisTemp = temp;
+            }
+        }
+
+        //executed if the message is from the y-axis motor
+        else if(text.at(0) == QString("%1").arg(m_settings->value("motorsettings/yaxis/motoradress", YAXIS_MOTORADRESS).toInt())){
+
+            //checks if the y-axis temperature has changed
+            //triggered if it has
+            if(temp != *m_currentYAxisTemp){
+
+                //sets the value of m_currentYAxisTemp to the value of temp
+                *m_currentYAxisTemp = temp;
+                //emits that the y-axis temperature has changed
+                emit currentYAxisTempChanged(*m_currentYAxisTemp);
+            }
+
+            //triggered if it hasn't
+            else{
+
+                //sets the value of m_currentYAxisTemp to the value of temp
+                *m_currentYAxisTemp = temp;
+            }
+        }
+
+        //executed if the message is from the z-axis motor
+        else if(text.at(0) == QString("%1").arg(m_settings->value("motorsettings/zaxis/motoradress", ZAXIS_MOTORADRESS).toInt())){
+
+            //checks if the z-axis temperature has changed
+            //triggered if it has
+            if(temp != *m_currentZAxisTemp){
+
+                //sets the value of m_currentZAxisTemp to the value of temp
+                *m_currentZAxisTemp = temp;
+                //emits that the z-axis temperature has changed
+                emit currentZAxisTempChanged(*m_currentZAxisTemp);
+            }
+
+            //triggered if it hasn't
+            else{
+
+                //sets the value of m_currentZAxisTemp to the value of temp
+                *m_currentZAxisTemp = temp;
+            }
+        }
+
+        //executed if the message is from the extruder motor
+        else if(text.at(0) == QString("%1").arg(m_settings->value("motorsettings/extruder/motoradress", EXTRUDER_MOTORADRESS).toInt())){
+
+            //checks if the extruder temperature has changed
+            //triggered if it has
+            if(temp != *m_currentExtruderTemp){
+
+                //sets the value of m_currentExtruderTemp to the value of temp
+                *m_currentExtruderTemp = temp;
+                //emits that the extruder temperature has changed
+                emit currentExtruderTempChanged(*m_currentExtruderTemp);
+            }
+
+            //triggered if it hasn't
+            else{
+
+                //sets the value of m_currentExtruderTemp to the value of temp
+                *m_currentExtruderTemp = temp;
+            }
+        }
     }
 }
 
@@ -1199,6 +1335,13 @@ void MotorController::checkMovement()
     }
 }
 
+void MotorController::checkTemp()
+{
+
+    emit send(QString("#*:temp_adc\r"));
+    QTimer::singleShot(m_settings->value("motorsettings/tempcheckinterval", TEMPCHECKINTERVAL).toInt(), Qt::PreciseTimer, this, SLOT(checkTemp()));
+}
+
 void MotorController::motorSetup()
 {
 
@@ -1249,6 +1392,75 @@ void MotorController::motorSetup()
         emit error(QString("Wrong motortype set"));
         return;
     }
+
+    //checks if the x-axis backlash is in the allowed range
+    //triggered if it is
+    if(m_settings->value("motorsettings/xaxis/backlash", 0).toInt() >= 0 && m_settings->value("motorsettings/xaxis/backlash", 0).toInt() <= 9999){
+
+
+        //setting the backlash for the x-axis
+        m_commandBuffer->buffer.append(QString("#%1z%2\r").arg(m_settings->value("motorsettings/xaxis/motoradress", XAXIS_MOTORADRESS).toInt()).arg(m_settings->value("motorsettings/xaxis/backlash", 0).toInt()));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    //triggerd if it isn't
+    else{
+
+        emit error(QString("X-Axis backlash is not in the allowed range"));
+        return;
+    }
+
+    //checks if the ý-axis backlash is in the allowed range
+    //triggered if it is
+    if(m_settings->value("motorsettings/yaxis/backlash", 0).toInt() >= 0 && m_settings->value("motorsettings/yaxis/backlash", 0).toInt() <= 9999){
+
+
+        //setting the backlash for the y-axis
+        m_commandBuffer->buffer.append(QString("#%1z%2\r").arg(m_settings->value("motorsettings/yaxis/motoradress", YAXIS_MOTORADRESS).toInt()).arg(m_settings->value("motorsettings/yaxis/backlash", 0).toInt()));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    //triggerd if it isn't
+    else{
+
+        emit error(QString("Y-Axis backlash is not in the allowed range"));
+        return;
+    }
+
+    //checks if the z-axis backlash is in the allowed range
+    //triggered if it is
+    if(m_settings->value("motorsettings/zaxis/backlash", 0).toInt() >= 0 && m_settings->value("motorsettings/zaxis/backlash", 0).toInt() <= 9999){
+
+
+        //setting the backlash for the z-axis
+        m_commandBuffer->buffer.append(QString("#%1z%2\r").arg(m_settings->value("motorsettings/zaxis/motoradress", ZAXIS_MOTORADRESS).toInt()).arg(m_settings->value("motorsettings/zaxis/backlash", 0).toInt()));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    //triggerd if it isn't
+    else{
+
+        emit error(QString("Z-Axis backlash is not in the allowed range"));
+        return;
+    }
+
+    //checks if the extruder backlash is in the allowed range
+    //triggered if it is
+    if(m_settings->value("motorsettings/extruder/backlash", 0).toInt() >= 0 && m_settings->value("motorsettings/extruder/backlash", 0).toInt() <= 9999){
+
+
+        //setting the backlash for the extruder
+        m_commandBuffer->buffer.append(QString("#%1z%2\r").arg(m_settings->value("motorsettings/extruder/motoradress", EXTRUDER_MOTORADRESS).toInt()).arg(m_settings->value("motorsettings/extruder/backlash", 0).toInt()));
+        m_commandBuffer->bufferInfo.append(0);
+    }
+
+    //triggerd if it isn't
+    else{
+
+        emit error(QString("Extruder backlash is not in the allowed range"));
+        return;
+    }
+
     //setting the positioningtype of all motors to MOTOR_POSITIONINGMODE
     m_commandBuffer->buffer.append(QString("#*p%1\r").arg(m_settings->value("motorsettings/positioningmode", MOTOR_POSITIONINGMODE).toInt()));
     m_commandBuffer->bufferInfo.append(0);

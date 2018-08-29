@@ -60,6 +60,10 @@ public:
     void setCurrentYAxisPosition(qreal currentYAxisPosition);
     void setCurrentZAxisPosition(qreal currentZAxisPosition);
     void setCurrentExtruderPosition(qreal currentExtruderPosition);
+    int currentXAxisTemp();
+    int currentYAxisTemp();
+    int currentZAxisTemp();
+    int currentExtruderTemp();
 
 signals:
 
@@ -70,6 +74,10 @@ signals:
     void currentYAxisPositionChanged(qreal position);
     void currentZAxisPositionChanged(qreal position);
     void currentExtruderPositionChanged(qreal position);
+    void currentXAxisTempChanged(int temp);
+    void currentYAxisTempChanged(int temp);
+    void currentZAxisTempChanged(int temp);
+    void currentExtruderTempChanged(int temp);
 
 public slots:
 
@@ -82,6 +90,7 @@ public slots:
 private slots:
 
     void checkMovement();
+    void checkTemp();
 
 private:
 
@@ -106,6 +115,10 @@ private:
     qint32 *m_desiredYAxisMotorPosition;
     qint32 *m_desiredZAxisMotorPosition;
     qint32 *m_desiredExtruderMotorPosition;
+    int *m_currentXAxisTemp;
+    int *m_currentYAxisTemp;
+    int *m_currentZAxisTemp;
+    int *m_currentExtruderTemp;
     CommandBuffer *m_commandBuffer;
     QSettings *m_settings;
 };
