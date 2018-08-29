@@ -2,7 +2,7 @@
 #define INFOSCREEN_H
 
 #include <QWidget>
-#include "infogeneralscreen.h"
+#include "infogcodescreen.h"
 #include "infomotorscreen.h"
 #include "infoheatingscreen.h"
 #include "infoioscreen.h"
@@ -23,8 +23,8 @@ public:
 
 private slots:
 
-    void generalButtonClicked();
     void motorButtonClicked();
+    void gcodeButtonClicked();
     void heatingButtonClicked();
     void ioButtonClicked();
     void serialButtonClicked();
@@ -33,8 +33,8 @@ private slots:
 private:
 
     Ui::InfoScreen *ui;
-    InfoGeneralScreen *m_infoGeneralScreen;
     InfoMotorScreen *m_infoMotorScreen;
+    InfoGCodeScreen *m_infoGCodeScreen;
     InfoHeatingScreen *m_infoHeatingScreen;
     InfoIOScreen *m_infoIOScreen;
     InfoSerialScreen *m_infoSerialScreen;

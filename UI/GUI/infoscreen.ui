@@ -19,10 +19,10 @@
   <property name="styleSheet">
    <string notr="true">backgound-color: #ffffff;</string>
   </property>
-  <widget class="QPushButton" name="generalButton">
+  <widget class="QPushButton" name="gcodeButton">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>123</x>
      <y>0</y>
      <width>122</width>
      <height>40</height>
@@ -41,13 +41,13 @@ QPushButton:pressed{
 }</string>
    </property>
    <property name="text">
-    <string>General</string>
+    <string>GCode</string>
    </property>
   </widget>
   <widget class="QPushButton" name="motorButton">
    <property name="geometry">
     <rect>
-     <x>123</x>
+     <x>0</x>
      <y>0</y>
      <width>122</width>
      <height>40</height>

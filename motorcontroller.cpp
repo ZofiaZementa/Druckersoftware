@@ -90,7 +90,7 @@ MotorController::MotorController(QObject *parent) : QObject(parent)
     //motorsetup
 
     motorSetup();
-    checkBuffer();
+    checkTemp();
 }
 
 MotorController::~MotorController()

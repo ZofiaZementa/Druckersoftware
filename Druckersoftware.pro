@@ -48,8 +48,8 @@ SOURCES += \
     UI/GUI/infoserialscreen.cpp \
     UI/GUI/infoheatingscreen.cpp \
     UI/GUI/infoioscreen.cpp \
-    UI/GUI/infogeneralscreen.cpp \
-    UI/GUI/infomiscscreen.cpp
+    UI/GUI/infomiscscreen.cpp \
+    UI/GUI/infogcodescreen.cpp
 
 HEADERS += \
     machinecontroller.h \
@@ -77,8 +77,8 @@ HEADERS += \
     UI/GUI/infoserialscreen.h \
     UI/GUI/infoheatingscreen.h \
     UI/GUI/infoioscreen.h \
-    UI/GUI/infogeneralscreen.h \
-    UI/GUI/infomiscscreen.h
+    UI/GUI/infomiscscreen.h \
+    UI/GUI/infogcodescreen.h
 
 FORMS += \
     UI/GUI/controlwindow.ui \
@@ -89,8 +89,8 @@ FORMS += \
     UI/GUI/infoserialscreen.ui \
     UI/GUI/infoheatingscreen.ui \
     UI/GUI/infoioscreen.ui \
-    UI/GUI/infogeneralscreen.ui \
-    UI/GUI/infomiscscreen.ui
+    UI/GUI/infomiscscreen.ui \
+    UI/GUI/infogcodescreen.ui
 
 RESOURCES += \
     icons.qrc
