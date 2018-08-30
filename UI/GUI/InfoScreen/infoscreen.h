@@ -5,7 +5,7 @@
 #include "infogcodescreen.h"
 #include "infomotorscreen.h"
 #include "infoheatingscreen.h"
-#include "infoioscreen.h"
+#include "UI/GUI/InfoScreen/InfoIOScreen/infoioscreen.h"
 #include "infoserialscreen.h"
 #include "infomiscscreen.h"
 

@@ -1,0 +1,821 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InfoIODigitalScreen</class>
+ <widget class="QWidget" name="InfoIODigitalScreen">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>739</width>
+    <height>518</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLabel" name="outputsLabel">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>24</y>
+     <width>251</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Outputs:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1Label">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>70</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 1:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>90</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 1</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2Label">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>134</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 2:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>154</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 2</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output3Label">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>198</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 3:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output3ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>218</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 3</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output4Label">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>262</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 4:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output4ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>282</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 4</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output5Label">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>326</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 5:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output5ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>346</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 5</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output6Label">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>390</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 6:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output6ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>410</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 6</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output13Label">
+   <property name="geometry">
+    <rect>
+     <x>244</x>
+     <y>390</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 13:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output9ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>244</x>
+     <y>154</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 9</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output10Label">
+   <property name="geometry">
+    <rect>
+     <x>244</x>
+     <y>198</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 10:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output7ValueLabel_2">
+   <property name="geometry">
+    <rect>
+     <x>244</x>
+     <y>90</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 8</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output10ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>244</x>
+     <y>218</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 10</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output11Label">
+   <property name="geometry">
+    <rect>
+     <x>244</x>
+     <y>262</y>
+     <width>86</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 11:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output12Label">
+   <property name="geometry">
+    <rect>
+     <x>244</x>
+     <y>326</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 12:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output13ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>244</x>
+     <y>410</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 13</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output9Label">
+   <property name="geometry">
+    <rect>
+     <x>244</x>
+     <y>134</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 9:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output12ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>244</x>
+     <y>346</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 12</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output8Label">
+   <property name="geometry">
+    <rect>
+     <x>244</x>
+     <y>70</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 8:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output11ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>244</x>
+     <y>282</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 11</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input6Label">
+   <property name="geometry">
+    <rect>
+     <x>409</x>
+     <y>390</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 6:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input2ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>409</x>
+     <y>154</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 2</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input3Label">
+   <property name="geometry">
+    <rect>
+     <x>409</x>
+     <y>198</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 3:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input1ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>409</x>
+     <y>90</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 1</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input3ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>409</x>
+     <y>218</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 3</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input4Label">
+   <property name="geometry">
+    <rect>
+     <x>409</x>
+     <y>262</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 4:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input5Label">
+   <property name="geometry">
+    <rect>
+     <x>409</x>
+     <y>326</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 5:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input6ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>409</x>
+     <y>410</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 6:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input2Label">
+   <property name="geometry">
+    <rect>
+     <x>409</x>
+     <y>134</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 2:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input5ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>409</x>
+     <y>346</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 5</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input1Label">
+   <property name="geometry">
+    <rect>
+     <x>409</x>
+     <y>70</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 1:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input4ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>409</x>
+     <y>282</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 4</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="inputsLabel">
+   <property name="geometry">
+    <rect>
+     <x>409</x>
+     <y>24</y>
+     <width>251</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Inputs:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input10Label">
+   <property name="geometry">
+    <rect>
+     <x>574</x>
+     <y>198</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 10:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input9Label">
+   <property name="geometry">
+    <rect>
+     <x>574</x>
+     <y>134</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 9:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input10ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>574</x>
+     <y>218</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 10</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input8Label">
+   <property name="geometry">
+    <rect>
+     <x>574</x>
+     <y>70</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 8:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input8ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>574</x>
+     <y>90</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 8</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input12Label">
+   <property name="geometry">
+    <rect>
+     <x>574</x>
+     <y>326</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 12:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input11ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>574</x>
+     <y>282</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 11</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input13ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>574</x>
+     <y>410</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 13</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input11Label">
+   <property name="geometry">
+    <rect>
+     <x>574</x>
+     <y>262</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 11:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input9ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>574</x>
+     <y>154</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 9</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input12ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>574</x>
+     <y>346</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 12</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input13Label">
+   <property name="geometry">
+    <rect>
+     <x>574</x>
+     <y>390</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 13:</string>
+   </property>
+  </widget>
+  <widget class="Line" name="line">
+   <property name="geometry">
+    <rect>
+     <x>204</x>
+     <y>70</y>
+     <width>1</width>
+     <height>424</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="line_2">
+   <property name="geometry">
+    <rect>
+     <x>534</x>
+     <y>70</y>
+     <width>1</width>
+     <height>424</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="line_3">
+   <property name="geometry">
+    <rect>
+     <x>369</x>
+     <y>24</y>
+     <width>1</width>
+     <height>470</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output7Label">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>454</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 7:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output7ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>79</x>
+     <y>474</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 7</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output14ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>244</x>
+     <y>474</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 14</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output14Label">
+   <property name="geometry">
+    <rect>
+     <x>244</x>
+     <y>454</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 14:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input7ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>409</x>
+     <y>474</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 7</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input7Label">
+   <property name="geometry">
+    <rect>
+     <x>409</x>
+     <y>454</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 7:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input14ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>574</x>
+     <y>474</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 14</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="input14Label">
+   <property name="geometry">
+    <rect>
+     <x>574</x>
+     <y>454</y>
+     <width>86</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Input 14:</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -43,13 +43,17 @@ SOURCES += \
     UI/GUI/controlwindow.cpp \
     UI/GUI/menubar.cpp \
     UI/GUI/homescreen.cpp \
-    UI/GUI/infoscreen.cpp \
-    UI/GUI/infomotorscreen.cpp \
-    UI/GUI/infoserialscreen.cpp \
-    UI/GUI/infoheatingscreen.cpp \
-    UI/GUI/infoioscreen.cpp \
-    UI/GUI/infomiscscreen.cpp \
-    UI/GUI/infogcodescreen.cpp
+    UI/GUI/InfoScreen/infogcodescreen.cpp \
+    UI/GUI/InfoScreen/infoheatingscreen.cpp \
+    UI/GUI/InfoScreen/infomiscscreen.cpp \
+    UI/GUI/InfoScreen/infomotorscreen.cpp \
+    UI/GUI/InfoScreen/infoscreen.cpp \
+    UI/GUI/InfoScreen/infoserialscreen.cpp \
+    UI/GUI/InfoScreen/InfoIOScreen/infoiocorescreen.cpp \
+    UI/GUI/InfoScreen/InfoIOScreen/infoioscreen.cpp \
+    UI/GUI/InfoScreen/InfoIOScreen/infoiodigitalscreen.cpp \
+    UI/GUI/InfoScreen/InfoIOScreen/infoioanalogscreen.cpp \
+    UI/GUI/InfoScreen/InfoIOScreen/infoiortdscreen.cpp
 
 HEADERS += \
     machinecontroller.h \
@@ -72,25 +76,33 @@ HEADERS += \
     UI/GUI/controlwindow.h \
     UI/GUI/menubar.h \
     UI/GUI/homescreen.h \
-    UI/GUI/infoscreen.h \
-    UI/GUI/infomotorscreen.h \
-    UI/GUI/infoserialscreen.h \
-    UI/GUI/infoheatingscreen.h \
-    UI/GUI/infoioscreen.h \
-    UI/GUI/infomiscscreen.h \
-    UI/GUI/infogcodescreen.h
+    UI/GUI/InfoScreen/infogcodescreen.h \
+    UI/GUI/InfoScreen/infoheatingscreen.h \
+    UI/GUI/InfoScreen/infomiscscreen.h \
+    UI/GUI/InfoScreen/infomotorscreen.h \
+    UI/GUI/InfoScreen/infoscreen.h \
+    UI/GUI/InfoScreen/infoserialscreen.h \
+    UI/GUI/InfoScreen/InfoIOScreen/infoiocorescreen.h \
+    UI/GUI/InfoScreen/InfoIOScreen/infoioscreen.h \
+    UI/GUI/InfoScreen/InfoIOScreen/infoiodigitalscreen.h \
+    UI/GUI/InfoScreen/InfoIOScreen/infoioanalogscreen.h \
+    UI/GUI/InfoScreen/InfoIOScreen/infoiortdscreen.h
 
 FORMS += \
     UI/GUI/controlwindow.ui \
     UI/GUI/menubar.ui \
     UI/GUI/homescreen.ui \
-    UI/GUI/infoscreen.ui \
-    UI/GUI/infomotorscreen.ui \
-    UI/GUI/infoserialscreen.ui \
-    UI/GUI/infoheatingscreen.ui \
-    UI/GUI/infoioscreen.ui \
-    UI/GUI/infomiscscreen.ui \
-    UI/GUI/infogcodescreen.ui
+    UI/GUI/InfoScreen/infogcodescreen.ui \
+    UI/GUI/InfoScreen/infoheatingscreen.ui \
+    UI/GUI/InfoScreen/infomiscscreen.ui \
+    UI/GUI/InfoScreen/infomotorscreen.ui \
+    UI/GUI/InfoScreen/infoscreen.ui \
+    UI/GUI/InfoScreen/infoserialscreen.ui \
+    UI/GUI/InfoScreen/InfoIOScreen/infoiocorescreen.ui \
+    UI/GUI/InfoScreen/InfoIOScreen/infoioscreen.ui \
+    UI/GUI/InfoScreen/InfoIOScreen/infoiodigitalscreen.ui \
+    UI/GUI/InfoScreen/InfoIOScreen/infoioanalogscreen.ui \
+    UI/GUI/InfoScreen/InfoIOScreen/infoiortdscreen.ui
 
 RESOURCES += \
     icons.qrc

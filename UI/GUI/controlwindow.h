@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include "UI/GUI/menubar.h"
 #include "UI/GUI/homescreen.h"
-#include "UI/GUI/infoscreen.h"
+#include "UI/GUI/InfoScreen/infoscreen.h"
 
 namespace Ui {
 class ControlWindow;

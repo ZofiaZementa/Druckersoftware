@@ -50,6 +50,13 @@ void InfoScreen::motorButtonClicked()
     m_infoIOScreen->setVisible(false);
     m_infoSerialScreen->setVisible(false);
     m_infoMiscScreen->setVisible(false);
+
+//    ui->motorButton->setDown(true);
+//    ui->gcodeButton->setDown(false);
+//    ui->heatingButton->setDown(false);
+//    ui->ioButton->setDown(false);
+//    ui->serialButton->setDown(false);
+//    ui->miscButton->setDown(false);
 }
 
 void InfoScreen::gcodeButtonClicked()
@@ -61,6 +68,13 @@ void InfoScreen::gcodeButtonClicked()
     m_infoIOScreen->setVisible(false);
     m_infoSerialScreen->setVisible(false);
     m_infoMiscScreen->setVisible(false);
+
+//    ui->motorButton->setDown(false);
+//    ui->gcodeButton->setDown(true);
+//    ui->heatingButton->setDown(false);
+//    ui->ioButton->setDown(false);
+//    ui->serialButton->setDown(false);
+//    ui->miscButton->setDown(false);
 }
 
 void InfoScreen::heatingButtonClicked()
@@ -72,6 +86,13 @@ void InfoScreen::heatingButtonClicked()
     m_infoIOScreen->setVisible(false);
     m_infoSerialScreen->setVisible(false);
     m_infoMiscScreen->setVisible(false);
+
+//    ui->motorButton->setDown(false);
+//    ui->gcodeButton->setDown(false);
+//    ui->heatingButton->setDown(true);
+//    ui->ioButton->setDown(false);
+//    ui->serialButton->setDown(false);
+//    ui->miscButton->setDown(false);
 }
 
 void InfoScreen::ioButtonClicked()
@@ -83,6 +104,13 @@ void InfoScreen::ioButtonClicked()
     m_infoIOScreen->setVisible(true);
     m_infoSerialScreen->setVisible(false);
     m_infoMiscScreen->setVisible(false);
+
+//    ui->motorButton->setDown(false);
+//    ui->gcodeButton->setDown(false);
+//    ui->heatingButton->setDown(false);
+//    ui->ioButton->setDown(true);
+//    ui->serialButton->setDown(false);
+//    ui->miscButton->setDown(false);
 }
 
 void InfoScreen::serialButtonClicked()
@@ -94,6 +122,13 @@ void InfoScreen::serialButtonClicked()
     m_infoIOScreen->setVisible(false);
     m_infoSerialScreen->setVisible(true);
     m_infoMiscScreen->setVisible(false);
+
+//    ui->motorButton->setDown(false);
+//    ui->gcodeButton->setDown(false);
+//    ui->heatingButton->setDown(false);
+//    ui->ioButton->setDown(false);
+//    ui->serialButton->setDown(true);
+//    ui->miscButton->setDown(false);
 }
 
 void InfoScreen::miscButtonClicked()
@@ -105,4 +140,11 @@ void InfoScreen::miscButtonClicked()
     m_infoIOScreen->setVisible(false);
     m_infoSerialScreen->setVisible(false);
     m_infoMiscScreen->setVisible(true);
+
+//    ui->motorButton->setDown(false);
+//    ui->gcodeButton->setDown(false);
+//    ui->heatingButton->setDown(false);
+//    ui->ioButton->setDown(false);
+//    ui->serialButton->setDown(false);
+//    ui->miscButton->setDown(true);
 }
