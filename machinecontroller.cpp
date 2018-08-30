@@ -21,8 +21,6 @@ MachineController::MachineController(QObject *parent) : QObject(parent)
     m_printerBedXAxisTilt = new qreal;    //holds the tilt of the printerbed in the x-axis direction in radiants
     m_printerBedYAxisTilt = new qreal;    //holds the tilt of the printerbed in the y-axis direction in radiants
     m_gCodeReader = new GCodeReader(this);
-    m_motorController = new MotorController(this);
-    m_serialInterface = new SerialInterface(this);
     m_settings = new QSettings(this);
 
 
@@ -35,12 +33,6 @@ MachineController::MachineController(QObject *parent) : QObject(parent)
     *m_printerBedYAxisTilt = 0.0;    
 
     //Signals and Slots
-
-    //connecting the MotorController
-
-    QObject::connect(m_motorController, SIGNAL(movementFinished()), this, SLOT(movementFinished()));
-    QObject::connect(m_serialInterface, SIGNAL(dataReceived(QString)), m_motorController, SLOT(receive(QString)));
-    QObject::connect(m_motorController, SIGNAL(send(QString)), m_serialInterface, SLOT(send(QString)));
 
     //connecting the GCodeReader
 
@@ -153,6 +145,18 @@ QList<qreal> MachineController::printerBedMeasurements()
 {
 
     return *m_printerBedMeasurements;
+}
+
+void MachineController::setSerialInterface(SerialInterface *serialInterface)
+{
+
+    m_serialInterface = serialInterface;
+}
+
+void MachineController::setMotorController(MotorController *motorCotroller)
+{
+
+    m_motorController = motorCotroller;
 }
 
 //rapid linear move

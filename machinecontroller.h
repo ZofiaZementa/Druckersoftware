@@ -35,6 +35,8 @@ public:
     int line();
     void setPrinterBedMeasurements(QList<qreal> printerBedMeasurements);
     QList<qreal> printerBedMeasurements();
+    void setSerialInterface(SerialInterface *serialInterface);
+    void setMotorController(MotorController *motorCotroller);
 
 public slots:
 

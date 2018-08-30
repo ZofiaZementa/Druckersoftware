@@ -1,5 +1,7 @@
 #include "UI/GUI/controlwindow.h"
 #include "machinecontroller.h"
+#include "serialinterface.h"
+#include "motorcontroller.h"
 #include "IO/heatingcontroller.h"
 #include "IO/sensorlistener.h"
 #include "IO/fancontroller.h"
@@ -58,6 +60,8 @@ int main(int argc, char *argv[])
     //Component-definition
 
     MachineController c;
+    SerialInterface s;
+    MotorController mc;
     IOController io;
     SensorListener sl;
     HeatingController hc;
@@ -77,6 +81,10 @@ int main(int argc, char *argv[])
     c.moveToThread(sysThread);
     //moving the Logger to the sysThread
     l.moveToThread(sysThread);
+    //moving the SerialInterface to the sysThread
+    s.moveToThread(sysThread);
+    //moving the MotorController to the sysThread
+    mc.moveToThread(sysThread);
 
     //moving IO-components to the ioThread
 
@@ -101,7 +109,25 @@ int main(int argc, char *argv[])
     ioml.setIOController(&io);
     ioml.setLightingController(&lc);
 
+    //sets the pointers in MachineController
+
+    c.setMotorController(&mc);
+    c.setSerialInterface(&s);
+
+    //setup of the serialinterface
+
+    c.serialInterfaceSetup();
+
     //signals & slots
+
+    //MotorController
+
+    //connecting the send signal od the MotorController to the send slot of the SerialInterface
+    QObject::connect(&mc, SIGNAL(send(QString)), &s, SLOT(send(QString)));
+    //connecting the send signal od the SerialInterface to the send slot of the MotorController
+    QObject::connect(&s, SIGNAL(dataReceived(QString)), &mc, SLOT(receive(QString)));
+    //connecting the movementFinished signal of the MotorController to the movementFinished slot of the MachineController
+    QObject::connect(&mc, SIGNAL(movementFinished()), &c, SLOT(movementFinished()));
 
     //logging
 
@@ -149,6 +175,11 @@ int main(int argc, char *argv[])
         //connects the error signal of the IOController to the displayErrorMessage slot of the GUI
         //QObject::connect(&io, SIGNAL(error(QString)), &w, SLOT(displayErrorMessage(QString)));
         //connects the destroyed signal of the GUI to the quit slot of the ioThread, so that the ioThread stops when the window gets closed
+        //connecting the error signal of the MotorController to the displayErrorMessage slot of the GUI
+        //QObject::connect(&mc, SIGNAL(error(QString)), &w, SLOT(displayErrorMessage(QString)));
+        //connecting the error signal of the SerialInterface to the displayErrorMessage slot of the GUI
+        //QObject::connect(&s, SIGNAL(error(QString)), &w, SLOT(displayErrorMessage(QString)));
+
         QObject::connect(&w, SIGNAL(closed()), ioThread, SLOT(quit()));
         //connects the destroyed signal of the GUI to the quit slot of the sysThread, so that the sysThread stops when the window gets closed
         QObject::connect(&w, SIGNAL(closed()), sysThread, SLOT(quit()));
