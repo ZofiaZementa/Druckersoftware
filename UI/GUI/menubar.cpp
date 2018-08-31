@@ -9,12 +9,12 @@ MenuBar::MenuBar(QWidget *parent) :
 
     m_networkStatus = new QSvgWidget(this);
 
-    QObject::connect(ui->homeButton, SIGNAL(pressed()), this, SLOT(on_homeButtonPressed()));
-    QObject::connect(ui->infoButton, SIGNAL(pressed()), this, SLOT(on_infoButtonPressed()));
-    QObject::connect(ui->startAPrintButton, SIGNAL(pressed()), this, SLOT(on_startAPrintButtonPressed()));
-    QObject::connect(ui->logButton, SIGNAL(pressed()), this, SLOT(on_logButtonPressed()));
-    QObject::connect(ui->settingsButton, SIGNAL(pressed()), this, SLOT(on_settingsButtonPressed()));
-    QObject::connect(ui->sysActionsButton, SIGNAL(pressed()), this, SLOT(on_sysActionsButtonPressed()));
+    QObject::connect(ui->homeButton, SIGNAL(clicked()), this, SLOT(on_homeButtonClicked()));
+    QObject::connect(ui->infoButton, SIGNAL(clicked()), this, SLOT(on_infoButtonClicked()));
+    QObject::connect(ui->startAPrintButton, SIGNAL(clicked()), this, SLOT(on_startAPrintButtonClicked()));
+    QObject::connect(ui->logButton, SIGNAL(clicked()), this, SLOT(on_logButtonClicked()));
+    QObject::connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(on_settingsButtonClicked()));
+    QObject::connect(ui->sysActionsButton, SIGNAL(clicked()), this, SLOT(on_sysActionsButtonClicked()));
 
     m_networkStatus->load(QString(":/Icons/UI/Icons/sharp-signal_cellular_null-24px.svg"));
     m_networkStatus->resize(20, 20);
@@ -24,6 +24,14 @@ MenuBar::MenuBar(QWidget *parent) :
 MenuBar::~MenuBar()
 {
     delete ui;
+}
+
+void MenuBar::paintEvent(QPaintEvent *pe){
+
+    QStyleOption o;
+    o.initFrom(this);
+    QPainter p(this);
+    style()->drawPrimitive(QStyle::PE_Widget, &o, &p, this);
 }
 
 void MenuBar::setNetworkStatus(int status)
@@ -40,38 +48,38 @@ void MenuBar::setNetworkStatus(int status)
     }
 }
 
-void MenuBar::on_homeButtonPressed()
+void MenuBar::on_homeButtonClicked()
 {
 
-    emit homeButtonPressed();
+    emit homeButtonClicked();
 }
 
-void MenuBar::on_infoButtonPressed()
+void MenuBar::on_infoButtonClicked()
 {
 
-    emit infoButtonPressed();
+    emit infoButtonClicked();
 }
 
-void MenuBar::on_startAPrintButtonPressed()
+void MenuBar::on_startAPrintButtonClicked()
 {
 
-    emit startAPrintButtonPressed();
+    emit startAPrintButtonClicked();
 }
 
-void MenuBar::on_logButtonPressed()
+void MenuBar::on_logButtonClicked()
 {
 
-    emit logButtonPressed();
+    emit logButtonClicked();
 }
 
-void MenuBar::on_settingsButtonPressed()
+void MenuBar::on_settingsButtonClicked()
 {
 
-    emit settingsButtonPressed();
+    emit settingsButtonClicked();
 }
 
-void MenuBar::on_sysActionsButtonPressed()
+void MenuBar::on_sysActionsButtonClicked()
 {
 
-    emit sysActionsButtonPressed();
+    emit sysActionsButtonClicked();
 }

@@ -53,7 +53,8 @@ SOURCES += \
     UI/GUI/InfoScreen/InfoIOScreen/infoioscreen.cpp \
     UI/GUI/InfoScreen/InfoIOScreen/infoiodigitalscreen.cpp \
     UI/GUI/InfoScreen/InfoIOScreen/infoioanalogscreen.cpp \
-    UI/GUI/InfoScreen/InfoIOScreen/infoiortdscreen.cpp
+    UI/GUI/InfoScreen/InfoIOScreen/infoiortdscreen.cpp \
+    UI/GUI/errorscreen.cpp
 
 HEADERS += \
     machinecontroller.h \
@@ -86,7 +87,8 @@ HEADERS += \
     UI/GUI/InfoScreen/InfoIOScreen/infoioscreen.h \
     UI/GUI/InfoScreen/InfoIOScreen/infoiodigitalscreen.h \
     UI/GUI/InfoScreen/InfoIOScreen/infoioanalogscreen.h \
-    UI/GUI/InfoScreen/InfoIOScreen/infoiortdscreen.h
+    UI/GUI/InfoScreen/InfoIOScreen/infoiortdscreen.h \
+    UI/GUI/errorscreen.h
 
 FORMS += \
     UI/GUI/controlwindow.ui \
@@ -102,7 +104,8 @@ FORMS += \
     UI/GUI/InfoScreen/InfoIOScreen/infoioscreen.ui \
     UI/GUI/InfoScreen/InfoIOScreen/infoiodigitalscreen.ui \
     UI/GUI/InfoScreen/InfoIOScreen/infoioanalogscreen.ui \
-    UI/GUI/InfoScreen/InfoIOScreen/infoiortdscreen.ui
+    UI/GUI/InfoScreen/InfoIOScreen/infoiortdscreen.ui \
+    UI/GUI/errorscreen.ui
 
 RESOURCES += \
     icons.qrc

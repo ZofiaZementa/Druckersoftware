@@ -53,12 +53,8 @@ void LogFile::log(QString logMessage, QString origin, int code) const
     //variable for the line which to write
     QByteArray line;
     //variable for the hex-errorcode
-    QString hexCode;
+    QString hexCode = convertDectoHex(code);
 
-    //writes the errorcode into a string
-    hexCode.setNum(code, 16);
-    //inserts the "0x" in front of the string
-    hexCode.insert(0, QString("0x"));
     //writes the line into the bytearray
     line.append(QString("At %1:%2:%3:%4 from %5 with code %6: %7;\r\n").arg(QTime::currentTime().hour()).arg(QTime::currentTime().minute()).arg(QTime::currentTime().second()).arg(QTime::currentTime().msec()).arg(origin).arg(hexCode).arg(logMessage));
     //writes the line into the file
@@ -96,4 +92,35 @@ QStringList LogFile::readAll()
     file.close();
 
     return output;
+}
+
+QString LogFile::convertDectoHex(int decimal) const
+{
+
+    //defining the output variable
+    QString hexcode;
+
+    //converting from decimal to hexadecimal
+    hexcode.setNum(decimal, 16);
+
+    //filling the string hexcode up with 0s up to the 6th digit
+    for(int i = hexcode.count();i < 6;i++){
+
+        //puts a 0 at the first place of the string hexcode
+        hexcode.insert(0, QString("0"));
+    }
+
+    //replaces the small letters with capital letters
+    for(int i = 0;i < hexcode.count();i++){
+
+        //checks if the letter in hexcode at i is a small letter
+        //triggerd if it is
+        if(hexcode.unicode()[i].unicode() > 96 && hexcode.unicode()[i].unicode() < 123){
+
+            //converts it to a capital letter and writes it into hexcode at i
+            hexcode.replace(i, 1, QChar(hexcode.unicode()[i].unicode() - 32));
+        }
+    }
+
+    return hexcode;
 }

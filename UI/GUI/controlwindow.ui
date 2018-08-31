@@ -14,10 +14,7 @@
    <string>ControlWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">ControlWindow{
-
-	background-color: #ffffff;
-}</string>
+   <string notr="true">background-color: #FFFFFF;</string>
   </property>
   <widget class="QWidget" name="centralWidget"/>
  </widget>

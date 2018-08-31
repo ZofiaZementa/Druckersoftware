@@ -28,6 +28,8 @@ public slots:
 
 private:
 
+    QString convertDectoHex(int decimal) const;
+
     //stores the filepath of the file
     QString *m_filePath;
 };

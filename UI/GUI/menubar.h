@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QtSvg/QSvgWidget>
+#include <QPainter>
 
 namespace Ui {
 class MenuBar;
@@ -16,27 +17,29 @@ public:
     explicit MenuBar(QWidget *parent = nullptr);
     ~MenuBar();
 
+    void paintEvent(QPaintEvent *pe);
+
 public slots:
 
     void setNetworkStatus(int status);
 
 signals:
 
-    void homeButtonPressed();
-    void infoButtonPressed();
-    void startAPrintButtonPressed();
-    void logButtonPressed();
-    void settingsButtonPressed();
-    void sysActionsButtonPressed();
+    void homeButtonClicked();
+    void infoButtonClicked();
+    void startAPrintButtonClicked();
+    void logButtonClicked();
+    void settingsButtonClicked();
+    void sysActionsButtonClicked();
 
 private slots:
 
-    void on_homeButtonPressed();
-    void on_infoButtonPressed();
-    void on_startAPrintButtonPressed();
-    void on_logButtonPressed();
-    void on_settingsButtonPressed();
-    void on_sysActionsButtonPressed();
+    void on_homeButtonClicked();
+    void on_infoButtonClicked();
+    void on_startAPrintButtonClicked();
+    void on_logButtonClicked();
+    void on_settingsButtonClicked();
+    void on_sysActionsButtonClicked();
 
 private:
     Ui::MenuBar *ui;
