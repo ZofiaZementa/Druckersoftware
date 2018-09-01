@@ -42,8 +42,8 @@ private slots:
     void on_sysActionsButtonClicked();
 
 private:
-    Ui::MenuBar *ui;
 
+    Ui::MenuBar *ui;
     QSvgWidget *m_networkStatus;
 };
 

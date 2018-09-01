@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>InfoIOAnalogOutScreen</class>
+ <widget class="QWidget" name="InfoIOAnalogOutScreen">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>739</width>
+    <height>518</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLabel" name="output1Label">
+   <property name="geometry">
+    <rect>
+     <x>51</x>
+     <y>56</y>
+     <width>293</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 1:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>51</x>
+     <y>134</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Value:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1ValueValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>51</x>
+     <y>154</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Value</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1RangeLabel">
+   <property name="geometry">
+    <rect>
+     <x>51</x>
+     <y>230</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Range:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1RangeValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>51</x>
+     <y>250</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Range</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1EnableSlewLabel">
+   <property name="geometry">
+    <rect>
+     <x>51</x>
+     <y>326</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Enable Slew:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1EnableSlewValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>51</x>
+     <y>346</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>EnableSlew</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1SlewStepSizeLabel">
+   <property name="geometry">
+    <rect>
+     <x>51</x>
+     <y>422</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Slew Step Size:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1SlewStepSizeValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>51</x>
+     <y>442</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>SlewStepSize</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1SlewUpdateFreqLabel">
+   <property name="geometry">
+    <rect>
+     <x>223</x>
+     <y>134</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Slew Update Freq:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1OffsetValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>223</x>
+     <y>442</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Offset</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1OffsetLabel">
+   <property name="geometry">
+    <rect>
+     <x>223</x>
+     <y>422</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Offset:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1SlewUpdateFreqValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>223</x>
+     <y>154</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>SlewUpdateFreq</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1MultiplierValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>223</x>
+     <y>250</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Multiplier</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1DivisorLabel">
+   <property name="geometry">
+    <rect>
+     <x>223</x>
+     <y>326</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Divisor:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1DivisorValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>223</x>
+     <y>346</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Divisor</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output1MultiplierLabel">
+   <property name="geometry">
+    <rect>
+     <x>223</x>
+     <y>230</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Multiplier:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2Label">
+   <property name="geometry">
+    <rect>
+     <x>395</x>
+     <y>56</y>
+     <width>293</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Output 2:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>395</x>
+     <y>134</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Value:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2SlewStepSizeValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>395</x>
+     <y>442</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>SlewStepSize</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2SlewStepSizeLabel">
+   <property name="geometry">
+    <rect>
+     <x>395</x>
+     <y>422</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Slew Step Size:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2ValueValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>395</x>
+     <y>154</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Value</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2RangeValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>395</x>
+     <y>250</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Range</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2EnableSlewLabel">
+   <property name="geometry">
+    <rect>
+     <x>395</x>
+     <y>326</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Enable Slew:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2EnableSlewValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>395</x>
+     <y>346</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>EnableSlew</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2RangeLabel">
+   <property name="geometry">
+    <rect>
+     <x>395</x>
+     <y>230</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Range:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2SlewUpdateFreqLabel">
+   <property name="geometry">
+    <rect>
+     <x>567</x>
+     <y>134</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Slew Update Freq:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2OffsetValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>567</x>
+     <y>442</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Offset</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2OffsetLabel">
+   <property name="geometry">
+    <rect>
+     <x>567</x>
+     <y>422</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Offset:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2SlewUpdateFreqValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>567</x>
+     <y>154</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>SlewUpdateFreq</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2MultiplierValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>567</x>
+     <y>250</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Multiplier</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2DivisorLabel">
+   <property name="geometry">
+    <rect>
+     <x>567</x>
+     <y>326</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Divisor:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2DivisorValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>567</x>
+     <y>346</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Divisor</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="output2MultiplierLabel">
+   <property name="geometry">
+    <rect>
+     <x>567</x>
+     <y>230</y>
+     <width>121</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Multiplier:</string>
+   </property>
+  </widget>
+  <widget class="Line" name="verticalLine2">
+   <property name="geometry">
+    <rect>
+     <x>369</x>
+     <y>56</y>
+     <width>1</width>
+     <height>406</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000;</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="verticalLine1">
+   <property name="geometry">
+    <rect>
+     <x>197</x>
+     <y>134</y>
+     <width>1</width>
+     <height>328</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000;</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="verticalLine3">
+   <property name="geometry">
+    <rect>
+     <x>541</x>
+     <y>134</y>
+     <width>1</width>
+     <height>328</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000;</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

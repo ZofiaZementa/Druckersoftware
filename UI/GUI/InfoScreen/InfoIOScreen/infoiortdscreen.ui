@@ -13,6 +13,360 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <widget class="QLabel" name="rtd1Label">
+   <property name="geometry">
+    <rect>
+     <x>157</x>
+     <y>32</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>RTD 1:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd1ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>157</x>
+     <y>86</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Value:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd1ValueValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>157</x>
+     <y>106</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Value</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd1TypeLabel">
+   <property name="geometry">
+    <rect>
+     <x>157</x>
+     <y>158</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Type:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd1TypeValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>157</x>
+     <y>178</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Type</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd1WiringLabel">
+   <property name="geometry">
+    <rect>
+     <x>157</x>
+     <y>230</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Wiring:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd1WiringValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>157</x>
+     <y>250</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Wiring</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd1MultiplierLabel">
+   <property name="geometry">
+    <rect>
+     <x>157</x>
+     <y>302</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Multiplier:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd1MultiplierValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>157</x>
+     <y>322</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Multiplier</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd1DivisorLabel">
+   <property name="geometry">
+    <rect>
+     <x>157</x>
+     <y>374</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Divisor:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd1rtd1DivisorValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>157</x>
+     <y>394</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Divisor</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd1OffsetLabel">
+   <property name="geometry">
+    <rect>
+     <x>157</x>
+     <y>446</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Offset:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd1OffsetValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>157</x>
+     <y>466</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Offset</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd1rtd2DivisorValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>448</x>
+     <y>394</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Divisor</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd2MultiplierLabel">
+   <property name="geometry">
+    <rect>
+     <x>448</x>
+     <y>302</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Multiplier:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd2WiringLabel">
+   <property name="geometry">
+    <rect>
+     <x>448</x>
+     <y>230</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Wiring:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd2OffsetValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>448</x>
+     <y>466</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Offset</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd2ValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>448</x>
+     <y>86</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Value:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd2TypeValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>448</x>
+     <y>178</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Type</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd2ValueValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>448</x>
+     <y>106</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Value</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd2OffsetLabel">
+   <property name="geometry">
+    <rect>
+     <x>448</x>
+     <y>446</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Offset:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd2TypeLabel">
+   <property name="geometry">
+    <rect>
+     <x>448</x>
+     <y>158</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Type:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd2MultiplierValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>448</x>
+     <y>322</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Multiplier</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd2Label">
+   <property name="geometry">
+    <rect>
+     <x>448</x>
+     <y>32</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>RTD 2:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd2WiringValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>448</x>
+     <y>250</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Wiring</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="rtd2DivisorLabel">
+   <property name="geometry">
+    <rect>
+     <x>448</x>
+     <y>374</y>
+     <width>134</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Divisor:</string>
+   </property>
+  </widget>
+  <widget class="Line" name="verticalLine">
+   <property name="geometry">
+    <rect>
+     <x>369</x>
+     <y>32</y>
+     <width>1</width>
+     <height>454</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000;</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

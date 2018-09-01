@@ -17,7 +17,7 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">backgound-color: #ffffff;</string>
+   <string notr="true">background-color: #ffffff;</string>
   </property>
   <widget class="QPushButton" name="gcodeButton">
    <property name="geometry">

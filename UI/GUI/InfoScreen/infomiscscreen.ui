@@ -13,6 +13,116 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <widget class="QLabel" name="printerBedXAxisTiltLabel">
+   <property name="geometry">
+    <rect>
+     <x>145</x>
+     <y>157</y>
+     <width>152</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Printerbed X-Axis Tilt:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="printerBedXAxisTiltValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>145</x>
+     <y>179</y>
+     <width>152</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PrinterBedXAxisTilt</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="printerStatusLabe">
+   <property name="geometry">
+    <rect>
+     <x>145</x>
+     <y>358</y>
+     <width>449</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Printer Status:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="printerStatusValueLabe">
+   <property name="geometry">
+    <rect>
+     <x>145</x>
+     <y>380</y>
+     <width>449</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PrinterStatus</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="printerBedYAxisTiltValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>442</x>
+     <y>179</y>
+     <width>152</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>PrinterBedYAxisTilt</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="printerBedYAxisTiltLabel">
+   <property name="geometry">
+    <rect>
+     <x>442</x>
+     <y>157</y>
+     <width>152</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Printerbed Y-Axis Tilt:</string>
+   </property>
+  </widget>
+  <widget class="Line" name="horizontalLine">
+   <property name="geometry">
+    <rect>
+     <x>145</x>
+     <y>279</y>
+     <width>449</width>
+     <height>1</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000;</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="verticalLine">
+   <property name="geometry">
+    <rect>
+     <x>369</x>
+     <y>157</y>
+     <width>1</width>
+     <height>44</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000;</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

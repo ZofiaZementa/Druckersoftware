@@ -222,6 +222,12 @@ QPushButton:pressed{
      <height>40</height>
     </size>
    </property>
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="sysActionsButton">
    <property name="geometry">

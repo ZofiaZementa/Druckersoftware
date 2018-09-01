@@ -1,5 +1,6 @@
 #include "menubar.h"
 #include "ui_menubar.h"
+#include <QDebug>
 
 MenuBar::MenuBar(QWidget *parent) :
     QWidget(parent),
@@ -8,6 +9,10 @@ MenuBar::MenuBar(QWidget *parent) :
     ui->setupUi(this);
 
     m_networkStatus = new QSvgWidget(this);
+
+    qDebug() << ui->infoButton->autoExclusive();
+
+    ui->homeButton->setChecked(true);
 
     QObject::connect(ui->homeButton, SIGNAL(clicked()), this, SLOT(on_homeButtonClicked()));
     QObject::connect(ui->infoButton, SIGNAL(clicked()), this, SLOT(on_infoButtonClicked()));
@@ -52,34 +57,76 @@ void MenuBar::on_homeButtonClicked()
 {
 
     emit homeButtonClicked();
+
+    ui->homeButton->setChecked(true);
+    ui->infoButton->setChecked(false);
+    ui->startAPrintButton->setChecked(false);
+    ui->logButton->setChecked(false);
+    ui->settingsButton->setChecked(false);
+    ui->sysActionsButton->setChecked(false);
 }
 
 void MenuBar::on_infoButtonClicked()
 {
 
     emit infoButtonClicked();
+
+    ui->homeButton->setChecked(false);
+    ui->infoButton->setChecked(true);
+    ui->startAPrintButton->setChecked(false);
+    ui->logButton->setChecked(false);
+    ui->settingsButton->setChecked(false);
+    ui->sysActionsButton->setChecked(false);
 }
 
 void MenuBar::on_startAPrintButtonClicked()
 {
 
     emit startAPrintButtonClicked();
+
+    ui->homeButton->setChecked(false);
+    ui->infoButton->setChecked(false);
+    ui->startAPrintButton->setChecked(true);
+    ui->logButton->setChecked(false);
+    ui->settingsButton->setChecked(false);
+    ui->sysActionsButton->setChecked(false);
 }
 
 void MenuBar::on_logButtonClicked()
 {
 
     emit logButtonClicked();
+
+    ui->homeButton->setChecked(false);
+    ui->infoButton->setChecked(false);
+    ui->startAPrintButton->setChecked(false);
+    ui->logButton->setChecked(true);
+    ui->settingsButton->setChecked(false);
+    ui->sysActionsButton->setChecked(false);
 }
 
 void MenuBar::on_settingsButtonClicked()
 {
 
     emit settingsButtonClicked();
+
+    ui->homeButton->setChecked(false);
+    ui->infoButton->setChecked(false);
+    ui->startAPrintButton->setChecked(false);
+    ui->logButton->setChecked(false);
+    ui->settingsButton->setChecked(true);
+    ui->sysActionsButton->setChecked(false);
 }
 
 void MenuBar::on_sysActionsButtonClicked()
 {
 
     emit sysActionsButtonClicked();
+
+    ui->homeButton->setChecked(false);
+    ui->infoButton->setChecked(false);
+    ui->startAPrintButton->setChecked(false);
+    ui->logButton->setChecked(false);
+    ui->settingsButton->setChecked(false);
+    ui->sysActionsButton->setChecked(true);
 }

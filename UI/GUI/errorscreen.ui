@@ -88,8 +88,7 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: #D50000;
-border: none</string>
+    <string notr="true">border: none;</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton">

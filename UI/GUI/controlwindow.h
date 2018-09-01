@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "UI/GUI/menubar.h"
 #include "UI/GUI/errorscreen.h"
+#include "UI/GUI/warningbar.h"
 #include "UI/GUI/homescreen.h"
 #include "UI/GUI/InfoScreen/infoscreen.h"
 
@@ -27,6 +28,8 @@ public slots:
 signals:
 
     void closed();
+    void logEntry(QString logMessage, int code);
+    void error(QString errorMessage);
 
 private slots:
 
@@ -37,12 +40,15 @@ private slots:
     void logButtonClicked();
     void settingsButtonClicked();
     void sysActionsButtonClicked();
+    void logEntryOccured(QString logMessage, int code);
+    void errorOccured(QString errorMessage);
 
 private:
     Ui::ControlWindow *ui;
 
     MenuBar *m_menuBar;
     ErrorScreen *m_errorScreen;
+    WarningBar *m_warningBar;
     HomeScreen *m_homeScreen;
     InfoScreen *m_infoScreen;
 };

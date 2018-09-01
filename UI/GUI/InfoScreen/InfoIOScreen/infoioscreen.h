@@ -2,10 +2,11 @@
 #define INFOIOSCREEN_H
 
 #include <QWidget>
-#include "infoiocorescreen.h"
-#include "infoiodigitalscreen.h"
-#include "infoioanalogscreen.h"
-#include "infoiortdscreen.h"
+#include "UI/GUI/InfoScreen/InfoIOScreen/infoiocorescreen.h"
+#include "UI/GUI/InfoScreen/InfoIOScreen/infoiodigitalscreen.h"
+#include "UI/GUI/InfoScreen/InfoIOScreen/infoioanalogoutscreen.h"
+#include "UI/GUI/InfoScreen/InfoIOScreen/infoioanaloginscreen.h"
+#include "UI/GUI/InfoScreen/InfoIOScreen/infoiortdscreen.h"
 
 namespace Ui {
 class InfoIOScreen;
@@ -23,15 +24,17 @@ private slots:
 
     void coreButtonCLicked();
     void digitalButtonClicked();
-    void analogButtonClicked();
+    void analogOutButtonClicked();
+    void analogInButtonClicked();
     void rtdButtonClicked();
 
 private:
-    Ui::InfoIOScreen *ui;
 
+    Ui::InfoIOScreen *ui;
     InfoIOCoreScreen *m_infoIOCoreScreen;
     InfoIODigitalScreen *m_infoIODigitalScreen;
-    InfoIOAnalogScreen *m_infoIOAnalogScreen;
+    InfoIOAnalogOutScreen *m_infoIOAnalogOutScreen;
+    InfoIOAnalogInScreen *m_infoIOAnalogInScreen;
     InfoIORTDScreen *m_infoIORTDScreen;
 };
 

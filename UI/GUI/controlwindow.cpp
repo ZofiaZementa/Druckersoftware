@@ -12,14 +12,19 @@ ControlWindow::ControlWindow(QWidget *parent) :
 
     m_menuBar = new MenuBar(this);
     m_errorScreen = new ErrorScreen(this);
+    m_warningBar = new WarningBar(this);
     m_homeScreen = new HomeScreen(this);
     m_infoScreen = new InfoScreen(this);
 
     m_homeScreen->move(61, 0);
     m_infoScreen->move(61, 0);
+    m_warningBar->move(0, 480);
 
     m_errorScreen->setVisible(false);
+    m_warningBar->setVisible(false);
     m_infoScreen->setVisible(false);
+
+    //m_warningBar->raise();
 
     QObject::connect(m_menuBar, SIGNAL(homeButtonClicked()), this, SLOT(homeButtonClicked()));
     QObject::connect(m_menuBar, SIGNAL(infoButtonClicked()), this, SLOT(infoButtonClicked()));
@@ -90,4 +95,16 @@ void ControlWindow::settingsButtonClicked()
 void ControlWindow::sysActionsButtonClicked()
 {
 
+}
+
+void ControlWindow::logEntryOccured(QString logMessage, int code)
+{
+
+    emit logEntry(logMessage, code);
+}
+
+void ControlWindow::errorOccured(QString errorMessage)
+{
+
+    emit error(errorMessage);
 }

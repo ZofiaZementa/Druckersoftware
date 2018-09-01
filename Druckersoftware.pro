@@ -22,6 +22,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+
 SOURCES += \
         main.cpp \
     machinecontroller.cpp \
@@ -52,9 +53,11 @@ SOURCES += \
     UI/GUI/InfoScreen/InfoIOScreen/infoiocorescreen.cpp \
     UI/GUI/InfoScreen/InfoIOScreen/infoioscreen.cpp \
     UI/GUI/InfoScreen/InfoIOScreen/infoiodigitalscreen.cpp \
-    UI/GUI/InfoScreen/InfoIOScreen/infoioanalogscreen.cpp \
     UI/GUI/InfoScreen/InfoIOScreen/infoiortdscreen.cpp \
-    UI/GUI/errorscreen.cpp
+    UI/GUI/errorscreen.cpp \
+    UI/GUI/warningbar.cpp \
+    UI/GUI/InfoScreen/InfoIOScreen/infoioanalogoutscreen.cpp \
+    UI/GUI/InfoScreen/InfoIOScreen/infoioanaloginscreen.cpp
 
 HEADERS += \
     machinecontroller.h \
@@ -86,9 +89,11 @@ HEADERS += \
     UI/GUI/InfoScreen/InfoIOScreen/infoiocorescreen.h \
     UI/GUI/InfoScreen/InfoIOScreen/infoioscreen.h \
     UI/GUI/InfoScreen/InfoIOScreen/infoiodigitalscreen.h \
-    UI/GUI/InfoScreen/InfoIOScreen/infoioanalogscreen.h \
     UI/GUI/InfoScreen/InfoIOScreen/infoiortdscreen.h \
-    UI/GUI/errorscreen.h
+    UI/GUI/errorscreen.h \
+    UI/GUI/warningbar.h \
+    UI/GUI/InfoScreen/InfoIOScreen/infoioanalogoutscreen.h \
+    UI/GUI/InfoScreen/InfoIOScreen/infoioanaloginscreen.h
 
 FORMS += \
     UI/GUI/controlwindow.ui \
@@ -103,9 +108,11 @@ FORMS += \
     UI/GUI/InfoScreen/InfoIOScreen/infoiocorescreen.ui \
     UI/GUI/InfoScreen/InfoIOScreen/infoioscreen.ui \
     UI/GUI/InfoScreen/InfoIOScreen/infoiodigitalscreen.ui \
-    UI/GUI/InfoScreen/InfoIOScreen/infoioanalogscreen.ui \
     UI/GUI/InfoScreen/InfoIOScreen/infoiortdscreen.ui \
-    UI/GUI/errorscreen.ui
+    UI/GUI/errorscreen.ui \
+    UI/GUI/warningbar.ui \
+    UI/GUI/InfoScreen/InfoIOScreen/infoioanalogoutscreen.ui \
+    UI/GUI/InfoScreen/InfoIOScreen/infoioanaloginscreen.ui
 
 RESOURCES += \
     icons.qrc

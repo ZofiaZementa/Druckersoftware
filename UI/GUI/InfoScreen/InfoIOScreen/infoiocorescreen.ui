@@ -13,6 +13,84 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <widget class="QLabel" name="statusLabel">
+   <property name="geometry">
+    <rect>
+     <x>269</x>
+     <y>98</y>
+     <width>201</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Status:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="statusValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>269</x>
+     <y>119</y>
+     <width>201</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Status</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="coreTempLabel">
+   <property name="geometry">
+    <rect>
+     <x>269</x>
+     <y>238</y>
+     <width>201</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Core Temperature:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="coreTempValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>269</x>
+     <y>259</y>
+     <width>201</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>CoreTemp</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="statusLEDLabel">
+   <property name="geometry">
+    <rect>
+     <x>269</x>
+     <y>378</y>
+     <width>201</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Status LED:</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="statusLEDValueLabel">
+   <property name="geometry">
+    <rect>
+     <x>269</x>
+     <y>399</y>
+     <width>201</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>StatusLED</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
