@@ -13,17 +13,7 @@ InfoIOScreen::InfoIOScreen(QWidget *parent) :
     m_infoIOAnalogInScreen = new InfoIOAnalogInScreen(this);
     m_infoIORTDScreen = new InfoIORTDScreen(this);
 
-    m_infoIOCoreScreen->move(0, 41);
-    m_infoIODigitalScreen->move(0, 41);
-    m_infoIOAnalogOutScreen->move(0, 41);
-    m_infoIOAnalogInScreen->move(0, 41);
-    m_infoIORTDScreen->move(0, 41);
-
-    m_infoIOCoreScreen->setVisible(true);
-    m_infoIODigitalScreen->setVisible(false);
-    m_infoIOAnalogOutScreen->setVisible(false);
-    m_infoIOAnalogInScreen->setVisible(false);
-    m_infoIORTDScreen->setVisible(false);
+    uiSetup();
 
     QObject::connect(ui->coreButton, SIGNAL(clicked()), this, SLOT(coreButtonCLicked()));
     QObject::connect(ui->digitalButton, SIGNAL(clicked()), this, SLOT(digitalButtonClicked()));
@@ -45,6 +35,12 @@ void InfoIOScreen::coreButtonCLicked()
     m_infoIOAnalogOutScreen->setVisible(false);
     m_infoIOAnalogInScreen->setVisible(false);
     m_infoIORTDScreen->setVisible(false);
+
+    ui->coreButton->setChecked(true);
+    ui->digitalButton->setChecked(false);
+    ui->analogOutButton->setChecked(false);
+    ui->analogInButton->setChecked(false);
+    ui->rtdButton->setChecked(false);
 }
 
 void InfoIOScreen::digitalButtonClicked()
@@ -55,6 +51,12 @@ void InfoIOScreen::digitalButtonClicked()
     m_infoIOAnalogOutScreen->setVisible(false);
     m_infoIOAnalogInScreen->setVisible(false);
     m_infoIORTDScreen->setVisible(false);
+
+    ui->coreButton->setChecked(false);
+    ui->digitalButton->setChecked(true);
+    ui->analogOutButton->setChecked(false);
+    ui->analogInButton->setChecked(false);
+    ui->rtdButton->setChecked(false);
 }
 
 void InfoIOScreen::analogOutButtonClicked()
@@ -65,6 +67,12 @@ void InfoIOScreen::analogOutButtonClicked()
     m_infoIOAnalogOutScreen->setVisible(true);
     m_infoIOAnalogInScreen->setVisible(false);
     m_infoIORTDScreen->setVisible(false);
+
+    ui->coreButton->setChecked(false);
+    ui->digitalButton->setChecked(false);
+    ui->analogOutButton->setChecked(true);
+    ui->analogInButton->setChecked(false);
+    ui->rtdButton->setChecked(false);
 }
 
 void InfoIOScreen::analogInButtonClicked()
@@ -75,6 +83,12 @@ void InfoIOScreen::analogInButtonClicked()
     m_infoIOAnalogOutScreen->setVisible(false);
     m_infoIOAnalogInScreen->setVisible(true);
     m_infoIORTDScreen->setVisible(false);
+
+    ui->coreButton->setChecked(false);
+    ui->digitalButton->setChecked(false);
+    ui->analogOutButton->setChecked(false);
+    ui->analogInButton->setChecked(true);
+    ui->rtdButton->setChecked(false);
 }
 
 void InfoIOScreen::rtdButtonClicked()
@@ -85,4 +99,34 @@ void InfoIOScreen::rtdButtonClicked()
     m_infoIOAnalogOutScreen->setVisible(false);
     m_infoIOAnalogInScreen->setVisible(false);
     m_infoIORTDScreen->setVisible(true);
+
+    ui->coreButton->setChecked(false);
+    ui->digitalButton->setChecked(false);
+    ui->analogOutButton->setChecked(false);
+    ui->analogInButton->setChecked(false);
+    ui->rtdButton->setChecked(true);
+}
+
+void InfoIOScreen::uiSetup()
+{
+
+    m_infoIOCoreScreen->move(0, 41);
+    m_infoIODigitalScreen->move(0, 41);
+    m_infoIOAnalogOutScreen->move(0, 41);
+    m_infoIOAnalogInScreen->move(0, 41);
+    m_infoIORTDScreen->move(0, 41);
+
+    m_infoIOCoreScreen->setVisible(true);
+    m_infoIODigitalScreen->setVisible(false);
+    m_infoIOAnalogOutScreen->setVisible(false);
+    m_infoIOAnalogInScreen->setVisible(false);
+    m_infoIORTDScreen->setVisible(false);
+
+    ui->coreButton->setCheckable(true);
+    ui->digitalButton->setCheckable(true);
+    ui->analogOutButton->setCheckable(true);
+    ui->analogInButton->setCheckable(true);
+    ui->rtdButton->setCheckable(true);
+
+    ui->coreButton->setChecked(true);
 }

@@ -30,6 +30,8 @@ private slots:
 
 private:
 
+    void uiSetup();
+
     Ui::InfoIOScreen *ui;
     InfoIOCoreScreen *m_infoIOCoreScreen;
     InfoIODigitalScreen *m_infoIODigitalScreen;

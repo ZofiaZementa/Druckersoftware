@@ -1,6 +1,5 @@
 #include "menubar.h"
 #include "ui_menubar.h"
-#include <QDebug>
 
 MenuBar::MenuBar(QWidget *parent) :
     QWidget(parent),
@@ -10,9 +9,7 @@ MenuBar::MenuBar(QWidget *parent) :
 
     m_networkStatus = new QSvgWidget(this);
 
-    qDebug() << ui->infoButton->autoExclusive();
-
-    ui->homeButton->setChecked(true);
+    uiSetup();
 
     QObject::connect(ui->homeButton, SIGNAL(clicked()), this, SLOT(on_homeButtonClicked()));
     QObject::connect(ui->infoButton, SIGNAL(clicked()), this, SLOT(on_infoButtonClicked()));
@@ -20,10 +17,6 @@ MenuBar::MenuBar(QWidget *parent) :
     QObject::connect(ui->logButton, SIGNAL(clicked()), this, SLOT(on_logButtonClicked()));
     QObject::connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(on_settingsButtonClicked()));
     QObject::connect(ui->sysActionsButton, SIGNAL(clicked()), this, SLOT(on_sysActionsButtonClicked()));
-
-    m_networkStatus->load(QString(":/Icons/UI/Icons/sharp-signal_cellular_null-24px.svg"));
-    m_networkStatus->resize(20, 20);
-    m_networkStatus->move(20, 324);
 }
 
 MenuBar::~MenuBar()
@@ -129,4 +122,21 @@ void MenuBar::on_sysActionsButtonClicked()
     ui->logButton->setChecked(false);
     ui->settingsButton->setChecked(false);
     ui->sysActionsButton->setChecked(true);
+}
+
+void MenuBar::uiSetup()
+{
+
+    ui->homeButton->setCheckable(true);
+    ui->infoButton->setCheckable(true);
+    ui->startAPrintButton->setCheckable(true);
+    ui->logButton->setCheckable(true);
+    ui->settingsButton->setCheckable(true);
+    ui->sysActionsButton->setCheckable(true);
+
+    ui->homeButton->setChecked(true);
+
+    m_networkStatus->load(QString(":/Icons/UI/Icons/sharp-signal_cellular_null-24px.svg"));
+    m_networkStatus->resize(20, 20);
+    m_networkStatus->move(20, 324);
 }

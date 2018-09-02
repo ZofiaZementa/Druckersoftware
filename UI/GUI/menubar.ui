@@ -34,7 +34,12 @@
 
 QPushButton:pressed{
 
-	background-color: #00BCD4;
+	background-color: #00ACC1;
+}
+
+QPushButton:checked{
+
+	background-color: #00ACC1;
 }</string>
    </property>
    <property name="text">
@@ -49,6 +54,9 @@ QPushButton:pressed{
      <width>40</width>
      <height>40</height>
     </size>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="Line" name="verticalLine">
@@ -85,7 +93,12 @@ QPushButton:pressed{
 
 QPushButton:pressed{
 
-	background-color: #00BCD4;
+	background-color: #00ACC1;
+}
+
+QPushButton:checked{
+
+	background-color: #00ACC1;
 }</string>
    </property>
    <property name="text">
@@ -100,6 +113,9 @@ QPushButton:pressed{
      <width>40</width>
      <height>40</height>
     </size>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="Line" name="horizontalLine1">
@@ -136,7 +152,12 @@ QPushButton:pressed{
 
 QPushButton:pressed{
 
-	background-color: #00BCD4;
+	background-color: #00ACC1;
+}
+
+QPushButton:checked{
+
+	background-color: #00ACC1;
 }</string>
    </property>
    <property name="text">
@@ -151,6 +172,12 @@ QPushButton:pressed{
      <width>40</width>
      <height>40</height>
     </size>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QPushButton" name="logButton">
@@ -171,7 +198,12 @@ QPushButton:pressed{
 
 QPushButton:pressed{
 
-	background-color: #00BCD4;
+	background-color: #00ACC1;
+}
+
+QPushButton:checked{
+
+	background-color: #00ACC1;
 }</string>
    </property>
    <property name="text">
@@ -186,6 +218,9 @@ QPushButton:pressed{
      <width>40</width>
      <height>40</height>
     </size>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
    </property>
   </widget>
   <widget class="QPushButton" name="settingsButton">
@@ -206,7 +241,12 @@ QPushButton:pressed{
 
 QPushButton:pressed{
 
-	background-color: #00BCD4;
+	background-color: #00ACC1;
+}
+
+QPushButton:checked{
+
+	background-color: #00ACC1;
 }</string>
    </property>
    <property name="text">
@@ -247,7 +287,12 @@ QPushButton:pressed{
 
 QPushButton:pressed{
 
-	background-color: #00BCD4;
+	background-color: #00ACC1;
+}
+
+QPushButton:checked{
+
+	background-color: #00ACC1;
 }</string>
    </property>
    <property name="text">

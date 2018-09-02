@@ -32,6 +32,8 @@ private slots:
 
 private:
 
+    void uiSetup();
+
     Ui::InfoScreen *ui;
     InfoMotorScreen *m_infoMotorScreen;
     InfoGCodeScreen *m_infoGCodeScreen;

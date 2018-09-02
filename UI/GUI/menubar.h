@@ -43,6 +43,8 @@ private slots:
 
 private:
 
+    void uiSetup();
+
     Ui::MenuBar *ui;
     QSvgWidget *m_networkStatus;
 };
