@@ -22,5 +22,12 @@
         <file>UI/Icons/sharp-signal_cellular_null-24px.svg</file>
         <file>UI/Icons/sharp-stop-24px.svg</file>
         <file>UI/Icons/sharp-warning-24px.svg</file>
+        <file>UI/Icons/sharp-keyboard_arrow_down-24px.svg</file>
+        <file>UI/Icons/sharp-keyboard_arrow_left-24px.svg</file>
+        <file>UI/Icons/sharp-keyboard_arrow_right-24px.svg</file>
+        <file>UI/Icons/sharp-keyboard_arrow_up-24px.svg</file>
+        <file>UI/Icons/sharp-add-24px.svg</file>
+        <file>UI/Icons/sharp-remove-24px.svg</file>
+        <file>UI/Icons/sharp-videogame_asset-24px.svg</file>
     </qresource>
 </RCC>

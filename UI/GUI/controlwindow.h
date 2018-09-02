@@ -7,6 +7,11 @@
 #include "UI/GUI/warningbar.h"
 #include "UI/GUI/homescreen.h"
 #include "UI/GUI/InfoScreen/infoscreen.h"
+#include "UI/GUI/startaprintscreen.h"
+#include "UI/GUI/manualscreen.h"
+#include "UI/GUI/logscreen.h"
+#include "UI/GUI/settingsscreen.h"
+#include "UI/GUI/sysactionsscreen.h"
 
 namespace Ui {
 class ControlWindow;
@@ -37,6 +42,7 @@ private slots:
     void homeButtonClicked();
     void infoButtonClicked();
     void startAPrintButtonClicked();
+    void manualButtonClicked();
     void logButtonClicked();
     void settingsButtonClicked();
     void sysActionsButtonClicked();
@@ -44,13 +50,20 @@ private slots:
     void errorOccured(QString errorMessage);
 
 private:
-    Ui::ControlWindow *ui;
 
+    void uiSetup();
+
+    Ui::ControlWindow *ui;
     MenuBar *m_menuBar;
     ErrorScreen *m_errorScreen;
     WarningBar *m_warningBar;
     HomeScreen *m_homeScreen;
     InfoScreen *m_infoScreen;
+    StartAPrintScreen *m_startAPrintScreen;
+    ManualScreen *m_manualScreen;
+    LogScreen *m_logScreen;
+    SettingsScreen *m_settingsScreen;
+    SysActionsScreen *m_sysActionsScreen;
 };
 
 #endif // CONTROLWINDOW_H

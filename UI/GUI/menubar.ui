@@ -184,7 +184,7 @@ QPushButton:checked{
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>183</y>
+     <y>244</y>
      <width>60</width>
      <height>60</height>
     </rect>
@@ -227,7 +227,7 @@ QPushButton:checked{
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>244</y>
+     <y>305</y>
      <width>60</width>
      <height>60</height>
     </rect>
@@ -373,11 +373,70 @@ QPushButton:checked{
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
-  <widget class="Line" name="horizontalLine6">
+  <widget class="Line" name="horizontalLine7">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>539</y>
+     <width>60</width>
+     <height>1</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="manualButton">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>183</y>
+     <width>60</width>
+     <height>60</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+
+	border: none;
+	background-color: #26C6DA;
+}
+
+QPushButton:pressed{
+
+	background-color: #00ACC1;
+}
+
+QPushButton:checked{
+
+	background-color: #00ACC1;
+}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../../icons.qrc">
+     <normaloff>:/Icons/UI/Icons/sharp-videogame_asset-24px.svg</normaloff>:/Icons/UI/Icons/sharp-videogame_asset-24px.svg</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>40</width>
+     <height>40</height>
+    </size>
+   </property>
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="Line" name="horizontalLine6">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>365</y>
      <width>60</width>
      <height>1</height>
     </rect>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>StartAPrintScreen</class>
+ <widget class="QWidget" name="StartAPrintScreen">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>739</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLineEdit" name="filePathLine">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>60</y>
+     <width>499</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit{
+
+	border-color: #000000;
+	border-radius: 0px;
+	border-width: 1px;
+	border-style: solid;
+}</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="searchButton">
+   <property name="geometry">
+    <rect>
+     <x>579</x>
+     <y>60</y>
+     <width>120</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+
+	border: none;
+	background-color: #0097A7;
+}
+
+QPushButton:pressed{
+
+	background-color: #00838F;
+}
+
+QPushButton:checked{
+
+	background-color: #00838F;
+}</string>
+   </property>
+   <property name="text">
+    <string>Search</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="filePathLabel">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>40</y>
+     <width>499</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Filepath:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineLine">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>170</y>
+     <width>100</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit{
+
+	border-color: #000000;
+	border-radius: 0px;
+	border-width: 1px;
+	border-style: solid;
+	color: #000000
+}</string>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lineLabel">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>150</y>
+     <width>100</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Line:</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="measurePrinbterBedTiltCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>319</x>
+     <y>180</y>
+     <width>220</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox::indicator:unchecked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box_outline_blank-24px.svg);
+}
+
+QCheckBox::indicator:checked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box-24px.svg);
+}</string>
+   </property>
+   <property name="text">
+    <string>Measure the Printerbed Tilt</string>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="startButton">
+   <property name="geometry">
+    <rect>
+     <x>579</x>
+     <y>520</y>
+     <width>120</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+
+	border: none;
+	background-color: #0097A7;
+}
+
+QPushButton:pressed{
+
+	background-color: #00838F;
+}
+
+QPushButton:checked{
+
+	background-color: #00838F;
+}</string>
+   </property>
+   <property name="text">
+    <string>Start</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

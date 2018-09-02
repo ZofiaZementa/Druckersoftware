@@ -14,6 +14,7 @@ MenuBar::MenuBar(QWidget *parent) :
     QObject::connect(ui->homeButton, SIGNAL(clicked()), this, SLOT(on_homeButtonClicked()));
     QObject::connect(ui->infoButton, SIGNAL(clicked()), this, SLOT(on_infoButtonClicked()));
     QObject::connect(ui->startAPrintButton, SIGNAL(clicked()), this, SLOT(on_startAPrintButtonClicked()));
+    QObject::connect(ui->manualButton, SIGNAL(clicked()), this, SLOT(on_manualButtonClicked()));
     QObject::connect(ui->logButton, SIGNAL(clicked()), this, SLOT(on_logButtonClicked()));
     QObject::connect(ui->settingsButton, SIGNAL(clicked()), this, SLOT(on_settingsButtonClicked()));
     QObject::connect(ui->sysActionsButton, SIGNAL(clicked()), this, SLOT(on_sysActionsButtonClicked()));
@@ -54,6 +55,7 @@ void MenuBar::on_homeButtonClicked()
     ui->homeButton->setChecked(true);
     ui->infoButton->setChecked(false);
     ui->startAPrintButton->setChecked(false);
+    ui->manualButton->setChecked(false);
     ui->logButton->setChecked(false);
     ui->settingsButton->setChecked(false);
     ui->sysActionsButton->setChecked(false);
@@ -67,6 +69,7 @@ void MenuBar::on_infoButtonClicked()
     ui->homeButton->setChecked(false);
     ui->infoButton->setChecked(true);
     ui->startAPrintButton->setChecked(false);
+    ui->manualButton->setChecked(false);
     ui->logButton->setChecked(false);
     ui->settingsButton->setChecked(false);
     ui->sysActionsButton->setChecked(false);
@@ -80,6 +83,21 @@ void MenuBar::on_startAPrintButtonClicked()
     ui->homeButton->setChecked(false);
     ui->infoButton->setChecked(false);
     ui->startAPrintButton->setChecked(true);
+    ui->manualButton->setChecked(false);
+    ui->logButton->setChecked(false);
+    ui->settingsButton->setChecked(false);
+    ui->sysActionsButton->setChecked(false);
+}
+
+void MenuBar::on_manualButtonClicked()
+{
+
+    emit manualButtonClicked();
+
+    ui->homeButton->setChecked(false);
+    ui->infoButton->setChecked(false);
+    ui->startAPrintButton->setChecked(false);
+    ui->manualButton->setChecked(true);
     ui->logButton->setChecked(false);
     ui->settingsButton->setChecked(false);
     ui->sysActionsButton->setChecked(false);
@@ -93,6 +111,7 @@ void MenuBar::on_logButtonClicked()
     ui->homeButton->setChecked(false);
     ui->infoButton->setChecked(false);
     ui->startAPrintButton->setChecked(false);
+    ui->manualButton->setChecked(false);
     ui->logButton->setChecked(true);
     ui->settingsButton->setChecked(false);
     ui->sysActionsButton->setChecked(false);
@@ -106,6 +125,7 @@ void MenuBar::on_settingsButtonClicked()
     ui->homeButton->setChecked(false);
     ui->infoButton->setChecked(false);
     ui->startAPrintButton->setChecked(false);
+    ui->manualButton->setChecked(false);
     ui->logButton->setChecked(false);
     ui->settingsButton->setChecked(true);
     ui->sysActionsButton->setChecked(false);
@@ -119,6 +139,7 @@ void MenuBar::on_sysActionsButtonClicked()
     ui->homeButton->setChecked(false);
     ui->infoButton->setChecked(false);
     ui->startAPrintButton->setChecked(false);
+    ui->manualButton->setChecked(false);
     ui->logButton->setChecked(false);
     ui->settingsButton->setChecked(false);
     ui->sysActionsButton->setChecked(true);
@@ -130,6 +151,7 @@ void MenuBar::uiSetup()
     ui->homeButton->setCheckable(true);
     ui->infoButton->setCheckable(true);
     ui->startAPrintButton->setCheckable(true);
+    ui->manualButton->setCheckable(true);
     ui->logButton->setCheckable(true);
     ui->settingsButton->setCheckable(true);
     ui->sysActionsButton->setCheckable(true);
@@ -138,5 +160,5 @@ void MenuBar::uiSetup()
 
     m_networkStatus->load(QString(":/Icons/UI/Icons/sharp-signal_cellular_null-24px.svg"));
     m_networkStatus->resize(20, 20);
-    m_networkStatus->move(20, 324);
+    m_networkStatus->move(20, 385);
 }

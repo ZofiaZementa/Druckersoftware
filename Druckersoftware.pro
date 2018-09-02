@@ -57,7 +57,12 @@ SOURCES += \
     UI/GUI/errorscreen.cpp \
     UI/GUI/warningbar.cpp \
     UI/GUI/InfoScreen/InfoIOScreen/infoioanalogoutscreen.cpp \
-    UI/GUI/InfoScreen/InfoIOScreen/infoioanaloginscreen.cpp
+    UI/GUI/InfoScreen/InfoIOScreen/infoioanaloginscreen.cpp \
+    UI/GUI/startaprintscreen.cpp \
+    UI/GUI/manualscreen.cpp \
+    UI/GUI/logscreen.cpp \
+    UI/GUI/settingsscreen.cpp \
+    UI/GUI/sysactionsscreen.cpp
 
 HEADERS += \
     machinecontroller.h \
@@ -93,7 +98,12 @@ HEADERS += \
     UI/GUI/errorscreen.h \
     UI/GUI/warningbar.h \
     UI/GUI/InfoScreen/InfoIOScreen/infoioanalogoutscreen.h \
-    UI/GUI/InfoScreen/InfoIOScreen/infoioanaloginscreen.h
+    UI/GUI/InfoScreen/InfoIOScreen/infoioanaloginscreen.h \
+    UI/GUI/startaprintscreen.h \
+    UI/GUI/manualscreen.h \
+    UI/GUI/logscreen.h \
+    UI/GUI/settingsscreen.h \
+    UI/GUI/sysactionsscreen.h
 
 FORMS += \
     UI/GUI/controlwindow.ui \
@@ -112,7 +122,12 @@ FORMS += \
     UI/GUI/errorscreen.ui \
     UI/GUI/warningbar.ui \
     UI/GUI/InfoScreen/InfoIOScreen/infoioanalogoutscreen.ui \
-    UI/GUI/InfoScreen/InfoIOScreen/infoioanaloginscreen.ui
+    UI/GUI/InfoScreen/InfoIOScreen/infoioanaloginscreen.ui \
+    UI/GUI/startaprintscreen.ui \
+    UI/GUI/manualscreen.ui \
+    UI/GUI/logscreen.ui \
+    UI/GUI/settingsscreen.ui \
+    UI/GUI/sysactionsscreen.ui
 
 RESOURCES += \
     icons.qrc
