@@ -53,7 +53,7 @@ void LogFile::log(QString logMessage, QString origin, int code) const
     //variable for the line which to write
     QByteArray line;
     //variable for the hex-errorcode
-    QString hexCode = convertDectoHex(code);
+    QString hexCode = convertDecToHex(code);
 
     //writes the line into the bytearray
     line.append(QString("At %1:%2:%3:%4 from %5 with code %6: %7;\r\n").arg(QTime::currentTime().hour()).arg(QTime::currentTime().minute()).arg(QTime::currentTime().second()).arg(QTime::currentTime().msec()).arg(origin).arg(hexCode).arg(logMessage));
@@ -94,7 +94,7 @@ QStringList LogFile::readAll()
     return output;
 }
 
-QString LogFile::convertDectoHex(int decimal) const
+QString LogFile::convertDecToHex(int decimal) const
 {
 
     //defining the output variable
@@ -121,6 +121,8 @@ QString LogFile::convertDectoHex(int decimal) const
             hexcode.replace(i, 1, QChar(hexcode.unicode()[i].unicode() - 32));
         }
     }
+
+    hexcode.insert(0, QString("0x"));
 
     return hexcode;
 }

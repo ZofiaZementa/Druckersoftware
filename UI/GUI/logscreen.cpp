@@ -12,3 +12,4 @@ LogScreen::~LogScreen()
 {
     delete ui;
 }
+

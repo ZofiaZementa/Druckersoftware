@@ -70,5 +70,7 @@ QString ErrorScreen::convertDecToHex(int decimal)
         }
     }
 
+    hexcode.insert(0, QString("0x"));
+
     return hexcode;
 }

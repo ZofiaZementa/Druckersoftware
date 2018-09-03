@@ -2,6 +2,7 @@
 #define LOGSCREEN_H
 
 #include <QWidget>
+#include "spinbox.h"
 
 namespace Ui {
 class LogScreen;

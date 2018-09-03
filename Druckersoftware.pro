@@ -62,7 +62,8 @@ SOURCES += \
     UI/GUI/manualscreen.cpp \
     UI/GUI/logscreen.cpp \
     UI/GUI/settingsscreen.cpp \
-    UI/GUI/sysactionsscreen.cpp
+    UI/GUI/sysactionsscreen.cpp \
+    UI/GUI/spinbox.cpp
 
 HEADERS += \
     machinecontroller.h \
@@ -103,7 +104,8 @@ HEADERS += \
     UI/GUI/manualscreen.h \
     UI/GUI/logscreen.h \
     UI/GUI/settingsscreen.h \
-    UI/GUI/sysactionsscreen.h
+    UI/GUI/sysactionsscreen.h \
+    UI/GUI/spinbox.h
 
 FORMS += \
     UI/GUI/controlwindow.ui \
@@ -127,7 +129,8 @@ FORMS += \
     UI/GUI/manualscreen.ui \
     UI/GUI/logscreen.ui \
     UI/GUI/settingsscreen.ui \
-    UI/GUI/sysactionsscreen.ui
+    UI/GUI/sysactionsscreen.ui \
+    UI/GUI/spinbox.ui
 
 RESOURCES += \
     icons.qrc

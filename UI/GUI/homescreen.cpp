@@ -7,6 +7,10 @@ HomeScreen::HomeScreen(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->xValueLabel->setReadOnly(true);
+    ui->yValueLabel->setReadOnly(true);
+    ui->zValueLabel->setReadOnly(true);
+    ui->eValueLabel->setReadOnly(true);
 }
 
 HomeScreen::~HomeScreen()
