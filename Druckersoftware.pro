@@ -65,7 +65,27 @@ SOURCES += \
     UI/GUI/LogScreen/logscreen.cpp \
     UI/GUI/SettingsScreen/settingsscreen.cpp \
     UI/GUI/LogScreen/logeditlogscreen.cpp \
-    UI/GUI/LogScreen/logreadlogscreen.cpp
+    UI/GUI/LogScreen/logreadlogscreen.cpp \
+    UI/GUI/SettingsScreen/settingsloggingscreen.cpp \
+    UI/GUI/SettingsScreen/settingsgeneralscreen.cpp \
+    UI/GUI/SettingsScreen/settingsserialscreen.cpp \
+    UI/GUI/SettingsScreen/SettingsGUIScreen/settingsguiscreen.cpp \
+    UI/GUI/SettingsScreen/SettingsHeatingScreen/settingsheatingscreen.cpp \
+    UI/GUI/SettingsScreen/SettingsIOScreen/settingsioscreen.cpp \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotorscreen.cpp \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotorgeneralscreen.cpp \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotorxaxisscreen.cpp \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotoryaxisscreen.cpp \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotorzaxisscreen.cpp \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotorextruderscreen.cpp \
+    UI/GUI/SettingsScreen/SettingsIOScreen/settingsiosensorscreen.cpp \
+    UI/GUI/SettingsScreen/SettingsIOScreen/settingsioheatingscreen.cpp \
+    UI/GUI/SettingsScreen/SettingsIOScreen/settingsiolightingscreen.cpp \
+    UI/GUI/SettingsScreen/SettingsIOScreen/settingsiomiscscreen.cpp \
+    UI/GUI/SettingsScreen/SettingsHeatingScreen/settingsheatinghotendscreen.cpp \
+    UI/GUI/SettingsScreen/SettingsHeatingScreen/settingsheatingbedscreen.cpp \
+    UI/GUI/SettingsScreen/SettingsGUIScreen/settingsguimanualscreen.cpp \
+    UI/GUI/SettingsScreen/SettingsGUIScreen/settingsguispinboxscreen.cpp
 
 HEADERS += \
     machinecontroller.h \
@@ -109,7 +129,27 @@ HEADERS += \
     UI/GUI/LogScreen/logscreen.h \
     UI/GUI/SettingsScreen/settingsscreen.h \
     UI/GUI/LogScreen/logeditlogscreen.h \
-    UI/GUI/LogScreen/logreadlogscreen.h
+    UI/GUI/LogScreen/logreadlogscreen.h \
+    UI/GUI/SettingsScreen/settingsloggingscreen.h \
+    UI/GUI/SettingsScreen/settingsgeneralscreen.h \
+    UI/GUI/SettingsScreen/settingsserialscreen.h \
+    UI/GUI/SettingsScreen/SettingsGUIScreen/settingsguiscreen.h \
+    UI/GUI/SettingsScreen/SettingsHeatingScreen/settingsheatingscreen.h \
+    UI/GUI/SettingsScreen/SettingsIOScreen/settingsioscreen.h \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotorscreen.h \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotorgeneralscreen.h \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotorxaxisscreen.h \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotoryaxisscreen.h \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotorzaxisscreen.h \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotorextruderscreen.h \
+    UI/GUI/SettingsScreen/SettingsIOScreen/settingsiosensorscreen.h \
+    UI/GUI/SettingsScreen/SettingsIOScreen/settingsioheatingscreen.h \
+    UI/GUI/SettingsScreen/SettingsIOScreen/settingsiolightingscreen.h \
+    UI/GUI/SettingsScreen/SettingsIOScreen/settingsiomiscscreen.h \
+    UI/GUI/SettingsScreen/SettingsHeatingScreen/settingsheatinghotendscreen.h \
+    UI/GUI/SettingsScreen/SettingsHeatingScreen/settingsheatingbedscreen.h \
+    UI/GUI/SettingsScreen/SettingsGUIScreen/settingsguimanualscreen.h \
+    UI/GUI/SettingsScreen/SettingsGUIScreen/settingsguispinboxscreen.h
 
 FORMS += \
     UI/GUI/controlwindow.ui \
@@ -136,7 +176,27 @@ FORMS += \
     UI/GUI/LogScreen/logscreen.ui \
     UI/GUI/SettingsScreen/settingsscreen.ui \
     UI/GUI/LogScreen/logeditlogscreen.ui \
-    UI/GUI/LogScreen/logreadlogscreen.ui
+    UI/GUI/LogScreen/logreadlogscreen.ui \
+    UI/GUI/SettingsScreen/settingsloggingscreen.ui \
+    UI/GUI/SettingsScreen/settingsgeneralscreen.ui \
+    UI/GUI/SettingsScreen/settingsserialscreen.ui \
+    UI/GUI/SettingsScreen/SettingsGUIScreen/settingsguiscreen.ui \
+    UI/GUI/SettingsScreen/SettingsHeatingScreen/settingsheatingscreen.ui \
+    UI/GUI/SettingsScreen/SettingsIOScreen/settingsioscreen.ui \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotorscreen.ui \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotorgeneralscreen.ui \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotorxaxisscreen.ui \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotoryaxisscreen.ui \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotorzaxisscreen.ui \
+    UI/GUI/SettingsScreen/SettingsMotorScreen/settingsmotorextruderscreen.ui \
+    UI/GUI/SettingsScreen/SettingsIOScreen/settingsiosensorscreen.ui \
+    UI/GUI/SettingsScreen/SettingsIOScreen/settingsioheatingscreen.ui \
+    UI/GUI/SettingsScreen/SettingsIOScreen/settingsiolightingscreen.ui \
+    UI/GUI/SettingsScreen/SettingsIOScreen/settingsiomiscscreen.ui \
+    UI/GUI/SettingsScreen/SettingsHeatingScreen/settingsheatinghotendscreen.ui \
+    UI/GUI/SettingsScreen/SettingsHeatingScreen/settingsheatingbedscreen.ui \
+    UI/GUI/SettingsScreen/SettingsGUIScreen/settingsguimanualscreen.ui \
+    UI/GUI/SettingsScreen/SettingsGUIScreen/settingsguispinboxscreen.ui
 
 RESOURCES += \
     icons.qrc

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SettingsScreen</class>
- <widget class="QWidget" name="SettingsScreen">
+ <class>SettingsMotorScreen</class>
+ <widget class="QWidget" name="SettingsMotorScreen">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>739</width>
-    <height>600</height>
+    <height>559</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>105</width>
+     <width>147</width>
      <height>40</height>
     </rect>
    </property>
@@ -26,18 +26,18 @@
     <string notr="true">QPushButton{
 
 	border: none;
-	background-color: #0097A7;
+	background-color: #00838F;
 	color: #000000;
 }
 
 QPushButton:pressed{
 
-	background-color: #00838F;
+	background-color: #006064;
 }
 
 QPushButton:checked{
 
-	background-color: #00838F;
+	background-color: #006064;
 }</string>
    </property>
    <property name="text">
@@ -50,7 +50,7 @@ QPushButton:checked{
   <widget class="Line" name="verticalLine1">
    <property name="geometry">
     <rect>
-     <x>105</x>
+     <x>147</x>
      <y>0</y>
      <width>1</width>
      <height>40</height>
@@ -63,12 +63,12 @@ QPushButton:checked{
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="QPushButton" name="motorsButton">
+  <widget class="QPushButton" name="xAxisButton">
    <property name="geometry">
     <rect>
-     <x>106</x>
+     <x>148</x>
      <y>0</y>
-     <width>104</width>
+     <width>147</width>
      <height>40</height>
     </rect>
    </property>
@@ -76,22 +76,22 @@ QPushButton:checked{
     <string notr="true">QPushButton{
 
 	border: none;
-	background-color: #0097A7;
+	background-color: #00838F;
 	color: #000000;
 }
 
 QPushButton:pressed{
 
-	background-color: #00838F;
+	background-color: #006064;
 }
 
 QPushButton:checked{
 
-	background-color: #00838F;
+	background-color: #006064;
 }</string>
    </property>
    <property name="text">
-    <string>Motors</string>
+    <string>XAxis</string>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -100,7 +100,7 @@ QPushButton:checked{
   <widget class="Line" name="verticalLine2">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>295</x>
      <y>0</y>
      <width>1</width>
      <height>40</height>
@@ -113,12 +113,12 @@ QPushButton:checked{
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="QPushButton" name="guiButton">
+  <widget class="QPushButton" name="yAxiButton">
    <property name="geometry">
     <rect>
-     <x>211</x>
+     <x>296</x>
      <y>0</y>
-     <width>105</width>
+     <width>147</width>
      <height>40</height>
     </rect>
    </property>
@@ -126,56 +126,22 @@ QPushButton:checked{
     <string notr="true">QPushButton{
 
 	border: none;
-	background-color: #0097A7;
+	background-color: #00838F;
 	color: #000000;
 }
 
 QPushButton:pressed{
 
-	background-color: #00838F;
+	background-color: #006064;
 }
 
 QPushButton:checked{
 
-	background-color: #00838F;
+	background-color: #006064;
 }</string>
    </property>
    <property name="text">
-    <string>GUI</string>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="heatingButton">
-   <property name="geometry">
-    <rect>
-     <x>317</x>
-     <y>0</y>
-     <width>105</width>
-     <height>40</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton{
-
-	border: none;
-	background-color: #0097A7;
-	color: #000000;
-}
-
-QPushButton:pressed{
-
-	background-color: #00838F;
-}
-
-QPushButton:checked{
-
-	background-color: #00838F;
-}</string>
-   </property>
-   <property name="text">
-    <string>Heating</string>
+    <string>YAxis</string>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -184,7 +150,7 @@ QPushButton:checked{
   <widget class="Line" name="verticalLine3">
    <property name="geometry">
     <rect>
-     <x>316</x>
+     <x>443</x>
      <y>0</y>
      <width>1</width>
      <height>40</height>
@@ -197,12 +163,12 @@ QPushButton:checked{
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="QPushButton" name="ioButton">
+  <widget class="QPushButton" name="zAxisButton">
    <property name="geometry">
     <rect>
-     <x>423</x>
+     <x>444</x>
      <y>0</y>
-     <width>105</width>
+     <width>147</width>
      <height>40</height>
     </rect>
    </property>
@@ -210,22 +176,22 @@ QPushButton:checked{
     <string notr="true">QPushButton{
 
 	border: none;
-	background-color: #0097A7;
+	background-color: #00838F;
 	color: #000000;
 }
 
 QPushButton:pressed{
 
-	background-color: #00838F;
+	background-color: #006064;
 }
 
 QPushButton:checked{
 
-	background-color: #00838F;
+	background-color: #006064;
 }</string>
    </property>
    <property name="text">
-    <string>IO</string>
+    <string>ZAxis</string>
    </property>
    <property name="checkable">
     <bool>true</bool>
@@ -234,7 +200,7 @@ QPushButton:checked{
   <widget class="Line" name="verticalLine4">
    <property name="geometry">
     <rect>
-     <x>422</x>
+     <x>591</x>
      <y>0</y>
      <width>1</width>
      <height>40</height>
@@ -247,28 +213,12 @@ QPushButton:checked{
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="Line" name="verticalLine5">
+  <widget class="QPushButton" name="extruderButton">
    <property name="geometry">
     <rect>
-     <x>528</x>
+     <x>592</x>
      <y>0</y>
-     <width>1</width>
-     <height>40</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: #000000;</string>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Vertical</enum>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="loggingButton">
-   <property name="geometry">
-    <rect>
-     <x>529</x>
-     <y>0</y>
-     <width>104</width>
+     <width>147</width>
      <height>40</height>
     </rect>
    </property>
@@ -276,72 +226,22 @@ QPushButton:checked{
     <string notr="true">QPushButton{
 
 	border: none;
-	background-color: #0097A7;
+	background-color: #00838F;
 	color: #000000;
 }
 
 QPushButton:pressed{
 
-	background-color: #00838F;
+	background-color: #006064;
 }
 
 QPushButton:checked{
 
-	background-color: #00838F;
+	background-color: #006064;
 }</string>
    </property>
    <property name="text">
-    <string>Logging</string>
-   </property>
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="Line" name="verticalLine6">
-   <property name="geometry">
-    <rect>
-     <x>633</x>
-     <y>0</y>
-     <width>1</width>
-     <height>40</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: #000000;</string>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Vertical</enum>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="serialButton">
-   <property name="geometry">
-    <rect>
-     <x>634</x>
-     <y>0</y>
-     <width>105</width>
-     <height>40</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">QPushButton{
-
-	border: none;
-	background-color: #0097A7;
-	color: #000000;
-}
-
-QPushButton:pressed{
-
-	background-color: #00838F;
-}
-
-QPushButton:checked{
-
-	background-color: #00838F;
-}</string>
-   </property>
-   <property name="text">
-    <string>Serial</string>
+    <string>Extruder</string>
    </property>
    <property name="checkable">
     <bool>true</bool>
