@@ -32,6 +32,12 @@ public:
     QString suffix();
     void setDecimals(int decimals);
     int decimals();
+    void setAutoRepeat(bool on);
+    bool autoRepeat();
+    void setAutoRepeatDelay(int delay);
+    int autoRepeatDelay();
+    void setAutoRepeatInterval(int interval);
+    int autoRepeatInterval();
 
 public slots:
 

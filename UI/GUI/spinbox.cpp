@@ -203,6 +203,8 @@ void SpinBox::setDecimals(int decimals)
 {
 
     *m_decimals = decimals;
+    //updates the text of the valueLine with prefix and suffix
+    updateValueLineText();
 }
 
 //returns the value of m_decimals
@@ -210,6 +212,51 @@ int SpinBox::decimals()
 {
 
     return *m_decimals;
+}
+
+//sets the autoRepeat setting of both buttons to on
+void SpinBox::setAutoRepeat(bool on)
+{
+
+    ui->upButton->setAutoRepeat(on);
+    ui->downButton->setAutoRepeat(on);
+}
+
+//returns the autoRepeat setting of the upButton, representative for both buttons
+bool SpinBox::autoRepeat()
+{
+
+    return ui->upButton->autoRepeat();
+}
+
+//sets the setAutoRepeatDelay setting of both buttons to delay
+void SpinBox::setAutoRepeatDelay(int delay)
+{
+
+    ui->upButton->setAutoRepeatDelay(delay);
+    ui->downButton->setAutoRepeatDelay(delay);
+}
+
+//returns the autoRepeatDelay setting of the upButton, representative for both buttons
+int SpinBox::autoRepeatDelay()
+{
+
+    return ui->upButton->autoRepeatDelay();
+}
+
+//sets the setAutoRepeatInterval setting of both buttons to interval
+void SpinBox::setAutoRepeatInterval(int interval)
+{
+
+    ui->upButton->setAutoRepeatInterval(interval);
+    ui->downButton->setAutoRepeatInterval(interval);
+}
+
+//returns the autoRepeatInterval setting of the upButton, representative for both buttons
+int SpinBox::autoRepeatInterval()
+{
+
+    return ui->upButton->autoRepeatInterval();
 }
 
 //sets the value of m_value to value
@@ -394,14 +441,23 @@ void SpinBox::updateValueLineText()
     //appending the value of m_value to text
     text.append(QString::number(*m_value, 'g', digits));
 
-    //appending a decimal pointto text, if there isnt one
-    if(text.contains(QString(".")) == false){
+    //checks if there is a decimal point
+    //triggered if there is
+    if(text.contains(QString(".")) == true){
+
+        digits++;
+    }
+
+    //triggered if there isnt
+    //appending a decimal point to text, if there isnt one and there is at least one decimal set
+    else if(text.contains(QString(".")) == false && *m_decimals > 0){
 
         text.append(QString("."));
+        digits++;
     }
 
     //appending zeros to text so the set number of decimals and the number of actual decimals match
-    while(text.count() < digits + 1){
+    while(text.count() < digits){
 
         text.append(QString("0"));
     }
