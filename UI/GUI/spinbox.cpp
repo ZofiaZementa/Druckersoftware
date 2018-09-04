@@ -13,13 +13,17 @@ SpinBox::SpinBox(QWidget *parent) :
     m_prefix = new QString;
     m_suffix = new QString;
     m_minimum = new qreal;
+    m_minimumOn = new bool;
     m_maximum = new qreal;
+    m_maximumOn = new bool;
     m_stepSize = new qreal;
     m_decimals = new int;
 
     *m_value = 0.0;
     *m_minimum = 0.0;
+    *m_minimumOn = true;
     *m_maximum = 100.0;
+    *m_maximumOn = true;
     *m_stepSize = 1.0;
     *m_decimals = 3;
 
@@ -44,7 +48,9 @@ SpinBox::~SpinBox()
     delete m_prefix;
     delete m_suffix;
     delete m_minimum;
+    delete m_minimumOn;
     delete m_maximum;
+    delete m_maximumOn;
     delete m_stepSize;
     delete m_decimals;
 }
@@ -91,7 +97,7 @@ qreal SpinBox::value()
     return *m_value;
 }
 
-//sets the value of maximum to maximum
+//sets the value of m_maximum to maximum
 void SpinBox::setMaximum(qreal maximum)
 {
 
@@ -120,6 +126,32 @@ qreal SpinBox::maximum()
 {
 
     return *m_maximum;
+}
+
+//sets the value of m_maximumOn to on
+void SpinBox::setMaximumOn(bool on)
+{
+
+    *m_maximumOn = on;
+
+    //checks if m_value needs to be fixed because of the change of m_maximum
+    //triggered if it doesnt
+    if(*m_value != fixValue(*m_value)){
+
+        //writes the fixed value of m_value into m_value
+        *m_value = fixValue(*m_value);
+        //emits the valueChanged signal
+        emit valueChanged(*m_value);
+        //updates the text of the valueLine with prefix and suffix
+        updateValueLineText();
+    }
+}
+
+//returns the value of m_maximumOn
+bool SpinBox::maximumOn()
+{
+
+    return *m_maximumOn;
 }
 
 //sets the value of m_minimum to minimum
@@ -151,6 +183,32 @@ qreal SpinBox::minimum()
 {
 
     return *m_minimum;
+}
+
+//sets the value of m_minimumOn to on
+void SpinBox::setMinimumOn(bool on)
+{
+
+    *m_minimumOn = on;
+
+    //checks if m_value needs to be fixed because of the change of m_maximum
+    //triggered if it doesnt
+    if(*m_value != fixValue(*m_value)){
+
+        //writes the fixed value of m_value into m_value
+        *m_value = fixValue(*m_value);
+        //emits the valueChanged signal
+        emit valueChanged(*m_value);
+        //updates the text of the valueLine with prefix and suffix
+        updateValueLineText();
+    }
+}
+
+//returns the value of m_minimumOn
+bool SpinBox::minimumOn()
+{
+
+    return *m_minimumOn;
 }
 
 //sets the value of m_stepSize to step
@@ -401,14 +459,14 @@ qreal SpinBox::fixValue(qreal value)
 
     //checks if value is above the maximum or below the minimum
     //trigered if it is above the maximum
-    if(value > *m_maximum){
+    if(*m_maximumOn == true && value > *m_maximum){
 
         //sets value to maximum
         value = *m_maximum;
     }
 
     //triggered if it is below the minimum
-    else if(value < *m_minimum){
+    else if(*m_minimum == true && value < *m_minimum){
 
         //sets value to the minimum
         value = *m_minimum;

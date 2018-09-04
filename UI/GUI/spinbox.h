@@ -22,8 +22,12 @@ public:
     qreal value();
     void setMaximum(qreal maximum);
     qreal maximum();
+    void setMaximumOn(bool on);
+    bool maximumOn();
     void setMinimum(qreal minimum);
     qreal minimum();
+    void setMinimumOn(bool on);
+    bool minimumOn();
     void setSingleStep(qreal step);
     qreal singleStep();
     void setPrefix(QString prefix);
@@ -68,7 +72,9 @@ private:
     QString *m_prefix;
     QString *m_suffix;
     qreal *m_minimum;
+    bool *m_maximumOn;
     qreal *m_maximum;
+    bool *m_minimumOn;
     qreal *m_stepSize;
     int *m_decimals;
 };
