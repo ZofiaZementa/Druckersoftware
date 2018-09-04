@@ -33,6 +33,7 @@
 
 	border: none;
 	background-color: #0097A7;
+	color: #000000;
 }
 
 QPushButton:pressed{
@@ -63,6 +64,7 @@ QPushButton:checked{
 
 	border: none;
 	background-color: #0097A7;
+	color: #000000;
 }
 
 QPushButton:pressed{
@@ -93,6 +95,7 @@ QPushButton:checked{
 
 	border: none;
 	background-color: #0097A7;
+	color: #000000;
 }
 
 QPushButton:pressed{
@@ -123,6 +126,7 @@ QPushButton:checked{
 
 	border: none;
 	background-color: #0097A7;
+	color: #000000;
 }
 
 QPushButton:pressed{
@@ -153,6 +157,7 @@ QPushButton:checked{
 
 	border: none;
 	background-color: #0097A7;
+	color: #000000;
 }
 
 QPushButton:pressed{
@@ -183,6 +188,7 @@ QPushButton:checked{
 
 	border: none;
 	background-color: #0097A7;
+	color: #000000;
 }
 
 QPushButton:pressed{

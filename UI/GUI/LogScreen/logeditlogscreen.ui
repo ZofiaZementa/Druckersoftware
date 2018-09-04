@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LogEditLogScreen</class>
+ <widget class="QWidget" name="LogEditLogScreen">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>739</width>
+    <height>559</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QCheckBox" name="machineControllerCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>539</x>
+     <y>34</y>
+     <width>160</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox{
+
+	color: #000000;
+}
+
+QCheckBox::indicator:unchecked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box_outline_blank-24px.svg);
+}
+
+QCheckBox::indicator:checked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box-24px.svg);
+}</string>
+   </property>
+   <property name="text">
+    <string>MachineController</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="addLogButton">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>479</y>
+     <width>309</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+
+	border: none;
+	background-color: #0097A7;
+	color: #000000;
+}
+
+QPushButton:pressed{
+
+	background-color: #00838F;
+}
+
+QPushButton:checked{
+
+	background-color: #00838F;
+}</string>
+   </property>
+   <property name="text">
+    <string>Add Log</string>
+   </property>
+  </widget>
+  <widget class="Line" name="horizontalLine1">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>458</y>
+     <width>659</width>
+     <height>1</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: #000000;</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="iOControllerCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>539</x>
+     <y>112</y>
+     <width>160</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox{
+
+	color: #000000;
+}
+
+QCheckBox::indicator:unchecked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box_outline_blank-24px.svg);
+}
+
+QCheckBox::indicator:checked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box-24px.svg);
+}</string>
+   </property>
+   <property name="text">
+    <string>IOController</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="heatingControllerCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>539</x>
+     <y>151</y>
+     <width>160</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox{
+
+	color: #000000;
+}
+
+QCheckBox::indicator:unchecked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box_outline_blank-24px.svg);
+}
+
+QCheckBox::indicator:checked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box-24px.svg);
+}</string>
+   </property>
+   <property name="text">
+    <string>HeatingController</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="sensorListenerCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>539</x>
+     <y>229</y>
+     <width>160</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox{
+
+	color: #000000;
+}
+
+QCheckBox::indicator:unchecked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box_outline_blank-24px.svg);
+}
+
+QCheckBox::indicator:checked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box-24px.svg);
+}</string>
+   </property>
+   <property name="text">
+    <string>SensorListener</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="gCodeReaderCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>539</x>
+     <y>307</y>
+     <width>160</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox{
+
+	color: #000000;
+}
+
+QCheckBox::indicator:unchecked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box_outline_blank-24px.svg);
+}
+
+QCheckBox::indicator:checked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box-24px.svg);
+}</string>
+   </property>
+   <property name="text">
+    <string>GCodeReader</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="guiCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>539</x>
+     <y>385</y>
+     <width>160</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox{
+
+	color: #000000;
+}
+
+QCheckBox::indicator:unchecked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box_outline_blank-24px.svg);
+}
+
+QCheckBox::indicator:checked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box-24px.svg);
+}</string>
+   </property>
+   <property name="text">
+    <string>GUI</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="lightingControllerCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>539</x>
+     <y>346</y>
+     <width>160</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox{
+
+	color: #000000;
+}
+
+QCheckBox::indicator:unchecked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box_outline_blank-24px.svg);
+}
+
+QCheckBox::indicator:checked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box-24px.svg);
+}</string>
+   </property>
+   <property name="text">
+    <string>LightingControler</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="iOMainLoopCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>539</x>
+     <y>268</y>
+     <width>160</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox{
+
+	color: #000000;
+}
+
+QCheckBox::indicator:unchecked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box_outline_blank-24px.svg);
+}
+
+QCheckBox::indicator:checked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box-24px.svg);
+}</string>
+   </property>
+   <property name="text">
+    <string>IOMainLoop</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="serialInterfaceCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>539</x>
+     <y>190</y>
+     <width>160</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox{
+
+	color: #000000;
+}
+
+QCheckBox::indicator:unchecked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box_outline_blank-24px.svg);
+}
+
+QCheckBox::indicator:checked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box-24px.svg);
+}</string>
+   </property>
+   <property name="text">
+    <string>SerialInterface</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="motorControllerCheckBox">
+   <property name="geometry">
+    <rect>
+     <x>539</x>
+     <y>73</y>
+     <width>160</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox{
+
+	color: #000000;
+}
+
+QCheckBox::indicator:unchecked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box_outline_blank-24px.svg);
+}
+
+QCheckBox::indicator:checked{
+
+	image: url(:/Icons/UI/Icons/sharp-check_box-24px.svg);
+}</string>
+   </property>
+   <property name="text">
+    <string>MotorController</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="deleteLogButton">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>479</y>
+     <width>309</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+
+	border: none;
+	background-color: #0097A7;
+	color: #000000;
+}
+
+QPushButton:pressed{
+
+	background-color: #00838F;
+}
+
+QPushButton:checked{
+
+	background-color: #00838F;
+}</string>
+   </property>
+   <property name="text">
+    <string>Delete Log</string>
+   </property>
+  </widget>
+  <widget class="QListWidget" name="logListWidget">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>20</y>
+     <width>479</width>
+     <height>417</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QListWidget{
+
+ 	border-style: solid;
+	border-width: 1px;
+	border-color: #000000;
+	color: #000000;
+}</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

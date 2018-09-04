@@ -22,6 +22,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Outputs:</string>
    </property>
@@ -34,6 +40,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Output 1:</string>
@@ -48,6 +60,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Output 1</string>
    </property>
@@ -60,6 +78,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Output 2:</string>
@@ -74,6 +98,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Output 2</string>
    </property>
@@ -86,6 +116,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Output 3:</string>
@@ -100,6 +136,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Output 3</string>
    </property>
@@ -112,6 +154,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Output 4:</string>
@@ -126,6 +174,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Output 4</string>
    </property>
@@ -138,6 +192,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Output 5:</string>
@@ -152,6 +212,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Output 5</string>
    </property>
@@ -164,6 +230,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Output 6:</string>
@@ -178,6 +250,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Output 6</string>
    </property>
@@ -190,6 +268,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Output 13:</string>
@@ -204,6 +288,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Output 9</string>
    </property>
@@ -216,6 +306,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Output 10:</string>
@@ -230,6 +326,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Output 8</string>
    </property>
@@ -242,6 +344,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Output 10</string>
@@ -256,6 +364,12 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Output 11:</string>
    </property>
@@ -268,6 +382,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Output 12:</string>
@@ -282,6 +402,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Output 13</string>
    </property>
@@ -294,6 +420,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Output 9:</string>
@@ -308,6 +440,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Output 12</string>
    </property>
@@ -320,6 +458,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Output 8:</string>
@@ -334,6 +478,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Output 11</string>
    </property>
@@ -346,6 +496,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Input 6:</string>
@@ -360,6 +516,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Input 2</string>
    </property>
@@ -372,6 +534,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Input 3:</string>
@@ -386,6 +554,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Input 1</string>
    </property>
@@ -398,6 +572,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Input 3</string>
@@ -412,6 +592,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Input 4:</string>
    </property>
@@ -424,6 +610,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Input 5:</string>
@@ -438,6 +630,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Input 6:</string>
    </property>
@@ -450,6 +648,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Input 2:</string>
@@ -464,6 +668,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Input 5</string>
    </property>
@@ -476,6 +686,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Input 1:</string>
@@ -490,6 +706,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Input 4</string>
    </property>
@@ -502,6 +724,12 @@
      <width>251</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Inputs:</string>
@@ -516,6 +744,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Input 10:</string>
    </property>
@@ -528,6 +762,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Input 9:</string>
@@ -542,6 +782,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Input 10</string>
    </property>
@@ -554,6 +800,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Input 8:</string>
@@ -568,6 +820,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Input 8</string>
    </property>
@@ -580,6 +838,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Input 12:</string>
@@ -594,6 +858,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Input 11</string>
    </property>
@@ -606,6 +876,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Input 13</string>
@@ -620,6 +896,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Input 11:</string>
    </property>
@@ -632,6 +914,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Input 9</string>
@@ -646,6 +934,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Input 12</string>
    </property>
@@ -659,11 +953,17 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Input 13:</string>
    </property>
   </widget>
-  <widget class="Line" name="line">
+  <widget class="Line" name="verticalLine1">
    <property name="geometry">
     <rect>
      <x>204</x>
@@ -679,7 +979,7 @@
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="Line" name="line_2">
+  <widget class="Line" name="verticalLine3">
    <property name="geometry">
     <rect>
      <x>534</x>
@@ -695,7 +995,7 @@
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="Line" name="line_3">
+  <widget class="Line" name="verticalLine2">
    <property name="geometry">
     <rect>
      <x>369</x>
@@ -720,6 +1020,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Output 7:</string>
    </property>
@@ -732,6 +1038,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Output 7</string>
@@ -746,6 +1058,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Output 14</string>
    </property>
@@ -758,6 +1076,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Output 14:</string>
@@ -772,6 +1096,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Input 7</string>
    </property>
@@ -785,6 +1115,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Input 7:</string>
    </property>
@@ -797,6 +1133,12 @@
      <width>86</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Input 14</string>

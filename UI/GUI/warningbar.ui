@@ -31,7 +31,11 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border: none;</string>
+    <string notr="true">QTextBrowser{
+
+	border: none;
+	color: #000000;
+}</string>
    </property>
   </widget>
   <widget class="QLabel" name="warningLabel">
@@ -47,6 +51,12 @@
     <font>
      <pointsize>24</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Warning:</string>
@@ -70,6 +80,7 @@
     <string notr="true">QPushButton{
 
 	border: none;
+	color: #000000;
 }</string>
    </property>
    <property name="text">

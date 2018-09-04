@@ -22,6 +22,12 @@
      <height>33</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>HotEnd</string>
    </property>
@@ -34,6 +40,12 @@
      <width>152</width>
      <height>33</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Current Temperature:</string>
@@ -48,6 +60,12 @@
      <height>33</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Current Temperature</string>
    </property>
@@ -60,6 +78,12 @@
      <width>152</width>
      <height>33</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Target Temperature:</string>
@@ -74,6 +98,12 @@
      <height>33</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Target Temperature</string>
    </property>
@@ -86,6 +116,12 @@
      <width>152</width>
      <height>33</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Warning Temperature:</string>
@@ -100,6 +136,12 @@
      <height>33</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Warning Temperature</string>
    </property>
@@ -112,6 +154,12 @@
      <width>152</width>
      <height>33</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Critical Temperature:</string>
@@ -126,6 +174,12 @@
      <height>33</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Critical Temperature</string>
    </property>
@@ -138,6 +192,12 @@
      <width>152</width>
      <height>33</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Status:</string>
@@ -152,6 +212,12 @@
      <height>33</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Status</string>
    </property>
@@ -164,6 +230,12 @@
      <width>152</width>
      <height>33</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Bed</string>
@@ -178,6 +250,12 @@
      <height>33</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Current Temperature:</string>
    </property>
@@ -190,6 +268,12 @@
      <width>152</width>
      <height>33</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Target Temperature:</string>
@@ -204,6 +288,12 @@
      <height>33</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Status:</string>
    </property>
@@ -216,6 +306,12 @@
      <width>152</width>
      <height>33</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Status</string>
@@ -230,6 +326,12 @@
      <height>33</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Current Temperature</string>
    </property>
@@ -242,6 +344,12 @@
      <width>152</width>
      <height>33</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Warning Temperature</string>
@@ -256,6 +364,12 @@
      <height>33</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Target Temperature</string>
    </property>
@@ -268,6 +382,12 @@
      <width>152</width>
      <height>33</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Critical Temperature:</string>
@@ -282,6 +402,12 @@
      <height>33</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Warning Temperature:</string>
    </property>
@@ -294,6 +420,12 @@
      <width>152</width>
      <height>33</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Critical Temperature</string>

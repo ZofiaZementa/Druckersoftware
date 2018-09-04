@@ -73,7 +73,7 @@ QPushButton:pressed{
 	border-radius: 0px;
 	border-width: 1px;
 	border-style: solid;
-	color: #000000
+	color: #000000;
 }</string>
    </property>
    <property name="alignment">

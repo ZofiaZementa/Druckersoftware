@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include <QSettings>
-#include "spinbox.h"
+#include "UI/GUI/spinbox.h"
 
 namespace Ui {
 class ManualScreen;

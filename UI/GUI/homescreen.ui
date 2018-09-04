@@ -58,6 +58,12 @@ QProgressBar::chunk{
      <pointsize>60</pointsize>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Status</string>
    </property>
@@ -105,6 +111,12 @@ QProgressBar::chunk{
     <font>
      <pointsize>50</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>19:42:42</string>
@@ -214,6 +226,12 @@ QProgressBar::chunk{
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>X:</string>
    </property>
@@ -226,6 +244,12 @@ QProgressBar::chunk{
      <width>20</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Y:</string>
@@ -240,6 +264,12 @@ QProgressBar::chunk{
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Z:</string>
    </property>
@@ -252,6 +282,12 @@ QProgressBar::chunk{
      <width>20</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>E:</string>

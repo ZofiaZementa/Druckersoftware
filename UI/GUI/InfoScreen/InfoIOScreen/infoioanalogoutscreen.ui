@@ -22,6 +22,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Output 1:</string>
    </property>
@@ -34,6 +40,12 @@
      <width>121</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Value:</string>
@@ -48,6 +60,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Value</string>
    </property>
@@ -60,6 +78,12 @@
      <width>121</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Range:</string>
@@ -74,6 +98,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Range</string>
    </property>
@@ -86,6 +116,12 @@
      <width>121</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Enable Slew:</string>
@@ -100,6 +136,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>EnableSlew</string>
    </property>
@@ -112,6 +154,12 @@
      <width>121</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Slew Step Size:</string>
@@ -126,6 +174,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>SlewStepSize</string>
    </property>
@@ -138,6 +192,12 @@
      <width>121</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Slew Update Freq:</string>
@@ -152,6 +212,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Offset</string>
    </property>
@@ -164,6 +230,12 @@
      <width>121</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Offset:</string>
@@ -178,6 +250,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>SlewUpdateFreq</string>
    </property>
@@ -190,6 +268,12 @@
      <width>121</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Multiplier</string>
@@ -204,6 +288,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Divisor:</string>
    </property>
@@ -216,6 +306,12 @@
      <width>121</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Divisor</string>
@@ -230,6 +326,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Multiplier:</string>
    </property>
@@ -242,6 +344,12 @@
      <width>293</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Output 2:</string>
@@ -256,6 +364,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Value:</string>
    </property>
@@ -268,6 +382,12 @@
      <width>121</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>SlewStepSize</string>
@@ -282,6 +402,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Slew Step Size:</string>
    </property>
@@ -294,6 +420,12 @@
      <width>121</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Value</string>
@@ -308,6 +440,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Range</string>
    </property>
@@ -320,6 +458,12 @@
      <width>121</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Enable Slew:</string>
@@ -334,6 +478,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>EnableSlew</string>
    </property>
@@ -346,6 +496,12 @@
      <width>121</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Range:</string>
@@ -360,6 +516,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Slew Update Freq:</string>
    </property>
@@ -372,6 +534,12 @@
      <width>121</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Offset</string>
@@ -386,6 +554,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Offset:</string>
    </property>
@@ -398,6 +572,12 @@
      <width>121</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>SlewUpdateFreq</string>
@@ -412,6 +592,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Multiplier</string>
    </property>
@@ -424,6 +610,12 @@
      <width>121</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Divisor:</string>
@@ -438,6 +630,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Divisor</string>
    </property>
@@ -450,6 +648,12 @@
      <width>121</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Multiplier:</string>

@@ -33,6 +33,12 @@
      <pointsize>100</pointsize>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>ERROR</string>
    </property>
@@ -51,6 +57,12 @@
      <pointsize>60</pointsize>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>#FFFFFF</string>
    </property>
@@ -68,6 +80,12 @@
     <font>
      <pointsize>20</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>ErrorMessage:</string>
@@ -88,7 +106,11 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">border: none;</string>
+    <string notr="true">QTextBrowser{
+
+	border: none;
+	color: #000000;
+}</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton">
@@ -110,6 +132,7 @@
 
 	border: none;
 	background-color: #D50000;
+	color: #000000;
 }
 </string>
    </property>

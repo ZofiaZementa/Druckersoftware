@@ -9,8 +9,8 @@
 #include "UI/GUI/InfoScreen/infoscreen.h"
 #include "UI/GUI/startaprintscreen.h"
 #include "UI/GUI/manualscreen.h"
-#include "UI/GUI/logscreen.h"
-#include "UI/GUI/settingsscreen.h"
+#include "UI/GUI/LogScreen/logscreen.h"
+#include "UI/GUI/SettingsScreen/settingsscreen.h"
 #include "UI/GUI/sysactionsscreen.h"
 
 namespace Ui {

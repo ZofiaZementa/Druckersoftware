@@ -22,6 +22,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Filepath</string>
    </property>
@@ -34,6 +40,12 @@
      <width>659</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Filepath:</string>
@@ -48,6 +60,15 @@
      <height>358</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QTextBrowser{
+
+	border-style: solid;
+	border-width: 1px;
+	border-color: #000000;
+	color: #000000;
+}</string>
+   </property>
   </widget>
   <widget class="QLabel" name="gcodeCommandLabel">
    <property name="geometry">
@@ -57,6 +78,12 @@
      <width>384</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Current GCode command:</string>
@@ -103,6 +130,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Current line:</string>
    </property>
@@ -115,6 +148,12 @@
      <width>228</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Current line</string>
@@ -129,6 +168,12 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Status:</string>
    </property>
@@ -141,6 +186,12 @@
      <width>228</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Status</string>

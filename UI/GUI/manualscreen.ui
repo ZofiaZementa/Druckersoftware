@@ -47,6 +47,7 @@
 
 	border: none;
 	background-color: #0097A7;
+	color: #000000;
 }
 
 QPushButton:pressed{
@@ -71,6 +72,12 @@ QPushButton:checked{
      <width>499</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>GCode command:</string>
@@ -101,6 +108,12 @@ QPushButton:checked{
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>HotEnd Target Temp:</string>
    </property>
@@ -113,6 +126,12 @@ QPushButton:checked{
      <width>120</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Bed Target Temp:</string>
@@ -144,7 +163,12 @@ QPushButton:checked{
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QCheckBox::indicator:unchecked{
+    <string notr="true">QCheckBox{
+
+	color: #000000;
+}
+
+QCheckBox::indicator:unchecked{
 
 	image: url(:/Icons/UI/Icons/sharp-check_box_outline_blank-24px.svg);
 }
@@ -386,6 +410,12 @@ QPushButton:checked{
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>X</string>
    </property>
@@ -401,6 +431,12 @@ QPushButton:checked{
      <width>20</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Y</string>
@@ -418,6 +454,12 @@ QPushButton:checked{
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>X:</string>
    </property>
@@ -430,6 +472,12 @@ QPushButton:checked{
      <width>20</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Y:</string>
@@ -444,6 +492,12 @@ QPushButton:checked{
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Z:</string>
    </property>
@@ -456,6 +510,12 @@ QPushButton:checked{
      <width>20</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>E:</string>
@@ -486,6 +546,12 @@ QPushButton:checked{
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>F:</string>
    </property>
@@ -498,6 +564,12 @@ QPushButton:checked{
      <width>105</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Steps per Click:</string>
@@ -592,6 +664,12 @@ QPushButton:checked{
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>E:</string>
    </property>
@@ -684,6 +762,12 @@ QPushButton:checked{
      <width>20</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Z:</string>

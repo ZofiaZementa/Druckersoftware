@@ -60,10 +60,12 @@ SOURCES += \
     UI/GUI/InfoScreen/InfoIOScreen/infoioanaloginscreen.cpp \
     UI/GUI/startaprintscreen.cpp \
     UI/GUI/manualscreen.cpp \
-    UI/GUI/logscreen.cpp \
-    UI/GUI/settingsscreen.cpp \
     UI/GUI/sysactionsscreen.cpp \
-    UI/GUI/spinbox.cpp
+    UI/GUI/spinbox.cpp \
+    UI/GUI/LogScreen/logscreen.cpp \
+    UI/GUI/SettingsScreen/settingsscreen.cpp \
+    UI/GUI/LogScreen/logeditlogscreen.cpp \
+    UI/GUI/LogScreen/logreadlogscreen.cpp
 
 HEADERS += \
     machinecontroller.h \
@@ -102,10 +104,12 @@ HEADERS += \
     UI/GUI/InfoScreen/InfoIOScreen/infoioanaloginscreen.h \
     UI/GUI/startaprintscreen.h \
     UI/GUI/manualscreen.h \
-    UI/GUI/logscreen.h \
-    UI/GUI/settingsscreen.h \
     UI/GUI/sysactionsscreen.h \
-    UI/GUI/spinbox.h
+    UI/GUI/spinbox.h \
+    UI/GUI/LogScreen/logscreen.h \
+    UI/GUI/SettingsScreen/settingsscreen.h \
+    UI/GUI/LogScreen/logeditlogscreen.h \
+    UI/GUI/LogScreen/logreadlogscreen.h
 
 FORMS += \
     UI/GUI/controlwindow.ui \
@@ -127,10 +131,12 @@ FORMS += \
     UI/GUI/InfoScreen/InfoIOScreen/infoioanaloginscreen.ui \
     UI/GUI/startaprintscreen.ui \
     UI/GUI/manualscreen.ui \
-    UI/GUI/logscreen.ui \
-    UI/GUI/settingsscreen.ui \
     UI/GUI/sysactionsscreen.ui \
-    UI/GUI/spinbox.ui
+    UI/GUI/spinbox.ui \
+    UI/GUI/LogScreen/logscreen.ui \
+    UI/GUI/SettingsScreen/settingsscreen.ui \
+    UI/GUI/LogScreen/logeditlogscreen.ui \
+    UI/GUI/LogScreen/logreadlogscreen.ui
 
 RESOURCES += \
     icons.qrc

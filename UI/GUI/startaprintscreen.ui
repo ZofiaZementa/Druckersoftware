@@ -29,6 +29,7 @@
 	border-radius: 0px;
 	border-width: 1px;
 	border-style: solid;
+	color: #000000;
 }</string>
    </property>
   </widget>
@@ -46,6 +47,7 @@
 
 	border: none;
 	background-color: #0097A7;
+	color: #000000;
 }
 
 QPushButton:pressed{
@@ -70,6 +72,12 @@ QPushButton:checked{
      <width>499</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
    </property>
    <property name="text">
     <string>Filepath:</string>
@@ -107,6 +115,12 @@ QPushButton:checked{
      <height>20</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+
+	color: #000000;
+}</string>
+   </property>
    <property name="text">
     <string>Line:</string>
    </property>
@@ -121,7 +135,12 @@ QPushButton:checked{
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QCheckBox::indicator:unchecked{
+    <string notr="true">QCheckBox{
+
+	color: #000000;
+}
+
+QCheckBox::indicator:unchecked{
 
 	image: url(:/Icons/UI/Icons/sharp-check_box_outline_blank-24px.svg);
 }
@@ -152,6 +171,7 @@ QCheckBox::indicator:checked{
 
 	border: none;
 	background-color: #0097A7;
+	color: #000000;
 }
 
 QPushButton:pressed{
