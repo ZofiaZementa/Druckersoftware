@@ -30,6 +30,7 @@
    </property>
    <property name="font">
     <font>
+     <family>Cantarell</family>
      <pointsize>100</pointsize>
     </font>
    </property>

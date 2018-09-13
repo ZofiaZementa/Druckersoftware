@@ -10,6 +10,10 @@ ControlWindow::ControlWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //QFontDatabase::addApplicationFont(QString(":/Cantarell/Cantarell-Regular.ttf"));
+
+    QApplication::setFont(QFont(QString("Cantarell"), 11, QFont::Normal, false));
+
     m_menuBar = new MenuBar(this);
     m_errorScreen = new ErrorScreen(this);
     m_warningBar = new WarningBar(this);

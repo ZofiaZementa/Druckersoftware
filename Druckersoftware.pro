@@ -199,4 +199,5 @@ FORMS += \
     UI/GUI/SettingsScreen/SettingsGUIScreen/settingsguispinboxscreen.ui
 
 RESOURCES += \
-    icons.qrc
+    icons.qrc \
+    UI/Fonts/fonts.qrc

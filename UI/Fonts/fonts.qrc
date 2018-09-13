@@ -1,0 +1,36 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Cantarell/Cantarell-Bold.ttf</file>
+        <file>Cantarell/Cantarell-Regular.ttf</file>
+        <file>Cantarell/Cantarell-Oblique.ttf</file>
+        <file>Cantarell/Cantarell-BoldOblique.ttf</file>
+        <file>Lato/Lato-Regular.ttf</file>
+        <file>Lato/Lato-LightItalic.ttf</file>
+        <file>Lato/Lato-Light.ttf</file>
+        <file>Lato/Lato-Italic.ttf</file>
+        <file>Lato/Lato-HairlineItalic.ttf</file>
+        <file>Lato/Lato-Hairline.ttf</file>
+        <file>Lato/Lato-BoldItalic.ttf</file>
+        <file>Lato/Lato-Bold.ttf</file>
+        <file>Lato/Lato-BlackItalic.ttf</file>
+        <file>Lato/Lato-Black.ttf</file>
+        <file>Raleway/Raleway-ThinItalic.ttf</file>
+        <file>Raleway/Raleway-Thin.ttf</file>
+        <file>Raleway/Raleway-SemiBoldItalic.ttf</file>
+        <file>Raleway/Raleway-SemiBold.ttf</file>
+        <file>Raleway/Raleway-Regular.ttf</file>
+        <file>Raleway/Raleway-MediumItalic.ttf</file>
+        <file>Raleway/Raleway-Medium.ttf</file>
+        <file>Raleway/Raleway-LightItalic.ttf</file>
+        <file>Raleway/Raleway-Light.ttf</file>
+        <file>Raleway/Raleway-Italic.ttf</file>
+        <file>Raleway/Raleway-ExtraLightItalic.ttf</file>
+        <file>Raleway/Raleway-ExtraLight.ttf</file>
+        <file>Raleway/Raleway-ExtraBoldItalic.ttf</file>
+        <file>Raleway/Raleway-ExtraBold.ttf</file>
+        <file>Raleway/Raleway-BoldItalic.ttf</file>
+        <file>Raleway/Raleway-Bold.ttf</file>
+        <file>Raleway/Raleway-BlackItalic.ttf</file>
+        <file>Raleway/Raleway-Black.ttf</file>
+    </qresource>
+</RCC>

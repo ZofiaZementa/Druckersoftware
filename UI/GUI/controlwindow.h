@@ -2,6 +2,7 @@
 #define CONTROLWINDOW_H
 
 #include <QMainWindow>
+#include <QFontDatabase>
 #include "UI/GUI/menubar.h"
 #include "UI/GUI/errorscreen.h"
 #include "UI/GUI/warningbar.h"
