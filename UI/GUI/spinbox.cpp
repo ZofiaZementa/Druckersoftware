@@ -466,7 +466,7 @@ qreal SpinBox::fixValue(qreal value)
     }
 
     //triggered if it is below the minimum
-    else if(*m_minimum == true && value < *m_minimum){
+    else if(*m_minimumOn == true && value < *m_minimum){
 
         //sets value to the minimum
         value = *m_minimum;
@@ -484,6 +484,13 @@ void SpinBox::updateValueLineText()
     int digits = *m_decimals;
     //defining & initialising help with the value of m_value so that the digits before the comma can be counted
     int help = (int)(*m_value);
+
+    //checks if help is negative
+    //triggered if it is
+    if(help < 0){
+
+        help = help * (-1);
+    }
 
     //counting the digits before the comma and adding them to digits
     //executed while the value of help bigger or equal to ten
@@ -511,6 +518,13 @@ void SpinBox::updateValueLineText()
     else if(text.contains(QString(".")) == false && *m_decimals > 0){
 
         text.append(QString("."));
+        digits++;
+    }
+
+    //checks if there is a minus
+    //triggered if there is
+    if(*m_value < 0){
+
         digits++;
     }
 
