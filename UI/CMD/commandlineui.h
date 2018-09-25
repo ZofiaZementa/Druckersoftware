@@ -6,6 +6,7 @@
 #include "Logging/logger.h"
 #include <QObject>
 #include <QThread>
+#include <QSettings>
 
 class CommandlineUI : public QObject
 {
@@ -33,6 +34,9 @@ signals:
     void loggerDeleteLog(QString logName);
     void loggerReadFile(QString fileName, QStringList *ret);
     void loggerLog(QString logMessage, int code);
+    void serialInterfaceSend(QString text);
+    void serialInterfaceConnect();
+    void serialInterfaceDisconnect();
 
 public slots:
 
@@ -50,6 +54,7 @@ private:
 
     //the input
     char *m_input[400];
+    QSettings *m_settings;
 };
 
 #endif // COMMANDLINEUI_H

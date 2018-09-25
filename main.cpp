@@ -263,6 +263,15 @@ int main(int argc, char *argv[])
         //connecting the loggerSetLogFolderPath signal of the CommandlineUI to the setLogFolderPath slot of the CmdUILoggerInterface
         QObject::connect(&cmd, SIGNAL(loggerSetLogFolderPath(QString)), &cli, SLOT(setLogFolderPath(QString)), Qt::BlockingQueuedConnection);
 
+        //connecting the CommandLineUI to the SerialInterface
+
+        //connecting the serialInterfaceSend signal of the CommandlineUI to the send slot of the SerialInterface
+        QObject::connect(&cmd, SIGNAL(serialInterfaceSend(QString)), &s, SLOT(send(QString)));
+        //connecting the serialInterfaceConnect signal of the CommandlineUI to the connect slot of the SerialInterface
+        QObject::connect(&cmd, SIGNAL(serialInterfaceConnect()), &s, SLOT(connect()));
+        //connecting the serialInterfaceDisconnect signal of the CommandlineUI to the disconnect slot of the SerialInterface
+        QObject::connect(&cmd, SIGNAL(serialInterfaceDisconnect()), &s, SLOT(disconnect()));
+
         //connecting the cmdThread to the several threads
 
         //connecting the started signal of the cmdThread to the mainLoop slot of the CommandlineUI, so that it starts when the cmdThread starts

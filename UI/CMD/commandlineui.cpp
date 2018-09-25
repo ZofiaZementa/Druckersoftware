@@ -3,6 +3,7 @@
 CommandlineUI::CommandlineUI(QObject *parent) : QObject(parent)
 {
 
+    m_settings = new QSettings(this);
 }
 
 //mainloop to provide a consistent commandline interface
@@ -94,31 +95,18 @@ int CommandlineUI::checkCommands()
     for(int i = 0;i < input.count();i++){
 
         //checks the if it is a command
+        //triggered if it is help
+        if(input.at(i) == QString("help")){
+
+            //prints help
+            printhelp();
+        }
+
         //triggered if it is exit
-        if(input.at(i) == QString("exit")){
+        else if(input.at(i) == QString("exit")){
 
             //returns a 1 so the loop knows it has to exit
             return 1;
-        }
-
-        //triggered if it is setfile
-        else if(input.at(i) == QString("setfile")){
-
-            //emits signal so that the MachineController sets the filepath to the given argument
-            emit machineControllerSetFilePath(QUrl(input.at(i + 1)));
-            //prints that the filepath was set to ...
-            printf("Filepath set to %s\r\n", input.at(i + 1).toLatin1().data());
-            return 0;
-        }
-
-        //triggered if it is setline
-        else if(input.at(i) == QString("setline")){
-
-            //emits signal so that the MachineController sets the line to the given argument
-            emit machineControllerSetLine(input.at(i + 1).toInt());
-            //prints that the line was set to ...
-            printf("line set to %d\r\n", input.at(i + 1).toInt());
-            return 0;
         }
 
         //triggered if it is print
@@ -209,8 +197,133 @@ int CommandlineUI::checkCommands()
             return 0;
         }
 
+        //triggered if it is setfile
+        else if(input.at(i) == QString("setfile")){
+
+            //emits signal so that the MachineController sets the filepath to the given argument
+            emit machineControllerSetFilePath(QUrl(input.at(i + 1)));
+            //prints that the filepath was set to ...
+            printf("Filepath set to %s\r\n", input.at(i + 1).toLatin1().data());
+            return 0;
+        }
+
+        //triggered if it is setline
+        else if(input.at(i) == QString("setline")){
+
+            //emits signal so that the MachineController sets the line to the given argument
+            emit machineControllerSetLine(input.at(i + 1).toInt());
+            //prints that the line was set to ...
+            printf("line set to %d\r\n", input.at(i + 1).toInt());
+            return 0;
+        }
+
+        //triggered if it is setvalue
+        else if(input.at(i) == QString("setvalue")){
+
+            //checks if all the arguments are there
+            //triggered if they are
+            if(input.count() == i + 3){
+
+                //checks the types
+                //triggered if the type is int
+                if(input.at(i + 3) == QString("int")){
+
+                    bool ok;
+                    //converts value from String to int and sets it at the key
+                    m_settings->setValue(input.at(i + 1), input.at(i + 2).toInt(&ok, 10));
+                    return 0;
+                }
+
+                //triggered if the type is qreal
+                else if(input.at(i + 3) == QString("qreal")){
+
+                    bool ok;
+                    //converts value from String to double and sets it at the key
+                    m_settings->setValue(input.at(i + 1), input.at(i + 2).toDouble(&ok));
+                    return 0;
+                }
+
+                //triggered if the type is bool
+                else if(input.at(i + 3) == QString("bool")){
+
+                    //checks if the value is 1, true, 0 or false
+                    //triggered if it is 1
+                    if(input.at(i + 2) == QString("1")){
+
+                        //sets true at the key
+                        m_settings->setValue(input.at(i + 1), true);
+                        return 0;
+                    }
+
+                    //triggered if it is true
+                    else if(input.at(i + 2) == QString("true")){
+
+                        //sets true at the key
+                        m_settings->setValue(input.at(i + 1), true);
+                        return 0;
+                    }
+
+                    //triggered if it is 0
+                    else if(input.at(i + 2) == QString("0")){
+
+                        //sets false at the key
+                        m_settings->setValue(input.at(i + 1), false);
+                        return 0;
+                    }
+
+                    //triggered if it is false
+                    else if(input.at(i + 2) == QString("false")){
+
+                        //sets false at the key
+                        m_settings->setValue(input.at(i + 1), false);
+                        return 0;
+                    }
+
+                    //triggered if it is something else
+                    else{
+
+                        //returns 2 so that the loop prints the help
+                        return 2;
+                    }
+                }
+
+                //triggered if the type is invalid
+                else{
+
+                    //returns 2 so that the loop prints the help
+                    return 2;
+                }
+            }
+
+            //triggered if they aren't
+            else{
+
+                //returns 2 so that the loop prints the help
+                return 2;
+            }
+        }
+
+        //triggered if it is value
+        else if(input.at(i) == QString("value")){
+
+            //checks if all the arguments are there
+            //triggered if they are
+            if(input.count() == i + 1){
+
+                //prints the value at key
+                printf("Value: %s\r\n", m_settings->value(input.at(i + 1)).toByteArray().data());
+            }
+
+            //triggered if they aren't
+            else{
+
+                //returns 2 so that the loop prints the help
+                return 2;
+            }
+        }
+
         //triggered if it is write
-        else if(input.at(i) == QString("write")){
+        else if(input.at(i) == QString("iowrite")){
 
             //checks if all the arguments are there
             //triggered if they are
@@ -247,7 +360,7 @@ int CommandlineUI::checkCommands()
         }
 
         //triggered if it is read
-        else if(input.at(i) == QString("read")){
+        else if(input.at(i) == QString("ioread")){
 
             //checks if all the arguments are there
             //triggered if they are
@@ -269,6 +382,40 @@ int CommandlineUI::checkCommands()
                 //returns 2 so that the loop prints the help
                 return 2;
             }
+        }
+
+        //triggered if it is swrite
+        else if(input.at(i) == QString("swrite")){
+
+            //checks if all the arguments are there
+            //triggered if they are
+            if(input.count() == i + 1){
+
+                //emits signal so that the SerialInterface sends the text
+                emit serialInterfaceSend(input.at(i + 1));
+                return 0;
+            }
+
+            //triggered if they aren't
+            else{
+
+                //returns 2 so that the loop prints the help
+                return 2;
+            }
+        }
+
+        //triggered if it is sconnect
+        else if(input.at(i) == QString("sconnect")){
+
+            emit serialInterfaceConnect();
+            return 0;
+        }
+
+        //triggered if it is sdconnect
+        else if(input.at(i) == QString("sdconnect")){
+
+            emit serialInterfaceDisconnect();
+            return 0;
         }
 
         //triggered if it is addlog
@@ -561,9 +708,8 @@ void CommandlineUI::printhelp()
 {
     printf("commands for the Printersoftware:\r\n\n\n");
 
-    printf("settings:\r\n\n");
-    printf("\tsetfile   \t<filepath> sets the filepath\r\n");
-    printf("\tsetline   \t<linenumber> sets the linenumber at which to start\r\n");
+    printf("help:\r\n\n");
+    printf("\thelp      \tprints this help\r\n");
 
     printf("\ncontrols:\r\n\n");
     printf("\texit      \texits the Printersoftware and goes back to the terminal\r\n");
@@ -572,9 +718,20 @@ void CommandlineUI::printhelp()
     printf("\tplay      \tcontinues the print\r\n");
     printf("\treset     \tresets all set values\r\n");
 
+    printf("settings:\r\n\n");
+    printf("\tsetfile   \t<filepath> sets the filepath\r\n");
+    printf("\tsetline   \t<linenumber> sets the linenumber at which to start\r\n");
+    printf("\tsetvalue  \t<key> <value> <type> sets the value pf the key to value of type\r\n");
+    printf("\tvalue     \t<key> reads the value of the key and prints it\r\n");
+
     printf("\nio controls:\r\n\n");
-    printf("\twrite     \t<pinName> <value>\r\n");
-    printf("\tread      \t<pinName>\r\n");
+    printf("\tiowrite   \t<pinName> <value>\r\n");
+    printf("\tioread    \t<pinName>\r\n");
+
+    printf("\nserial controls:\r\n\n");
+    printf("\tswrite    \t<string to write> writes string into the serialinterface\r\n");
+    printf("\tsconnect  \topens connection of the serialinterface\r\n");
+    printf("\tsdconnect \tclosesconnection of the serialinterface\r\n");
 
     printf("\nloggercontrols:\r\n\n");
     printf("\taddlog    \t<logName> <type1> <type2> ...\r\n");
