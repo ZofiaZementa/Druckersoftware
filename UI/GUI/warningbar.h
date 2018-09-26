@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QtSvg/QSvgWidget>
 #include <QPainter>
+#include <QStyleOption>
 
 namespace Ui {
 class WarningBar;

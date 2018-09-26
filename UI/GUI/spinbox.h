@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPainter>
+#include <QStyleOption>
 
 namespace Ui {
 class SpinBox;
