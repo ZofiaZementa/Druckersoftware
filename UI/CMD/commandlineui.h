@@ -4,6 +4,7 @@
 #include "machinecontroller.h"
 #include "IO/iocontroller.h"
 #include "Logging/logger.h"
+#include "stdio.h"
 #include <QObject>
 #include <QThread>
 #include <QSettings>
@@ -13,6 +14,7 @@ class CommandlineUI : public QObject
     Q_OBJECT
 public:
     explicit CommandlineUI(QObject *parent = nullptr);
+    ~CommandlineUI();
 
 signals:
 
@@ -53,7 +55,7 @@ private:
     void printhelp();
 
     //the input
-    char *m_input[400];
+    QString *m_input;
     QSettings *m_settings;
 };
 

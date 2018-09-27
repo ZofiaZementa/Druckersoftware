@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QFile>
 #include <QTime>
+#include <QStringList>
 
 class LogFile : public QObject
 {

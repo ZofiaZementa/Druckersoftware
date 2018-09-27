@@ -5,6 +5,7 @@
 #include <QUrl>
 #include <QBuffer>
 #include <QFile>
+#include <QStringList>
 
 class GCodeReader : public QObject
 {

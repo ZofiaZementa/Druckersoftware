@@ -3,7 +3,16 @@
 CommandlineUI::CommandlineUI(QObject *parent) : QObject(parent)
 {
 
+    m_input = new QString();
     m_settings = new QSettings(this);
+}
+
+CommandlineUI::~CommandlineUI()
+{
+
+    delete m_input;
+
+    m_input = NULL;
 }
 
 //mainloop to provide a consistent commandline interface
@@ -12,6 +21,8 @@ void CommandlineUI::mainLoop()
 
     //variable to check wether to print the help or not or shut down the software down or not
     int check;
+    bool loopHelp = true;
+    char inputChar;
 
     //loop
     while(true){
@@ -19,7 +30,24 @@ void CommandlineUI::mainLoop()
         //prints linestart
         printf(">>>");
         //waits for user input
-        scanf("%399s", *m_input);
+        m_input->clear();
+        loopHelp = true;
+
+        while(loopHelp){
+
+            inputChar = getc(stdin);
+
+            if(inputChar != '\r' && inputChar != '\n'){
+
+                m_input->append(QChar(inputChar));
+
+            }
+
+            else{
+
+                loopHelp = false;
+            }
+        }
         //carriage return & new line feed
         printf("\r\n");
         //checks for commands
@@ -40,7 +68,6 @@ void CommandlineUI::mainLoop()
             printhelp();
         }
     }
-
 }
 
 //breaks up String at the spaces
@@ -89,7 +116,7 @@ int CommandlineUI::checkCommands()
 {
 
     //breaks up the string
-    QStringList input = breakUpString(QString(*m_input));
+    QStringList input = breakUpString(*m_input);
 
     //loop to go through allthe different components of the input
     for(int i = 0;i < input.count();i++){
@@ -100,6 +127,7 @@ int CommandlineUI::checkCommands()
 
             //prints help
             printhelp();
+            return 0;
         }
 
         //triggered if it is exit
@@ -222,7 +250,7 @@ int CommandlineUI::checkCommands()
 
             //checks if all the arguments are there
             //triggered if they are
-            if(input.count() == i + 3){
+            if(input.count() == 4){
 
                 //checks the types
                 //triggered if the type is int
@@ -240,6 +268,17 @@ int CommandlineUI::checkCommands()
                     bool ok;
                     //converts value from String to double and sets it at the key
                     m_settings->setValue(input.at(i + 1), input.at(i + 2).toDouble(&ok));
+                    return 0;
+                }
+
+                //triggered if the type is QString
+
+                //triggered if the type is qreal
+                else if(input.at(i + 3) == QString("QString")){
+
+                    bool ok;
+                    //converts value from String to double and sets it at the key
+                    m_settings->setValue(input.at(i + 1), input.at(i + 2));
                     return 0;
                 }
 
@@ -308,10 +347,11 @@ int CommandlineUI::checkCommands()
 
             //checks if all the arguments are there
             //triggered if they are
-            if(input.count() == i + 1){
+            if(input.count() == 2){
 
                 //prints the value at key
-                printf("Value: %s\r\n", m_settings->value(input.at(i + 1)).toByteArray().data());
+                printf("Value: %s\r\n", m_settings->value(input.at(i + 1)).toString().toLatin1().data());
+                return 0;
             }
 
             //triggered if they aren't
@@ -340,7 +380,7 @@ int CommandlineUI::checkCommands()
                 //triggered if it is
                 if(ret == true && ok == true){
 
-                    return 1;
+                    return 0;
                 }
 
                 //triggered if it is
@@ -373,7 +413,7 @@ int CommandlineUI::checkCommands()
 
                 //prints the value
                 printf("value: %d\r\n", ret);
-                return 1;
+                return 0;
             }
 
             //triggered if they aren't
@@ -460,6 +500,7 @@ int CommandlineUI::checkCommands()
 
             //emits signal so that the Logger adds the log
             emit loggerAddLog(types, logName);
+            return 0;
         }
 
         //triggerd if it is editlog
@@ -504,6 +545,7 @@ int CommandlineUI::checkCommands()
 
             //emits signal so that the Logger edits the log
             emit loggerEditLog(types, logName);
+            return 0;
         }
 
         //triggerd if it is dellog
@@ -529,6 +571,7 @@ int CommandlineUI::checkCommands()
 
             //emits signal so that the Logger deletes the log
             emit loggerDeleteLog(logName);
+            return 0;
         }
 
         //triggerd if it is setlfpath
@@ -554,6 +597,7 @@ int CommandlineUI::checkCommands()
 
             //emits signal so that the Logger sets the folderpath
             emit loggerSetLogFolderPath(folderPath);
+            return 0;
         }
 
         //triggerd if it is chnglfpath
@@ -608,6 +652,7 @@ int CommandlineUI::checkCommands()
 
             //prints that the folder path is ...
             printf("log folder path: %s", output.data());
+            return 0;
         }
 
         //triggerd if it is g0
