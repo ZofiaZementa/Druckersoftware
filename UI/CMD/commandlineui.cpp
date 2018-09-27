@@ -4,7 +4,7 @@ CommandlineUI::CommandlineUI(QObject *parent) : QObject(parent)
 {
 
     m_input = new QString();
-    m_settings = new QSettings(this);
+    m_settings = new QSettings(QString("./settings.ini"), QSettings::NativeFormat, this);
 }
 
 CommandlineUI::~CommandlineUI()
@@ -259,6 +259,7 @@ int CommandlineUI::checkCommands()
                     bool ok;
                     //converts value from String to int and sets it at the key
                     m_settings->setValue(input.at(i + 1), input.at(i + 2).toInt(&ok, 10));
+                    m_settings->sync();
                     return 0;
                 }
 
@@ -268,6 +269,7 @@ int CommandlineUI::checkCommands()
                     bool ok;
                     //converts value from String to double and sets it at the key
                     m_settings->setValue(input.at(i + 1), input.at(i + 2).toDouble(&ok));
+                    m_settings->sync();
                     return 0;
                 }
 
@@ -279,6 +281,7 @@ int CommandlineUI::checkCommands()
                     bool ok;
                     //converts value from String to double and sets it at the key
                     m_settings->setValue(input.at(i + 1), input.at(i + 2));
+                    m_settings->sync();
                     return 0;
                 }
 
@@ -291,6 +294,7 @@ int CommandlineUI::checkCommands()
 
                         //sets true at the key
                         m_settings->setValue(input.at(i + 1), true);
+                        m_settings->sync();
                         return 0;
                     }
 
@@ -299,6 +303,7 @@ int CommandlineUI::checkCommands()
 
                         //sets true at the key
                         m_settings->setValue(input.at(i + 1), true);
+                        m_settings->sync();
                         return 0;
                     }
 
@@ -307,6 +312,7 @@ int CommandlineUI::checkCommands()
 
                         //sets false at the key
                         m_settings->setValue(input.at(i + 1), false);
+                        m_settings->sync();
                         return 0;
                     }
 
@@ -315,6 +321,7 @@ int CommandlineUI::checkCommands()
 
                         //sets false at the key
                         m_settings->setValue(input.at(i + 1), false);
+                        m_settings->sync();
                         return 0;
                     }
 

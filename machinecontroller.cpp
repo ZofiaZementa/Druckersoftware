@@ -21,7 +21,7 @@ MachineController::MachineController(QObject *parent) : QObject(parent)
     m_printerBedXAxisTilt = new qreal;    //holds the tilt of the printerbed in the x-axis direction in radiants
     m_printerBedYAxisTilt = new qreal;    //holds the tilt of the printerbed in the y-axis direction in radiants
     m_gCodeReader = new GCodeReader(this);
-    m_settings = new QSettings(this);
+    m_settings = new QSettings(QString("./settings.ini"), QSettings::IniFormat, this);
 
 
     //initialising variables

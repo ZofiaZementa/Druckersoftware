@@ -61,7 +61,7 @@ MotorController::MotorController(QObject *parent) : QObject(parent)
     m_currentZAxisTemp = new int;   //holds the current temperature of the z-axis
     m_currentExtruderTemp = new int;   //holds the current temperature of the extruder
     m_commandBuffer = new CommandBuffer;    //holds all the commands that still need to be executed
-    m_settings = new QSettings(this);
+    m_settings = new QSettings(QString("./settings.ini"), QSettings::IniFormat, this);
 
     //initialising variables
 
@@ -897,6 +897,7 @@ void MotorController::setXAxisMaxFeedrate(qreal xAxisMaxFeedrate)
 {
 
     m_settings->setValue("motorsettings/xaxis/maximum_feedrate", xAxisMaxFeedrate);
+    m_settings->sync();
 }
 
 //returns m_xAxisMaxFeedrate
@@ -911,6 +912,7 @@ void MotorController::setYAxisMaxFeedrate(qreal yAxisMaxFeedrate)
 {
 
     m_settings->setValue("motorsettings/yaxis/maximum_feedrate", yAxisMaxFeedrate);
+    m_settings->sync();
 }
 
 //returns m_yAxisMaxFeedrate
@@ -925,6 +927,7 @@ void MotorController::setZAxisMaxFeedrate(qreal zAxisMaxFeedrate)
 {
 
     m_settings->setValue("motorsettings/zaxis/maximum_feedrate", zAxisMaxFeedrate);
+    m_settings->sync();
 }
 
 //returns m_zAxisMaxFeedrate
@@ -939,6 +942,7 @@ void MotorController::setExtruderMaxFeedrate(qreal extruderMaxFeedrate)
 {
 
     m_settings->setValue("motorsettings/extruder/maximum_feedrate", extruderMaxFeedrate);
+    m_settings->sync();
 }
 
 //returns m_extruderMaxFeedrate
@@ -967,6 +971,7 @@ void MotorController::setDefaultPrintingAcceleration(qreal defaultPrintingAccele
     else{
 
        m_settings->setValue("motorsettings/maximum_printing_acceleration", defaultPrintingAcceleration);
+       m_settings->sync();
     }
 }
 
@@ -996,7 +1001,9 @@ void MotorController::setDefaultTravelAcceleration(qreal defaultTravelAccelerati
     else{
 
        m_settings->setValue("motorsettings/maximum_travel_acceleration", defaultTravelAcceleration);
-    }}
+       m_settings->sync();
+    }
+}
 
 //returns m_defaultTravelAcceleration
 qreal MotorController::defaultTravelAcceleration()

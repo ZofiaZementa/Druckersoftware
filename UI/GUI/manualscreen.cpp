@@ -15,7 +15,7 @@ ManualScreen::ManualScreen(QWidget *parent) :
     eSpinBox = new SpinBox(this);
     hotEndTargetTempSpinBox = new SpinBox(this);
     bedTargetTempSpinBox = new SpinBox(this);
-    m_settings = new QSettings(this);
+    m_settings = new QSettings(QString("./settings.ini"), QSettings::IniFormat, this);
 
     uiSetup();
 
@@ -174,6 +174,7 @@ void ManualScreen::stepsPerClickSpinBoxValueEdited(qreal value)
 {
 
     m_settings->setValue("gui/manualscreen/stepsperclick", value);
+    m_settings->sync();
 }
 
 void ManualScreen::xSpinBoxValueEdited(qreal value)
@@ -318,4 +319,5 @@ void ManualScreen::uiUpdateValues()
 {
 
     stepsPerClickSpinBox->setValue(m_settings->value("gui/manualscreen/stepsperclick", 10.0).toReal());
+    m_settings->sync();
 }

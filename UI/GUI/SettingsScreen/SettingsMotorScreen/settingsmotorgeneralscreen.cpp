@@ -24,7 +24,7 @@ SettingsMotorGeneralScreen::SettingsMotorGeneralScreen(QWidget *parent) :
     m_maxPrintFeedrateSpinBox = new SpinBox(this);
     m_defaultTravelFeedrateSpinBox = new SpinBox(this);
     m_defaultPrintFeedrateSpinBox = new SpinBox(this);
-    m_settings = new QSettings(this);
+    m_settings = new QSettings(QString("./settings.ini"), QSettings::IniFormat, this);
 
     uiSetup();
     uiUpdateSettings();
@@ -199,6 +199,7 @@ void SettingsMotorGeneralScreen::uiUpdateValues()
     m_maxPrintFeedrateSpinBox->setValue(m_settings->value("motorsettings/maximum_printing_feedrate", 100.0).toReal());
     m_defaultTravelFeedrateSpinBox->setValue(m_settings->value("motorsettings/default_travel_feedrate", 100.0).toReal());
     m_defaultPrintFeedrateSpinBox->setValue(m_settings->value("motorsettings/default_printing_feedrate", 100.0).toReal());
+    m_settings->sync();
 
     if(m_settings->value("motorsettings/stepsize", 64).toReal() == 1.0){
 

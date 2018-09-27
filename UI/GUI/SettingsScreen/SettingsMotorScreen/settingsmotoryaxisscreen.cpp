@@ -19,7 +19,7 @@ SettingsMotorYAxisScreen::SettingsMotorYAxisScreen(QWidget *parent) :
     m_maxDeccelerationSpinBox = new SpinBox(this);
     m_maxAccelerationChangeSpinBox = new SpinBox(this);
     m_maxDeccelerationChangeSpinBox = new SpinBox(this);
-    m_settings = new QSettings(this);
+    m_settings = new QSettings(QString("./settings.ini"), QSettings::IniFormat, this);
 
     uiSetup();
     uiUpdateSettings();
@@ -158,6 +158,7 @@ void SettingsMotorYAxisScreen::uiUpdateValues()
     m_maxDeccelerationSpinBox->setValue(m_settings->value("motorsettings/yaxis/maximum_decceleration", 500.0).toReal());
     m_maxAccelerationChangeSpinBox->setValue(m_settings->value("motorsettings/yaxis/maximum_acceleration_change", 100.0).toReal());
     m_maxDeccelerationChangeSpinBox->setValue(m_settings->value("motorsettings/yaxis/maximum_decceleration_change", 100.0).toReal());
+    m_settings->sync();
 
     if(m_settings->value("motorsettings/yaxis/negative_turningdirection", 0).toInt() == 0){
 

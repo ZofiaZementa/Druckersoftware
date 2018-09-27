@@ -4,7 +4,7 @@ Logger::Logger(QObject *parent) : QObject(parent)
 {
 
     m_logFileList = new QList<LogFile>;
-    m_settings = new QSettings(this);
+    m_settings = new QSettings(QString("./settings.ini"), QSettings::IniFormat, this);
 }
 
 Logger::~Logger()
@@ -19,6 +19,7 @@ void Logger::setLogFolderPath(QString folderPath)
 {
 
     m_settings->setValue("logger/folderPath", folderPath);
+    m_settings->sync();
 }
 
 void Logger::changeLogFolderPath(QString folderPath)
@@ -26,6 +27,7 @@ void Logger::changeLogFolderPath(QString folderPath)
 
     moveLogFiles(folderPath);
     m_settings->setValue("logger/folderPath", folderPath);
+    m_settings->sync();
 }
 
 QString Logger::logFolderPath()
@@ -59,8 +61,10 @@ void Logger::addLog(QList<int> types, QString logName)
 
         logNames.append(qVariantFromValue(logName));
         m_settings->setValue("logger/logNames", logNames);
+        m_settings->sync();
         typesList.append(qVariantFromValue(types));
         m_settings->setValue("logger/types", typesList);
+        m_settings->sync();
     }
 }
 
@@ -74,6 +78,7 @@ void Logger::editLog(QList<int> types, QString logName)
 
         typesList[logNames.indexOf(qVariantFromValue(types))] = qVariantFromValue(types);
         m_settings->setValue("logger/types", typesList);
+        m_settings->sync();
     }
 }
 
@@ -88,8 +93,10 @@ void Logger::deleteLog(QString logName)
 
         typesList.removeAt(logNames.indexOf(logName));
         m_settings->setValue("logger/types", typesList);
+        m_settings->sync();
         logNames.removeOne(logName);
         m_settings->setValue("logger/logNames", logNames);
+        m_settings->sync();
     }
 }
 
