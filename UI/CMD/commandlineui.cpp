@@ -374,7 +374,7 @@ int CommandlineUI::checkCommands()
 
             //checks if all the arguments are there
             //triggered if they are
-            if(input.count() == i + 3){
+            if(input.count() == 3){
 
                 //there for the conversion from string to int
                 bool ok;
@@ -411,7 +411,7 @@ int CommandlineUI::checkCommands()
 
             //checks if all the arguments are there
             //triggered if they are
-            if(input.count() == i + 2){
+            if(input.count() == 2){
 
                 //there to hold the return of the execution of read
                 int ret;
@@ -436,7 +436,7 @@ int CommandlineUI::checkCommands()
 
             //checks if all the arguments are there
             //triggered if they are
-            if(input.count() == i + 1){
+            if(input.count() == 2){
 
                 //emits signal so that the SerialInterface sends the text
                 emit serialInterfaceSend(input.at(i + 1));
