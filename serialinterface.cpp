@@ -4,26 +4,6 @@
 SerialInterface::SerialInterface(QObject *parent) : QObject(parent)
 {
 
-    //defining pointers
-
-    m_serialPort = new QSerialPort(this);
-    m_openMode = new QIODevice::OpenMode;
-    m_status = new SerialInterface::Status;
-    m_buffer = new QStringList;
-
-    //initialising pointers
-
-    *m_status = SerialInterface::Disconnected;
-    *m_openMode = QIODevice::ReadWrite;
-    *m_buffer = QStringList();
-
-    //emits that the status has changed
-
-    emit statusChanged(*m_status);
-
-    //signals and slots
-
-    QObject::connect(m_serialPort, SIGNAL(readyRead()), this, SLOT(onReadReady()));
 }
 
 SerialInterface::~SerialInterface()
@@ -418,4 +398,29 @@ SerialInterface::Status SerialInterface::status()
 {
 
     return *m_status;
+}
+
+void SerialInterface::initialise()
+{
+
+    //defining pointers
+
+    m_serialPort = new QSerialPort(this);
+    m_openMode = new QIODevice::OpenMode;
+    m_status = new SerialInterface::Status;
+    m_buffer = new QStringList;
+
+    //initialising pointers
+
+    *m_status = SerialInterface::Disconnected;
+    *m_openMode = QIODevice::ReadWrite;
+    *m_buffer = QStringList();
+
+    //emits that the status has changed
+
+    emit statusChanged(*m_status);
+
+    //signals and slots
+
+    QObject::connect(m_serialPort, SIGNAL(readyRead()), this, SLOT(onReadReady()));
 }

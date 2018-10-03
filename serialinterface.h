@@ -40,6 +40,7 @@ signals:
 
 public slots:
 
+    void initialise();
     bool connect();
     bool connect(QIODevice::OpenMode mode);
     void disconnect();

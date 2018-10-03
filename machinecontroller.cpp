@@ -713,9 +713,10 @@ void MachineController::zAxisNegativeEndstopHit()
 void MachineController::serialInterfaceSetup()
 {
 
+    m_serialInterface->initialise();
     m_serialInterface->setBaudRate(m_settings->value("serialinterface/baudrate", STANDARD_BAUDRATE).toInt());
     m_serialInterface->setOpenMode(QIODevice::ReadWrite);
-    m_serialInterface->setPortName(m_settings->value("serialinterface/portname", "tty0").toString());
+    m_serialInterface->setPortName(m_settings->value("serialinterface/portname", "ttyUSB0").toString());
     m_serialInterface->connect();
 }
 

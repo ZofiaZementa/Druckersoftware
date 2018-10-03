@@ -114,10 +114,6 @@ int main(int argc, char *argv[])
     c.setMotorController(&mc);
     c.setSerialInterface(&s);
 
-    //setup of the serialinterface
-
-    c.serialInterfaceSetup();
-
     //signals & slots
 
     //MotorController
@@ -163,6 +159,9 @@ int main(int argc, char *argv[])
     QObject::connect(&c, SIGNAL(setStatusLED(int,int)), &lc, SLOT(setStatusLED(int,int)));
     //connecting the started signal of the ioThread to the startMainLoop slot of the IOMainLoop, so that it starts when the thread starts
     QObject::connect(ioThread, SIGNAL(started()), &ioml, SLOT(startMainLoop()));
+    //connecting the started signal of the sysThread to the serialInterfaceSetup slot of the MachineController, so that it initialises when the thread starts
+    QObject::connect(sysThread, SIGNAL(started()), &c, SLOT(serialInterfaceSetup()));
+
 
     //checks a GUI should be displayed or not
     //triggered if it should
