@@ -278,7 +278,7 @@ void SerialInterface::onReadReady()
 
         else{
 
-            if(m_buffer->last().contains(QString("\r")) == false){
+            if(m_buffer->isEmpty() == false && m_buffer->last().contains(QString("\r")) == false){
 
                 m_buffer->last().append(data.mid(0, data.indexOf(QString("\r")) + 1));
             }
