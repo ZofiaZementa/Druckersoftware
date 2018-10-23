@@ -416,7 +416,7 @@ int CommandlineUI::checkCommands()
                 //there to hold the return of the execution of read
                 int ret;
                 //emits signal so that the IOController reads the values
-                emit iOControllerRead(input.at(i), &ret);
+                emit iOControllerRead(input.at(1), &ret);
 
                 //prints the value
                 printf("value: %d\r\n", ret);
@@ -673,6 +673,8 @@ int CommandlineUI::checkCommands()
             qreal z = 0.0;
             //variable for the x-extruder coordinate
             qreal e = 0.0;
+            //variable for the feedrate
+            qreal f = 0.0;
             //variable for the enstop behavior
             int s = 0;
 
@@ -714,6 +716,15 @@ int CommandlineUI::checkCommands()
                     input[n].remove(0, 1);
                     //converts the argument into a double and writes it into e
                     e = input.at(n).toDouble();
+                }
+
+                //triggered if it is F
+                else if(input.at(n).at(0) == QString("F") || input.at(n).at(0) == QString("f")){
+
+                    //removes the E from th argument
+                    input[n].remove(0, 1);
+                    //converts the argument into a double and writes it into e
+                    f = input.at(n).toDouble();
                 }
 
                 //triggered if it is S
@@ -794,5 +805,5 @@ void CommandlineUI::printhelp()
     printf("\tlfpath    \tprints out the log folder path\r\n");
 
     printf("\ngcode commands:\n\n");
-    printf("\tg0        \t[X<xvalue>] [Y<yvalue>] [Z<zvalue>] [E<evalue>] [S<svalue>] drives to the given position with top speed\r\n");
+    printf("\tg0        \t[X<xvalue>] [Y<yvalue>] [Z<zvalue>] [F<evalue>] [E<evalue>] [S<svalue>] drives to the given position with top speed\r\n");
 }
