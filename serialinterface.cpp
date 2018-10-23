@@ -266,7 +266,7 @@ void SerialInterface::onReadReady()
 
     QString data;
 
-    data = m_serialPort->readAll();
+    data = QString(m_serialPort->readAll());
 
     while(data.isEmpty() == false){
 
@@ -288,7 +288,7 @@ void SerialInterface::onReadReady()
                 m_buffer->append(data.mid(0, data.indexOf(QString("\r")) + 1));
             }
 
-            data.remove(0, data.indexOf(QString("\r")));
+            data.remove(0, data.indexOf(QString("\r")) + 1);
         }
     }
 
@@ -299,7 +299,7 @@ void SerialInterface::onReadReady()
 void SerialInterface::checkBuffer()
 {
 
-    if(m_buffer->first().contains(QString("\r"))){
+    if(m_buffer->isEmpty() == false && m_buffer->first().contains(QString("\r"))){
 
         emit dataReceived(m_buffer->takeFirst());
         checkBuffer();
