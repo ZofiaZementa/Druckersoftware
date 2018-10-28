@@ -13,13 +13,17 @@ SerialInterface::~SerialInterface()
 
     delete m_openMode;
     delete m_status;
-    delete m_buffer;
+    delete m_converstionStatus;
+    delete m_inputBuffer;
+    delete m_outputBuffer;
 
     //setting pointers to NULL
 
     m_openMode = NULL;
     m_status = NULL;
-    m_buffer = NULL;
+    m_converstionStatus = NULL;
+    m_inputBuffer = NULL;
+    m_outputBuffer = NULL;
 }
 
 //disconnects the connection, sets the baudrate and reconects
@@ -211,33 +215,21 @@ void SerialInterface::setOpenMode(QIODevice::OpenMode mode)
 }
 
 //writes data to the serial connection
-bool SerialInterface::send(QString data)
+void SerialInterface::send(QString data)
 {
 
-    //checks if the connection is open
-    //exected if it is
-    if(m_serialPort->isOpen() == true){
+    QByteArray dat;
 
-        QByteArray m_data;
+    dat.append(data);
+    m_outputBuffer->append(dat);
+    checkOutputBuffer();
+}
 
-        //appends data to m_data
-        m_data.append(data);
-        //writes m_data to the port
-        m_serialPort->write(m_data);
-        return true;
-    }
+void SerialInterface::send(QByteArray data)
+{
 
-    //executed if it isn't
-    else{
-
-        //sets the status to error
-        *m_status = SerialInterface::Error;
-        //emits that the status has changed
-        emit statusChanged(*m_status);
-        //emits that an error has occured
-        emit error(QString("Not connected"));
-        return false;
-    }
+    m_outputBuffer->append(data);
+    checkOutputBuffer();
 }
 
 //reconnects the serial connection
@@ -272,37 +264,153 @@ void SerialInterface::onReadReady()
 
         if(data.contains(QString("\r")) == false){
 
-            m_buffer->append(data);
+            m_inputBuffer->append(data);
             break;
         }
 
         else{
 
-            if(m_buffer->isEmpty() == false && m_buffer->last().contains(QString("\r")) == false){
+            if(m_inputBuffer->isEmpty() == false && m_inputBuffer->last().contains(QString("\r")) == false){
 
-                m_buffer->last().append(data.mid(0, data.indexOf(QString("\r")) + 1));
+                m_inputBuffer->last().append(data.mid(0, data.indexOf(QString("\r")) + 1));
             }
 
             else{
 
-                m_buffer->append(data.mid(0, data.indexOf(QString("\r")) + 1));
+                m_inputBuffer->append(data.mid(0, data.indexOf(QString("\r")) + 1));
             }
 
             data.remove(0, data.indexOf(QString("\r")) + 1);
         }
     }
 
-    checkBuffer();
+    checkInputBuffer();
+}
+
+void SerialInterface::onBytesWritten()
+{
+
+    checkOutputBuffer();
 }
 
 //checks if there are command left in the buffer and if yes, clears them
-void SerialInterface::checkBuffer()
+void SerialInterface::checkInputBuffer()
 {
 
-    if(m_buffer->isEmpty() == false && m_buffer->first().contains(QString("\r"))){
+    if(m_inputBuffer->isEmpty() == false && m_inputBuffer->first().contains(QString("\r"))){
 
-        emit dataReceived(m_buffer->takeFirst());
-        checkBuffer();
+        if(QString(m_inputBuffer->first().at(0)).toInt() == m_settings->value("motorsettings/xaxis/motoradress", 1).toInt()){
+
+            (*m_converstionStatus)[0] == ConversationStatus::Ready;
+        }
+
+        else if(QString(m_inputBuffer->first().at(0)).toInt() == m_settings->value("motorsettings/yaxis/motoradress", 2).toInt()){
+
+            (*m_converstionStatus)[1] == ConversationStatus::Ready;
+        }
+
+        else if(QString(m_inputBuffer->first().at(0)).toInt() == m_settings->value("motorsettings/zaxis/motoradress", 3).toInt()){
+
+            (*m_converstionStatus)[2] == ConversationStatus::Ready;
+        }
+
+        else if(QString(m_inputBuffer->first().at(0)).toInt() == m_settings->value("motorsettings/extruder/motoradress", 4).toInt()){
+
+            (*m_converstionStatus)[3] == ConversationStatus::Ready;
+        }
+
+        else if(m_inputBuffer->first().at(0)== QChar('*')){
+
+            for(int i = 0;i < m_converstionStatus->count();i++){
+
+                (*m_converstionStatus)[i] = ConversationStatus::Ready;
+            }
+        }
+
+        else{
+
+            emit error("invalid Adress");
+            return;
+        }
+
+        emit dataReceived(m_inputBuffer->takeFirst());
+        checkInputBuffer();
+    }
+}
+
+void SerialInterface::checkOutputBuffer()
+{
+
+    if(m_outputBuffer->isEmpty() == false){
+
+        if(m_converstionStatus->at(0) == ConversationStatus::Ready || m_converstionStatus->at(1) == ConversationStatus::Ready || m_converstionStatus->at(2) == ConversationStatus::Ready || m_converstionStatus->at(3) == ConversationStatus::Ready){
+
+            for(int i = 0;i < m_outputBuffer->length();i++){
+
+                if(m_converstionStatus->at(0) == ConversationStatus::Ready && m_outputBuffer->at(i).at(1) == QString("%1").arg(m_settings->value("motorsettings/xaxis/motoradress", 1).toInt()).toLatin1().at(0)){
+
+                    sendData(m_outputBuffer->takeAt(i));
+                    (*m_converstionStatus)[0] = ConversationStatus::WaitingForReply;
+                }
+
+                else if(m_converstionStatus->at(1) == ConversationStatus::Ready && m_outputBuffer->at(i).at(1) == QString("%1").arg(m_settings->value("motorsettings/yaxis/motoradress", 2).toInt()).toLatin1().at(0)){
+
+                    sendData(m_outputBuffer->takeAt(i));
+                    (*m_converstionStatus)[1] = ConversationStatus::WaitingForReply;
+                }
+
+                else if(m_converstionStatus->at(2) == ConversationStatus::Ready && m_outputBuffer->at(i).at(1) == QString("%1").arg(m_settings->value("motorsettings/zaxis/motoradress", 3).toInt()).toLatin1().at(0)){
+
+                    sendData(m_outputBuffer->takeAt(i));
+                    (*m_converstionStatus)[2] = ConversationStatus::WaitingForReply;
+                }
+
+                else if(m_converstionStatus->at(3) == ConversationStatus::Ready && m_outputBuffer->at(i).at(1) == QString("%1").arg(m_settings->value("motorsettings/extruder/motoradress", 4).toInt()).toLatin1().at(0)){
+
+                    sendData(m_outputBuffer->takeAt(i));
+                    (*m_converstionStatus)[3] = ConversationStatus::WaitingForReply;
+                }
+
+                else if(m_converstionStatus->at(0) == ConversationStatus::Ready && m_converstionStatus->at(1) == ConversationStatus::Ready && m_converstionStatus->at(2) == ConversationStatus::Ready && m_converstionStatus->at(3) == ConversationStatus::Ready && m_outputBuffer->at(i).at(1) == QString("*").toLatin1().at(0)){
+
+                    sendData(m_outputBuffer->takeAt(i));
+
+                    for(int n = 0;n < m_converstionStatus->count();n++){
+
+                        (*m_converstionStatus)[n] = ConversationStatus::WaitingForReply;
+                    }
+                }
+
+                else{
+
+                    return;
+                }
+
+            }
+        }
+    }
+}
+
+void SerialInterface::sendData(QByteArray data)
+{
+
+    //checks if the connection is open
+    //exected if it is
+    if(m_serialPort->isOpen() == true){
+
+        //writes m_data to the port
+        m_serialPort->write(data);
+    }
+
+    //executed if it isn't
+    else{
+
+        //sets the status to error
+        *m_status = SerialInterface::Error;
+        //emits that the status has changed
+        emit statusChanged(*m_status);
+        //emits that an error has occured
+        emit error(QString("Not connected"));
     }
 }
 
@@ -408,13 +516,21 @@ void SerialInterface::initialise()
     m_serialPort = new QSerialPort(this);
     m_openMode = new QIODevice::OpenMode;
     m_status = new SerialInterface::Status;
-    m_buffer = new QStringList;
+    m_converstionStatus = new QList<SerialInterface::ConversationStatus>;
+    m_inputBuffer = new QStringList;
+    m_outputBuffer = new QList<QByteArray>;
+    m_settings = new QSettings;
 
     //initialising pointers
 
     *m_status = SerialInterface::Disconnected;
     *m_openMode = QIODevice::ReadWrite;
-    *m_buffer = QStringList();
+    *m_inputBuffer = QStringList();
+
+    for(int i = 0;i < 4;i++){
+
+        m_converstionStatus->append(ConversationStatus::Ready);
+    }
 
     //emits that the status has changed
 
@@ -423,4 +539,5 @@ void SerialInterface::initialise()
     //signals and slots
 
     QObject::connect(m_serialPort, SIGNAL(readyRead()), this, SLOT(onReadReady()));
+    QObject::connect(m_serialPort, SIGNAL(bytesWritten(qint64)), this, SLOT(onBytesWritten()));
 }

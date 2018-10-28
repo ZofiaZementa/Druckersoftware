@@ -1,7 +1,6 @@
 #include "machinecontroller.h"
 #include <QtMath>
 #include <QTimer>
-#include <QDebug>
 
 #define PRINTER_MAXSPEED 15000    //holds the printers top speed in mm/min
 #define XAXIS_LENGTH 400.0    //holds the length of the x-axis in mm

@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QtSerialPort/QSerialPort>
+#include <QSettings>
 
 class SerialInterface : public QObject
 {
@@ -18,6 +19,7 @@ public:
     ~SerialInterface();
 
     enum Status{Connected, Disconnected, Error};
+    enum ConversationStatus{Ready, WaitingForReply};
 
     bool setBaudRate(qint32 baudRate);
     bool setPortName(QString portName);
@@ -44,22 +46,29 @@ public slots:
     bool connect();
     bool connect(QIODevice::OpenMode mode);
     void disconnect();
-    bool send(QString data);
+    void send(QString data);
+    void send(QByteArray data);
     bool reconnect();
     bool reconnect(QIODevice::OpenMode mode);
 
 private slots:
 
     void onReadReady();
+    void onBytesWritten();
 
 private:
 
-    void checkBuffer();
+    void checkInputBuffer();
+    void checkOutputBuffer();
+    void sendData(QByteArray data);
 
     QSerialPort *m_serialPort;
     Status *m_status;
+    QList<ConversationStatus> *m_converstionStatus;
     QIODevice::OpenMode *m_openMode;
-    QStringList *m_buffer;
+    QStringList *m_inputBuffer;
+    QList<QByteArray> *m_outputBuffer;
+    QSettings *m_settings;
 
 };
 

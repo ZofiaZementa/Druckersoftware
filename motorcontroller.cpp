@@ -1,6 +1,5 @@
 #include "motorcontroller.h"
 #include "math.h"
-#include <QDebug>
 #include <QtMath>
 
 #define MOTOR_POSITIONINGMODE 1    //holds the positioning mode of the motors, see nanotec programming manual, page 51
@@ -573,10 +572,10 @@ bool MotorController::relativeMove(qreal x, qreal y, qreal z, qreal e, qreal xSp
     qreal help;
 
     //checks if the speed is too high or too low
-    if((qint32)(xSpeed * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 60.0) > 1000000 || (qint32)(xSpeed * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 60.0) < 1 ||
-            (qint32)(ySpeed * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 60.0) > 1000000 || (qint32)(ySpeed * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 60.0) < 1 ||
-            (qint32)(zSpeed * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 60.0) > 1000000 || (qint32)(zSpeed * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 60.0) < 1 ||
-            (qint32)(eSpeed * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 60.0) > 1000000 || (qint32)(eSpeed * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 60.0) < 1){
+    if((qint32)(xSpeed * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 60.0) >= 1000000 || (qint32)(xSpeed * m_settings->value("motorsettings/xaxis/multiplier", XAXIS_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 60.0) <= 1 ||
+            (qint32)(ySpeed * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 60.0) >= 1000000 || (qint32)(ySpeed * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 60.0) <= 1 ||
+            (qint32)(zSpeed * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 60.0) >= 1000000 || (qint32)(zSpeed * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 60.0) <= 1 ||
+            (qint32)(eSpeed * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 60.0) >= 1000000 || (qint32)(eSpeed * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 60.0) <= 1){
 
         emit error(QString("Speed to high/low"));
         return false;
@@ -1536,7 +1535,7 @@ void MotorController::checkBuffer()
 
         //checks if the command is moving the motors or not
         //executed if the motors are not moved
-        if(m_commandBuffer->bufferInfo.first() == 0){
+        if(m_commandBuffer->bufferInfo.isEmpty() == false && m_commandBuffer->bufferInfo.first() == 0){
 
             //sending the command to the buffer and removing it from the buffer
             emit send(m_commandBuffer->buffer.takeFirst());
@@ -1551,10 +1550,10 @@ void MotorController::checkBuffer()
         }
 
         //executed if the motors are moved
-        else if(m_commandBuffer->bufferInfo.first() > 0){
+        else if(m_commandBuffer->bufferInfo.isEmpty() == false && m_commandBuffer->bufferInfo.first() > 0){
 
             //this loop is there to send all the commands that move the motor at nearly the same time
-            while(m_commandBuffer->bufferInfo.first() > 0){
+            while(m_commandBuffer->bufferInfo.isEmpty() == false && m_commandBuffer->bufferInfo.first() > 0){
 
                 //checks which axis is moved by the command
                 //executed if the command moves the x-axis

@@ -679,7 +679,7 @@ int CommandlineUI::checkCommands()
             int s = 0;
 
             //loop to go through all the arguments
-            for(int n = i;n < input.count();n++){
+            for(int n = i + 1;n < input.count();n++){
 
                 //checks what the argument is
                 //triggered if it is X
@@ -745,7 +745,7 @@ int CommandlineUI::checkCommands()
             }
 
             //emits signal so that the MachineController excutes the g0
-            emit machineControllerG0(x, y, z, e, -1.0, s);
+            emit machineControllerG0(x, y, z, e, f, s);
 
             //prints that the MachineController executed g0 with the given arguments
             printf("drive to X%e Y%e Z%e E%e with the endstop behavior %d\r\n", (double)(x), (double)(y), (double)(z), (double)(e), s);
