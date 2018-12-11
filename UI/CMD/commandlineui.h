@@ -51,6 +51,7 @@ private:
     QStringList breakUpString(QString string);
     //checks the m_input for commands and executes them
     int checkCommands();
+    QString fixSpecialChars(QString string);
     //prints the help
     void printhelp();
 

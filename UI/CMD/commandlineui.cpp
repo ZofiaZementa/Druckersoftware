@@ -116,7 +116,7 @@ int CommandlineUI::checkCommands()
 {
 
     //breaks up the string
-    QStringList input = breakUpString(*m_input);
+    QStringList input = breakUpString(fixSpecialChars(*m_input));
 
     //loop to go through allthe different components of the input
     for(int i = 0;i < input.count();i++){
@@ -764,6 +764,22 @@ int CommandlineUI::checkCommands()
 
     //returns 2 so that the loop prints the help
     return 2;
+}
+
+QString CommandlineUI::fixSpecialChars(QString string)
+{
+
+    if(string.contains(QString("\\r"), Qt::CaseSensitive) == true){
+
+        string.replace(QString("\\r"), QString("\r"), Qt::CaseSensitive);
+    }
+
+    if(string.contains(QString("\\n"), Qt::CaseSensitive) == true){
+
+        string.replace(QString("\\n"), QString("\n"), Qt::CaseSensitive);
+    }
+
+    return string;
 }
 
 //prints the help

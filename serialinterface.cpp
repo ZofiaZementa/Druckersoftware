@@ -287,12 +287,6 @@ void SerialInterface::onReadReady()
     checkInputBuffer();
 }
 
-void SerialInterface::onBytesWritten()
-{
-
-    checkOutputBuffer();
-}
-
 //checks if there are command left in the buffer and if yes, clears them
 void SerialInterface::checkInputBuffer()
 {
@@ -301,22 +295,22 @@ void SerialInterface::checkInputBuffer()
 
         if(QString(m_inputBuffer->first().at(0)).toInt() == m_settings->value("motorsettings/xaxis/motoradress", 1).toInt()){
 
-            (*m_converstionStatus)[0] == ConversationStatus::Ready;
+            (*m_converstionStatus)[0] = ConversationStatus::Ready;
         }
 
         else if(QString(m_inputBuffer->first().at(0)).toInt() == m_settings->value("motorsettings/yaxis/motoradress", 2).toInt()){
 
-            (*m_converstionStatus)[1] == ConversationStatus::Ready;
+            (*m_converstionStatus)[1] = ConversationStatus::Ready;
         }
 
         else if(QString(m_inputBuffer->first().at(0)).toInt() == m_settings->value("motorsettings/zaxis/motoradress", 3).toInt()){
 
-            (*m_converstionStatus)[2] == ConversationStatus::Ready;
+            (*m_converstionStatus)[2] = ConversationStatus::Ready;
         }
 
         else if(QString(m_inputBuffer->first().at(0)).toInt() == m_settings->value("motorsettings/extruder/motoradress", 4).toInt()){
 
-            (*m_converstionStatus)[3] == ConversationStatus::Ready;
+            (*m_converstionStatus)[3] = ConversationStatus::Ready;
         }
 
         else if(m_inputBuffer->first().at(0)== QChar('*')){
@@ -539,5 +533,4 @@ void SerialInterface::initialise()
     //signals and slots
 
     QObject::connect(m_serialPort, SIGNAL(readyRead()), this, SLOT(onReadReady()));
-    QObject::connect(m_serialPort, SIGNAL(bytesWritten(qint64)), this, SLOT(onBytesWritten()));
 }
