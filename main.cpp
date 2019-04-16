@@ -1,7 +1,7 @@
 #include "UI/GUI/controlwindow.h"
 #include "machinecontroller.h"
 #include "serialinterface.h"
-#include "motorcontroller.h"
+#include "Motor/motorcontroller.h"
 #include "IO/heatingcontroller.h"
 #include "IO/sensorlistener.h"
 #include "IO/fancontroller.h"

@@ -7,7 +7,7 @@
 #include <QSettings>
 #include <QTimer>
 #include "gcodereader.h"
-#include "motorcontroller.h"
+#include "Motor/motorcontroller.h"
 #include "serialinterface.h"
 #include "IO/lightingcontroller.h"
 
