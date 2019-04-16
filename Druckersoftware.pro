@@ -28,7 +28,8 @@ SOURCES += \
     machinecontroller.cpp \
     gcodereader.cpp \
     serialinterface.cpp \
-    motorcontroller.cpp \
+    Motor/motorcontroller.cpp \
+    Motor/nanotecstepperdriver.cpp \
     Logging/logfile.cpp \
     Logging/logger.cpp \
     IO/fancontroller.cpp \
@@ -85,13 +86,15 @@ SOURCES += \
     UI/GUI/SettingsScreen/SettingsHeatingScreen/settingsheatinghotendscreen.cpp \
     UI/GUI/SettingsScreen/SettingsHeatingScreen/settingsheatingbedscreen.cpp \
     UI/GUI/SettingsScreen/SettingsGUIScreen/settingsguimanualscreen.cpp \
-    UI/GUI/SettingsScreen/SettingsGUIScreen/settingsguispinboxscreen.cpp
+    UI/GUI/SettingsScreen/SettingsGUIScreen/settingsguispinboxscreen.cpp \
+    Motor/motorgraph.cpp
 
 HEADERS += \
     machinecontroller.h \
     gcodereader.h \
     serialinterface.h \
-    motorcontroller.h \
+    Motor/motorcontroller.h \
+    Motor/nanotecstepperdriver.h \
     Logging/logfile.h \
     Logging/logger.h \
     IO/fancontroller.h \
@@ -149,7 +152,8 @@ HEADERS += \
     UI/GUI/SettingsScreen/SettingsHeatingScreen/settingsheatinghotendscreen.h \
     UI/GUI/SettingsScreen/SettingsHeatingScreen/settingsheatingbedscreen.h \
     UI/GUI/SettingsScreen/SettingsGUIScreen/settingsguimanualscreen.h \
-    UI/GUI/SettingsScreen/SettingsGUIScreen/settingsguispinboxscreen.h
+    UI/GUI/SettingsScreen/SettingsGUIScreen/settingsguispinboxscreen.h \
+    Motor/motorgraph.h
 
 FORMS += \
     UI/GUI/controlwindow.ui \
