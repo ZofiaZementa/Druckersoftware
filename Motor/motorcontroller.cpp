@@ -27,16 +27,28 @@
 #define MAXIMUM_ACCELERATION_CHANGE 100.0    //holds the maximum change of the acceleration during accelerating in mm/second/second/second
 #define MAXIMUM_DECCELERATION_CHANGE 100.0    //holds the maximum change of the decceleration during braking in mm/second/second/second
 #define TEMPCHECKINTERVAL 1000   //holds the interval in which to check the temperature in milliseconds
+#define MOVEMENT_PRIORITY 3    //holds the priority of any movement commands
+#define SETTINGS_PRIORITY 5    //holds the priority of any settings commands
 
 MotorController::MotorController(QObject *parent) : QObject(parent)
 {
 
+    m_conversationStatus = new QList<ConversationStatus>;
+    m_outputBuffer = new QList<CommandBufferItem>;
+    m_inputBuffer = new QByteArray;
+    m_mode = new MotorControllerMode;
     m_driver = new NanotecStepperDriver;
     m_settings = new QSettings(this);
+    m_motorGraph = NULL;
 
     m_driver->setMotorCount(4);
 
-    QObject::connect(m_driver, SIGNAL(send(QByteArray)), this, SLOT(onSend(QByteArray)));
+    for(int i = 0;i < m_driver->motorCount();i++){
+
+        (*m_conversationStatus)[i] = ConversationStatus::Ready;
+    }
+
+    QObject::connect(m_driver, SIGNAL(send(QByteArray, int)), this, SLOT(onSend(QByteArray, int)));
 
     motorSetup();
 }
@@ -44,130 +56,227 @@ MotorController::MotorController(QObject *parent) : QObject(parent)
 MotorController::~MotorController()
 {
 
+    delete m_conversationStatus;
+    delete m_outputBuffer;
+    delete m_inputBuffer;
+    delete m_mode;
     delete m_driver;
 
+    m_conversationStatus = NULL;
+    m_outputBuffer = NULL;
+    m_inputBuffer = NULL;
+    m_mode = NULL;
     m_driver = NULL;
+}
+
+void MotorController::setMode(MotorController::MotorControllerMode mode)
+{
+
+    if(*m_mode == MotorControllerMode::GraphDriven && m_motorGraph == NULL){
+
+        emit error(QString("Pointer to the MotorGraph not set"));
+    }
+
+    else{
+
+        *m_mode = mode;
+        emit modeChanged(*m_mode);
+    }
+}
+
+MotorController::MotorControllerMode MotorController::mode()
+{
+
+    return *m_mode;
+}
+
+MotorGraph *MotorController::motorGraph()
+{
+
+    return m_motorGraph;
 }
 
 void MotorController::relativeMove(QList<qreal> s, QList<qreal> v, QList<qreal> a, QList<qreal> j, QList<qreal> ad, QList<qreal> jd)
 {
 
-    convertUnits(&s, &v, &a, &j, &ad, &aj);
+    if(*m_mode == MotorControllerMode::CommandDriven){
 
-    m_driver->setPositioningmodeAll(1);
+        convertUnits(&s, &v, &a, &j, &ad, &aj);
 
-    m_driver->setWay(s);
-    m_driver->setMaxFrequenzy(v);
-    m_driver->setAccelerationCurve(a);
-    m_driver->setAccelerationJolt(j);
+        m_driver->setPositioningmodeAll(1, MOVEMENT_PRIORITY);
 
-    m_driver->setDeccelerationCurve(ad);
-    m_driver->setDeccelerationJolt(jd);
-    m_driver->startMotorAll();
+        m_driver->setWay(s, MOVEMENT_PRIORITY);
+        m_driver->setMaxFrequenzy(v, MOVEMENT_PRIORITY);
+        m_driver->setAccelerationCurve(a, MOVEMENT_PRIORITY);
+        m_driver->setAccelerationJolt(j, MOVEMENT_PRIORITY);
+
+        m_driver->setDeccelerationCurve(ad, MOVEMENT_PRIORITY);
+        m_driver->setDeccelerationJolt(jd, MOVEMENT_PRIORITY);
+        m_driver->startMotorAll(MOVEMENT_PRIORITY);
+    }
 }
 
 void MotorController::relativeMove(QList<qreal> s, QList<qreal> v, qreal a, qreal j, qreal ad, qreal jd)
 {
 
-    QList<qreal> a2;
-    QList<qreal> j2;
-    QList<qreal> ad2;
-    QList<qreal> jd2;
+    if(*m_mode = MotorControllerMode::CommandDriven){
 
-    for(int i = 0;i < m_driver->motorCount();i++){
+        QList<qreal> a2;
+        QList<qreal> j2;
+        QList<qreal> ad2;
+        QList<qreal> jd2;
 
-        a2.append(a);
-        j2.append(j);
-        ad2.append(ad);
-        jd2.append(jd);
+        for(int i = 0;i < m_driver->motorCount();i++){
+
+            a2.append(a);
+            j2.append(j);
+            ad2.append(ad);
+            jd2.append(jd);
+        }
+
+        relativeMove(s, v, a2, j2, ad2, jd2);
     }
-
-    relativeMove(s, v, a2, j2, ad2, jd2);
 }
 
 void MotorController::absoluteMove(QList<qreal> s, QList<qreal> v, QList<qreal> a, QList<qreal> j, QList<qreal> ad, QList<qreal> jd)
 {
 
-    convertUnits(&s, &v, &a, &j, &ad, &aj);
+    if(*m_mode == MotorControllerMode::CommandDriven){
 
-    m_driver->setPositioningmodeAll(2);
+        convertUnits(&s, &v, &a, &j, &ad, &aj);
 
-    m_driver->setWay(s);
-    m_driver->setMaxFrequenzy(v);
-    m_driver->setAccelerationCurve(a);
-    m_driver->setAccelerationJolt(j);
+        m_driver->setPositioningmodeAll(2, MOVEMENT_PRIORITY);
 
-    m_driver->setDeccelerationCurve(ad);
-    m_driver->setDeccelerationJolt(jd);
-    m_driver->startMotorAll();
+        m_driver->setWay(s, MOVEMENT_PRIORITY);
+        m_driver->setMaxFrequenzy(v, MOVEMENT_PRIORITY);
+        m_driver->setAccelerationCurve(a, MOVEMENT_PRIORITY);
+        m_driver->setAccelerationJolt(j, MOVEMENT_PRIORITY);
 
+        m_driver->setDeccelerationCurve(ad, MOVEMENT_PRIORITY);
+        m_driver->setDeccelerationJolt(jd, MOVEMENT_PRIORITY);
+        m_driver->startMotorAll(MOVEMENT_PRIORITY);
+    }
 }
 
 void MotorController::absoluteMove(QList<qreal> s, QList<qreal> v, qreal a, qreal j, qreal ad, qreal jd)
 {
 
-    QList<qreal> a2;
-    QList<qreal> j2;
-    QList<qreal> ad2;
-    QList<qreal> jd2;
+    if(*m_mode == MotorControllerMode::CommandDriven){
 
-    for(int i = 0;i < m_driver->motorCount();i++){
+        QList<qreal> a2;
+        QList<qreal> j2;
+        QList<qreal> ad2;
+        QList<qreal> jd2;
 
-        a2.append(a);
-        j2.append(j);
-        ad2.append(ad);
-        jd2.append(jd);
+        for(int i = 0;i < m_driver->motorCount();i++){
+
+            a2.append(a);
+            j2.append(j);
+            ad2.append(ad);
+            jd2.append(jd);
+        }
+
+        absoluteMove(s, v, a2, j2, ad2, jd2);
     }
-
-    absoluteMove(s, v, a2, j2, ad2, jd2);
 }
 
 void MotorController::rpmMove(QList<qreal> s, QList<qreal> v, QList<qreal> a, QList<qreal> j, QList<qreal> ad, QList<qreal> jd, bool correction)
 {
 
-    convertUnits(&s, &v, &a, &j, &ad, &aj);
+    if(*m_mode == MotorControllerMode::CommandDriven){
 
-    m_driver->setPositioningmodeAll(5);
+        convertUnits(&s, &v, &a, &j, &ad, &aj);
 
-    m_driver->setWay(s);
-    m_driver->setMaxFrequenzy(v);
-    m_driver->setAccelerationCurve(a);
-    m_driver->setAccelerationJolt(j);
+        m_driver->setPositioningmodeAll(5, MOVEMENT_PRIORITY);
 
-    m_driver->setDeccelerationCurve(ad);
-    m_driver->setDeccelerationJolt(jd);
-    m_driver->startMotorAll();
+        m_driver->setWay(s, MOVEMENT_PRIORITY);
+        m_driver->setMaxFrequenzy(v, MOVEMENT_PRIORITY);
+        m_driver->setAccelerationCurve(a, MOVEMENT_PRIORITY);
+        m_driver->setAccelerationJolt(j, MOVEMENT_PRIORITY);
+
+        m_driver->setDeccelerationCurve(ad, MOVEMENT_PRIORITY);
+        m_driver->setDeccelerationJolt(jd, MOVEMENT_PRIORITY);
+        m_driver->startMotorAll(MOVEMENT_PRIORITY);
+    }
 }
 
 void MotorController::rpmMove(QList<qreal> s, QList<qreal> v, qreal a, qreal j, qreal ad, qreal jd, bool correction)
 {
 
-    QList<qreal> a2;
-    QList<qreal> j2;
-    QList<qreal> ad2;
-    QList<qreal> jd2;
+    if(*m_mode == MotorControllerMode::CommandDriven){
 
-    for(int i = 0;i < m_driver->motorCount();i++){
+        QList<qreal> a2;
+        QList<qreal> j2;
+        QList<qreal> ad2;
+        QList<qreal> jd2;
 
-        a2.append(a);
-        j2.append(j);
-        ad2.append(ad);
-        jd2.append(jd);
+        for(int i = 0;i < m_driver->motorCount();i++){
+
+            a2.append(a);
+            j2.append(j);
+            ad2.append(ad);
+            jd2.append(jd);
+        }
+
+        rpmMove(s, v, a2, j2, ad2, jd2, correction);
     }
-
-    rpmMove(s, v, a2, j2, ad2, jd2, correction);
 }
 
+void MotorController::play()
+{
+
+}
+
+void MotorController::pause()
+{
+
+    m_driver->stopMotorAll();
+}
+
+void MotorController::stop()
+{
+
+    m_driver->emergencyStop();
+}
+
+void MotorController::settingsChanged()
+{
+
+}
+
+//appends the incoming data to the inputBuffer and executes checkInputBuffer
+//to see which motor is ready to receive again
 void MotorController::receive(QByteArray data)
 {
 
-    m_driver->receive(data);
+    m_inputBuffer->append(data);
+    checkInputBuffer();
 }
 
-void MotorController::onSend(QByteArray data)
+void MotorController::getMotorPositions(int adress, int position)
 {
 
-    emit send(data);
+
+}
+
+//appends the incoming command to the outputBuffer and then executes checkOutputBuffer
+//to see what needs to get send
+void MotorController::onSend(QByteArray data, int priority)
+{
+
+    CommandBufferItem newItem;
+
+    newItem.command = data;
+    newItem.priority = priority;
+    m_outputBuffer->append(newItem);
+
+    checkOutputBuffer();
+}
+
+void MotorController::startValueScope()
+{
+
+
 }
 
 void MotorController::motorSetup()
@@ -187,7 +296,7 @@ void MotorController::motorSetup()
     if(m_settings->value("motorsettings/phasecurrent", MOTOR_PHASECURRENT).toInt() < 100){
 
         //sets the phasecurrent of all motors to MOTOR_PHASECURRENT and appends it to the buffer
-        m_driver->setPhasecurrentAll(m_settings->value("motorsettings/phasecurrent", MOTOR_PHASECURRENT).toInt());
+        m_driver->setPhasecurrentAll(m_settings->value("motorsettings/phasecurrent", MOTOR_PHASECURRENT).toInt(), SETTINGS_PRIORITY);
     }
 
     //executed if it is
@@ -202,7 +311,7 @@ void MotorController::motorSetup()
     if(m_settings->value("motorsettings/haltphasecurrent", MOTOR_HALT_PHASECURRENT).toInt() < m_settings->value("motorsettings/phasecurrent", MOTOR_PHASECURRENT).toInt()){
 
         //sets the phasecurrent during halt of all motors to MOTOR_HALT_PHASECURRENT and appends it to the buffer
-        m_driver->setHaltPhasecurrentAll(m_settings->value("motorsettings/haltphasecurrent", MOTOR_HALT_PHASECURRENT).toInt());
+        m_driver->setHaltPhasecurrentAll(m_settings->value("motorsettings/haltphasecurrent", MOTOR_HALT_PHASECURRENT).toInt(), SETTINGS_PRIORITY);
     }
 
     //executed if it is
@@ -217,7 +326,7 @@ void MotorController::motorSetup()
     if(m_settings->value("motorsettings/motor_type", MOTOR_TYPE).toInt() == 0){
 
         //sets the motor type for all motors to MOTOR_TYPE and appends it to the buffer
-        m_driver->setMotorTypeAll(m_settings->value("motorsettings/motor_type", MOTOR_TYPE).toInt());
+        m_driver->setMotorTypeAll(m_settings->value("motorsettings/motor_type", MOTOR_TYPE).toInt(), SETTINGS_PRIORITY);
     }
 
     //executed if it isn't
@@ -233,7 +342,7 @@ void MotorController::motorSetup()
 
 
         //setting the backlash for the x-axis
-        m_driver->setBacklash(0, m_settings->value("motorsettings/xaxis/backlash", 0).toInt());
+        m_driver->setBacklash(0, m_settings->value("motorsettings/xaxis/backlash", 0).toInt(), SETTINGS_PRIORITY);
     }
 
     //triggerd if it isn't
@@ -249,7 +358,7 @@ void MotorController::motorSetup()
 
 
         //setting the backlash for the y-axis
-        m_driver->setBacklash(1, m_settings->value("motorsettings/yaxis/backlash", 0).toInt());
+        m_driver->setBacklash(1, m_settings->value("motorsettings/yaxis/backlash", 0).toInt(), SETTINGS_PRIORITY);
     }
 
     //triggerd if it isn't
@@ -265,7 +374,7 @@ void MotorController::motorSetup()
 
 
         //setting the backlash for the z-axis
-        m_driver->setBacklash(2, m_settings->value("motorsettings/zaxis/backlash", 0).toInt());
+        m_driver->setBacklash(2, m_settings->value("motorsettings/zaxis/backlash", 0).toInt(), SETTINGS_PRIORITY);
 
     }
 
@@ -282,7 +391,7 @@ void MotorController::motorSetup()
 
 
         //setting the backlash for the extruder
-        m_driver->setBacklash(3, m_settings->value("motorsettings/extruder/backlash", 0).toInt());
+        m_driver->setBacklash(3, m_settings->value("motorsettings/extruder/backlash", 0).toInt(), SETTINGS_PRIORITY);
     }
 
     //triggerd if it isn't
@@ -293,9 +402,9 @@ void MotorController::motorSetup()
     }
 
     //setting the stepmode of all motors to MOTOR_STEPSIZE
-    m_driver->setStepSizeAll(m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toInt());
+    m_driver->setStepSizeAll(m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toInt(), SETTINGS_PRIORITY);
     //sets the decceleration for all motors during an emergency stop to MOTOR_STOP_DECCELERATION
-    m_driver->setStopDeccelerationAll(m_settings->value("motorsettings/stop_decceleration", MOTOR_STOP_DECCELERATION).toInt());
+    m_driver->setStopDeccelerationAll(m_settings->value("motorsettings/stop_decceleration", MOTOR_STOP_DECCELERATION).toInt(), SETTINGS_PRIORITY);
 }
 
 void MotorController::convertUnits(QList<qreal> *s, QList<qreal> *v, QList<qreal> *a, QList<qreal> *j, QList<qreal> *ad, QList<qreal> *jd)
@@ -330,4 +439,165 @@ void MotorController::convertUnits(QList<qreal> *s, QList<qreal> *v, QList<qreal
     (*jd)[1] = (qint32)(jd->at(1) * m_settings->value("motorsettings/yaxis/multiplier", YAXIS_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0 / 1000.0);
     (*jd)[2] = (qint32)(jd->at(2) * m_settings->value("motorsettings/zaxis/multiplier", ZAXIS_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0 / 1000.0);
     (*jd)[3] = (qint32)(jd->at(3) * m_settings->value("motorsettings/extruder/multiplier", EXTRUDER_MULTIPLIER).toReal() * m_settings->value("motorsettings/stepsize", MOTOR_STEPSIZE).toReal() / 1000.0 / 1000.0);
+}
+
+void MotorController::mode2Loop()
+{
+
+    for(int i = 0;i < m_motorGraph->graphCount();i++){
+
+        if(m_motorGraph->currentPoint(i) != m_driver->get)
+    }
+
+    while(*m_mode == MotorControllerMode::GraphDriven){
+
+
+    }
+}
+
+//checks the inputbuffer if there is a full answer of a motor, sets the conversationstatus of that motor to Ready
+//and passes that command on to the nanotecstepperdriver
+void MotorController::checkInputBuffer()
+{
+
+    while(m_inputBuffer->isEmpty() == false && m_inputBuffer->contains('\r')){
+
+        address = retrieveAddress(*m_inputBuffer);
+
+        if(address == -2){
+
+            emit error(QString("Command doesnt contain an address"));
+            return;
+        }
+
+        else if(address = -1){
+
+            for(int i = 0;i < m_conversationStatus->count();i++){
+
+                (*m_conversationStatus)[i] = ConversationStatus::Ready;
+            }
+        }
+
+        else{
+
+            int motorMapAddress = findAddressInMotorMap(address);
+
+            if(motorMapAddress != -1){
+
+                (*m_conversationStatus)[motorMapAddress] = ConversationStatus::Ready;
+            }
+
+            else{
+
+                emit error(QString("Address is not in MotorMap"));
+            }
+        }
+
+        m_driver->receive(m_inputBuffer->remove(0, m_inputBuffer->indexOf('\r') + 1));
+    }
+}
+
+//checks the outputbuffer if there is a command to execute, if the motor is free
+//and then sends the command with the highest priority
+void MotorController::checkOutputBuffer()
+{
+
+    if(m_outputBuffer->isEmpty() == false){
+
+        int bufferExecuteMap[m_driver->motorCount()];
+
+        for(int i = 0;i < m_driver->motorCount();i++){
+
+            bufferExecuteMap[i] = -1;
+        }
+
+        for(int i = 0; i < m_outputBuffer->count();i++){
+
+            int address = findAddressInMotorMap(retrieveAddress(m_outputBuffer->at(i).command));
+
+            if(m_conversationStatus->at(address) == ConversationStatus::Ready){
+
+                if(bufferExecuteMap[address] == -1){
+
+                    bufferExecuteMap[address] = i;
+                }
+
+                else{
+
+                    if(m_outputBuffer->at(bufferExecuteMap[address]).priority > m_outputBuffer->at(i).priority){
+
+                        bufferExecuteMap[address] = i;
+                    }
+                }
+            }
+        }
+
+        for(int i = 0; i < m_driver->motorCount();i++){
+
+            if(bufferExecuteMap[i] > -1){
+
+                (*m_conversationStatus)[i] = ConversationStatus::WaitingForReply;
+                emit send(m_outputBuffer->at(bufferExecuteMap[i]).command);
+                m_outputBuffer->removeAt(bufferExecuteMap[i]);
+            }
+        }
+    }
+}
+
+//retrieves the first address from the given QByteArray
+//returns -1 if the address is '*'
+//returns -2 if there was no valid address in the QByteArray
+int MotorController::retrieveAddress(QByteArray command)
+{
+
+    while(command.at(0) < 47 && command.at(0) > 58 && command.at(0) != '*'){
+
+        command.remove(0, 1);
+    }
+
+    if(command.isEmpty() == false){
+
+        if(command.at(0) == '*'){
+
+            return -1;
+        }
+
+        else{
+
+            QByteArray address;
+
+            for(int i = 0;command->at(i) > 47 && command->at(i) < 58;i++){
+
+                address.append(command->at(i));
+            }
+
+            bool ok;
+            QList<int> motorMap = m_driver->motorMap();
+
+            return address.toInt(&ok, 10);
+        }
+    }
+
+    else{
+
+        return -2;
+    }
+}
+
+//returns the position of address in the MotorMap
+//returns -1 if the address is not in MotorMap
+int MotorController::findAddressInMotorMap(int address)
+{
+
+    QList<int> motorMap = m_driver->motorMap();
+
+    for(int i = 0;i < address;i++){
+
+        if(address == motorMap.at(i)){
+
+            return i;
+        }
+    }
+
+    return -1;
 }

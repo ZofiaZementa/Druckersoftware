@@ -13,10 +13,9 @@ class MotorGraph : public QObject
 {
     Q_OBJECT
 public:
-    explicit MotorGraph(QObject *parent = 0);
+    explicit MotorGraph(QObject *parent = 0, int graphCount = 0);
     ~MotorGraph();
 
-    void setGraphCount(int count);
     int graphCount();
     GraphElement currentPoint(int graph);
     int currentIndex(int graph);
@@ -35,7 +34,7 @@ public slots:
 
 private:
 
-    void collectGarbage();
+    void collectGarbage(int graph);
 
     QList<QList<GraphElement>> *m_graphs;
     QList<int> *m_counter;

@@ -1,12 +1,21 @@
 #include "motorgraph.h"
 
-MotorGraph::MotorGraph(QObject *parent) : QObject(parent)
+MotorGraph::MotorGraph(QObject *parent, int graphCount) : QObject(parent)
 {
 
     m_graphs = new QList<QList<GraphElement>>;
     m_counter = new QList<int>;
     m_autoGarbageCollection = new bool;
     m_autoGarbageCollectionThreshold = new int;
+
+    for(int i = 0;i < graphCount - m_counter;i++){
+
+        QList<GraphElement> t;
+
+        m_counter->append(0);
+        m_graphs->append(t);
+    }
+
 }
 
 MotorGraph::~MotorGraph()
@@ -16,30 +25,6 @@ MotorGraph::~MotorGraph()
     delete m_counter;
     delete m_autoGarbageCollection;
     delete m_autoGarbageCollectionThreshold;
-}
-
-void MotorGraph::setGraphCount(int count)
-{
-
-    if(m_counter < count){
-
-        for(int i = 0;i < count - m_counter;i++){
-
-            QList<GraphElement> t;
-
-            m_counter->append(0);
-            m_graphs->append(t);
-        }
-    }
-
-    else if(count < m_counter){
-
-        for(int i = 0;i < m_counter - count;i++){
-
-            m_counter->removeLast();
-            m_graphs->removeLast();
-        }
-    }
 }
 
 int MotorGraph::graphCount()
