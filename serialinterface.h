@@ -19,7 +19,6 @@ public:
     ~SerialInterface();
 
     enum Status{Connected, Disconnected, Error};
-    enum ConversationStatus{Ready, WaitingForReply};
 
     bool setBaudRate(qint32 baudRate);
     bool setPortName(QString portName);
@@ -35,7 +34,7 @@ public:
 signals:
 
     void error(QString errorMessage);
-    void dataReceived(QString data);
+    void dataReceived(QByteArray data);
     void statusChanged(SerialInterface::Status status);
     void portNameChanged(QString portName);
     void baudRateChanged(qint32 baudRate);
@@ -46,7 +45,6 @@ public slots:
     bool connect();
     bool connect(QIODevice::OpenMode mode);
     void disconnect();
-    void send(QString data);
     void send(QByteArray data);
     bool reconnect();
     bool reconnect(QIODevice::OpenMode mode);
@@ -58,16 +56,11 @@ private slots:
 
 private:
 
-    void checkInputBuffer();
-    void checkOutputBuffer();
     void sendData(QByteArray data);
 
     QSerialPort *m_serialPort;
     Status *m_status;
-    QList<ConversationStatus> *m_converstionStatus;
     QIODevice::OpenMode *m_openMode;
-    QStringList *m_inputBuffer;
-    QList<QByteArray> *m_outputBuffer;
     QSettings *m_settings;
 
 };
