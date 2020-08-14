@@ -15,7 +15,7 @@ public:
     explicit NanotecStepperDriver(QObject *parent = 0);
     ~NanotecStepperDriver();
 
-    void setStepSize(QHash<int, int> sizes, int priority = 3);
+	void setStepSize(QHash<int, int> sizes, int priority = 3);
     void setStepSize(int address, int size, int priority = 3);
     void setStepSizeAll(int size, int priority = 3);
     void setMotorType(QHash<int, int> types, int priority = 3);
@@ -45,30 +45,30 @@ public:
     void setPositioningmode(QHash<int, int> modes, int priority = 3);
     void setPositioningmode(int address, int mode, int priority = 3);
     void setPositioningmodeAll(int mode, int priority = 3);
-    void setWay(QHash<int, int> ways, int priority = 3);
-    void setWay(int address, int way, int priority = 3);
-    void setWayAll(int way, int priority = 3);
-    void setMinFrequenzy(QHash<int, int> vals, int priority = 3);
-    void setMinFrequenzy(int address, int val, int priority = 3);
-    void setMinFrequenzyAll(int val, int priority = 3);
-    void setMaxFrequenzy(QHash<int, int> vals, int priority = 3);
-    void setMaxFrequenzy(int address, int val, int priority = 3);
-    void setMaxFrequenzyAll(int val, int priority = 3);
-    void setAccelerationCurve(QHash<int, int> vals, int priority = 3);
-    void setAccelerationCurve(int address, int val, int priority = 3);
-    void setAccelerationCurveAll(int val, int priority = 3);
-    void setDeccelerationCurve(QHash<int, int> vals, int priority = 3);
-    void setDeccelerationCurve(int adress, int val, int priority = 3);
-    void setDeccelerationCurveAll(int val, int priority = 3);
+	void setWay(QHash<int, long> ways, int priority = 3);
+	void setWay(int address, long way, int priority = 3);
+	void setWayAll(long way, int priority = 3);
+	void setMinFrequenzy(QHash<int, long> vals, int priority = 3);
+	void setMinFrequenzy(int address, long val, int priority = 3);
+	void setMinFrequenzyAll(long val, int priority = 3);
+	void setMaxFrequenzy(QHash<int, long> vals, int priority = 3);
+	void setMaxFrequenzy(int address, long val, int priority = 3);
+	void setMaxFrequenzyAll(long val, int priority = 3);
+	void setAccelerationCurve(QHash<int, long> vals, int priority = 3);
+	void setAccelerationCurve(int address, long val, int priority = 3);
+	void setAccelerationCurveAll(long val, int priority = 3);
+	void setDeccelerationCurve(QHash<int, long> vals, int priority = 3);
+	void setDeccelerationCurve(int adress, long val, int priority = 3);
+	void setDeccelerationCurveAll(long val, int priority = 3);
     void setTurningdirection(QHash<int, bool> vals, int priority = 3);
     void setTurningdirection(int address, bool val, int priority = 3);
     void setTurningdirectionAll(bool val, int priority = 3);
-    void setAccelerationJolt(QHash<int, int> vals, int priority = 3);
-    void setAccelerationJolt(int address, int val, int priority = 3);
-    void setAccelerationJoltAll(int val, int priority = 3);
-    void setDeccelerationJolt(QHash<int, int> vals, int priority = 3);
-    void setDeccelerationJolt(int address, int val, int priority = 3);
-    void setDeccelerationJoltAll(int val, int priority = 3);
+	void setAccelerationJolt(QHash<int, long> vals, int priority = 3);
+	void setAccelerationJolt(int address, long val, int priority = 3);
+	void setAccelerationJoltAll(long val, int priority = 3);
+	void setDeccelerationJolt(QHash<int, long> vals, int priority = 3);
+	void setDeccelerationJolt(int address, long val, int priority = 3);
+	void setDeccelerationJoltAll(long val, int priority = 3);
     void increaseRPM(QList<int> go, int priority = 3);
     void increaseRPM(int address, int priority = 3);
     void increaseRPMAll(int priority = 3);
@@ -82,9 +82,9 @@ public:
 
 signals:
 
-    void position(int adress, int position);
-    void temperature(int adress, int temperature);
-    void rpm(int adress, int rpm);
+	void position(int adress, long position);
+	void temperature(int adress, long temperature);
+	void rpm(int adress, long rpm);
     void send(QByteArray data, int priority);
 
 public slots:

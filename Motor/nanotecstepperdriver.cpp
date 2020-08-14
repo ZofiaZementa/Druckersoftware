@@ -19,17 +19,14 @@ NanotecStepperDriver::~NanotecStepperDriver()
 void NanotecStepperDriver::setStepSize(QHash<int, int> sizes, int priority)
 {
 
-    for(QHash<int, int>::iterator i = sizes.begin();i != sizes.end(); i++){
-
-        setStepSize(i.key(), i.value(), priority);
-    }
+		setStepSize(i.key(), i.value(), priority);
 }
 
 //setting the StepSize for the motor at address to the given size, with the given priority
 void NanotecStepperDriver::setStepSize(int address, int size, int priority)
 {
 
-    sendData(QString("#%1g%2\r").arg(m_motorMap[address]).arg(size), priority);
+	sendData(QString("#%1g%2\r").arg(m_motorMap[address]).arg(size), priority);
 }
 
 //setting the StepSize for all the motors to the given size, with the given priority
@@ -43,17 +40,15 @@ void NanotecStepperDriver::setStepSizeAll(int size, int priority)
 void NanotecStepperDriver::setMotorType(QHash<int, int> types, int priority)
 {
 
-    for(QHash<int, int>::iterator i = types.begin();i != types.end(); i++){
-
-        setMotorType(i.key(), i.value(), priority);
-    }
+	for(QHash<int, int>::iterator i = types.begin();i != types.end(); i++)
+		setMotorType(i.key(), i.value(), priority);
 }
 
 //setting the MotorType for the motor at address to the given type, with the given priority
 void NanotecStepperDriver::setMotorType(int address, int type, int priority)
 {
 
-    sendData(QString("#%1:CL_motor_type=%2\r").arg(m_motorMap[address]).arg(type), priority);
+	sendData(QString("#%1:CL_motor_type=%2\r").arg(m_motorMap[address]).arg(type), priority);
 }
 
 //setting the MotorType for all the motors to the given type, with the given priority
@@ -67,10 +62,8 @@ void NanotecStepperDriver::setMotorTypeAll(int type, int priority)
 void NanotecStepperDriver::setBacklash(QHash<int, int> vals, int priority)
 {
 
-    for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++){
-
-        setBacklash(i.key(), i.value(), priority);
-    }
+	for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++)
+		setBacklash(i.key(), i.value(), priority);
 }
 
 //setting the Backlash for the motor at address to the given value, with the given priority
@@ -91,10 +84,8 @@ void NanotecStepperDriver::setBacklashAll(int val, int priority)
 void NanotecStepperDriver::setPhasecurrent(QHash<int, int> vals, int priority)
 {
 
-    for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++){
-
-        setPhasecurrent(i.key(), i.value(), priority);
-    }
+	for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++)
+		setPhasecurrent(i.key(), i.value(), priority);
 }
 
 //setting the Phasecurrent for the motor at address to the given value, with the given priority
@@ -116,10 +107,8 @@ void NanotecStepperDriver::setPhasecurrentAll(int val, int priority)
 void NanotecStepperDriver::setHaltPhasecurrent(QHash<int, int> vals, int priority)
 {
 
-    for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++){
-
-        setHaltPhasecurrent(i.key(), i.value(), priority);
-    }
+	for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++)
+		setHaltPhasecurrent(i.key(), i.value(), priority);
 }
 
 //setting the HaltPhasecurrent for the motor at address to the given value, with the given priority
@@ -141,10 +130,8 @@ void NanotecStepperDriver::setHaltPhasecurrentAll(int val, int priority)
 void NanotecStepperDriver::setStopDecceleration(QHash<int, int> vals, int priority)
 {
 
-    for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++){
-
-        setStopDecceleration(i.key(), i.value(), priority);
-    }
+	for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++)
+		setStopDecceleration(i.key(), i.value(), priority);
 }
 
 //setting the StopDecceleration for the motor at address to the given value, with the given priority
@@ -165,10 +152,8 @@ void NanotecStepperDriver::setStopDeccelerationAll(int val, int priority)
 void NanotecStepperDriver::startMotor(QList<int> go, int priority)
 {
 
-    for(int i = 0;i != go.count(); i++){
-
-        startMotor(go.at(i), priority);
-    }
+	for(int i = 0;i != go.count(); i++)
+		startMotor(go.at(i), priority);
 }
 
 //starts the motor with the given address, with the given priority
@@ -189,10 +174,8 @@ void NanotecStepperDriver::startMotorAll(int priority)
 void NanotecStepperDriver::stopMotor(QList<int> go, int priority)
 {
 
-    for(int i = 0;i < go.count(); i++){
-
-        stopMotor(go.at(i), priority);
-    }
+	for(int i = 0;i < go.count(); i++)
+		stopMotor(go.at(i), priority);
 }
 
 //stops the motor with the given address, with the given priority
@@ -213,10 +196,8 @@ void NanotecStepperDriver::stopMotorAll(int priority)
 void NanotecStepperDriver::quickStopMotor(QList<int> go, int priority)
 {
 
-    for(int i = 0;i < go.count(); i++){
-
-        quickStopMotor(go.at(i), priority);
-    }
+	for(int i = 0;i < go.count(); i++)
+		quickStopMotor(go.at(i), priority);
 }
 
 //quick stops the motor with the given address, with the given priority
@@ -238,10 +219,8 @@ void NanotecStepperDriver::quickStopMotorAll(int priority)
 void NanotecStepperDriver::setPositioningmode(QHash<int, int> modes, int priority)
 {
 
-    for(QHash<int, int>::iterator i = modes.begin();i != modes.end(); i++){
-
-        setPositioningmode(i.key(), i.value(), priority);
-    }
+	for(QHash<int, int>::iterator i = modes.begin();i != modes.end(); i++)
+		setPositioningmode(i.key(), i.value(), priority);
 }
 
 //setting the Positioningmode for the motor at address to the given value, with the given priority
@@ -259,24 +238,22 @@ void NanotecStepperDriver::setPositioningmodeAll(int mode, int priority)
 }
 
 //setting the way to drive for all the motors (keys) in the map to the given value in the map, with the given priority
-void NanotecStepperDriver::setWay(QHash<int, int> ways, int priority)
+void NanotecStepperDriver::setWay(QHash<int, long> ways, int priority)
 {
 
-    for(QHash<int, int>::iterator i = ways.begin();i != ways.end(); i++){
-
-        setWay(i.key(), i.value(), priority);
-    }
+	for(QHash<int, int>::iterator i = ways.begin();i != ways.end(); i++)
+		setWay(i.key(), i.value(), priority);
 }
 
 //setting the way to drive for the motor at address to the given value, with the given priority
-void NanotecStepperDriver::setWay(int address, int way, int priority)
+void NanotecStepperDriver::setWay(int address, long way, int priority)
 {
 
     sendData(QString("#%1s%2\r").arg(m_motorMap[address]).arg(way), priority);
 }
 
 //setting the way to drive for all the motors to the given value, with the given priority
-void NanotecStepperDriver::setWayAll(int way, int priority)
+void NanotecStepperDriver::setWayAll(long way, int priority)
 {
 
     sendData(QString("#*s%1\r").arg(way), priority);
@@ -284,24 +261,22 @@ void NanotecStepperDriver::setWayAll(int way, int priority)
 
 //setting the frequenzy to start at for all the motors (keys) in the map to the given value in the map,
 //with the given priority
-void NanotecStepperDriver::setMinFrequenzy(QHash<int, int> vals, int priority)
+void NanotecStepperDriver::setMinFrequenzy(QHash<int, long> vals, int priority)
 {
 
-    for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++){
-
-        setMinFrequenzy(i.key(), i.value(), priority);
-    }
+	for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++)
+		setMinFrequenzy(i.key(), i.value(), priority);
 }
 
 //setting the frequenzy to start at for alle for the motor at address to the given value, with the given priority
-void NanotecStepperDriver::setMinFrequenzy(int address, int val, int priority)
+void NanotecStepperDriver::setMinFrequenzy(int address, long val, int priority)
 {
 
     sendData(QString("#%1u%2\r").arg(m_motorMap[address]).arg(val), priority);
 }
 
 //setting the frequenzy to start at for all the motors to the given value, with the given priority
-void NanotecStepperDriver::setMinFrequenzyAll(int val, int priority)
+void NanotecStepperDriver::setMinFrequenzyAll(long val, int priority)
 {
 
     sendData(QString("#*s%1\r").arg(val), priority);
@@ -309,24 +284,22 @@ void NanotecStepperDriver::setMinFrequenzyAll(int val, int priority)
 
 //setting the frequenzy to drive at for all the motors (keys) in the map to the given value in the map,
 //with the given priority
-void NanotecStepperDriver::setMaxFrequenzy(QHash<int, int> vals, int priority)
+void NanotecStepperDriver::setMaxFrequenzy(QHash<int, long> vals, int priority)
 {
 
-    for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++){
-
-        setMaxFrequenzy(i.key(), i.value(), priority);
-    }
+	for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++)
+		setMaxFrequenzy(i.key(), i.value(), priority);
 }
 
 //setting the frequenzy to drive at for alle for the motor at address to the given value, with the given priority
-void NanotecStepperDriver::setMaxFrequenzy(int address, int val, int priority)
+void NanotecStepperDriver::setMaxFrequenzy(int address, long val, int priority)
 {
 
     sendData(QString("#%1o%2\r").arg(m_motorMap[address]).arg(val), priority);
 }
 
 //setting the frequenzy to drive at for all the motors to the given value, with the given priority
-void NanotecStepperDriver::setMaxFrequenzyAll(int val, int priority)
+void NanotecStepperDriver::setMaxFrequenzyAll(long val, int priority)
 {
 
     sendData(QString("#*o%1\r").arg(val), priority);
@@ -334,24 +307,22 @@ void NanotecStepperDriver::setMaxFrequenzyAll(int val, int priority)
 
 //setting the maximum acceleration for all the motors (keys) in the map to the given value in the map,
 //with the given priority
-void NanotecStepperDriver::setAccelerationCurve(QHash<int, int> vals, int priority)
+void NanotecStepperDriver::setAccelerationCurve(QHash<int, long> vals, int priority)
 {
 
-    for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++){
-
-        setAccelerationCurve(i.key(), i.value(), priority);
-    }
+	for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++)
+		setAccelerationCurve(i.key(), i.value(), priority);
 }
 
 //setting the maximum acceleration for the motor at address to the given value, with the given priority
-void NanotecStepperDriver::setAccelerationCurve(int address, int val, int priority)
+void NanotecStepperDriver::setAccelerationCurve(int address, long val, int priority)
 {
 
     sendData(QString("#%1b%2\r").arg(m_motorMap[address]).arg(val), priority);
 }
 
 //setting the maximum acceleration for all the motors to the given value, with the given priority
-void NanotecStepperDriver::setAccelerationCurveAll(int val, int priority)
+void NanotecStepperDriver::setAccelerationCurveAll(long val, int priority)
 {
 
     sendData(QString("#*b%1\r").arg(val), priority);
@@ -359,24 +330,22 @@ void NanotecStepperDriver::setAccelerationCurveAll(int val, int priority)
 
 //setting the maximum decceleration for all the motors (keys) in the map to the given value in the map,
 //with the given priority
-void NanotecStepperDriver::setDeccelerationCurve(QHash<int, int> vals, int priority)
+void NanotecStepperDriver::setDeccelerationCurve(QHash<int, long> vals, int priority)
 {
 
-    for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++){
-
-        setDeccelerationCurve(i.key(), i.value(), priority);
-    }
+	for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++)
+		setDeccelerationCurve(i.key(), i.value(), priority);
 }
 
 //setting the maximum decceleration for the motor at address to the given value, with the given priority
-void NanotecStepperDriver::setDeccelerationCurve(int address, int val, int priority)
+void NanotecStepperDriver::setDeccelerationCurve(int address, long val, int priority)
 {
 
     sendData(QString("#%1B%2\r").arg(m_motorMap[address]).arg(val), priority);
 }
 
 //setting the maximum decceleration for all the motors to the given value, with the given priority
-void NanotecStepperDriver::setDeccelerationCurveAll(int val, int priority)
+void NanotecStepperDriver::setDeccelerationCurveAll(long val, int priority)
 {
 
     sendData(QString("#*B%1\r").arg(val), priority);
@@ -387,62 +356,50 @@ void NanotecStepperDriver::setDeccelerationCurveAll(int val, int priority)
 void NanotecStepperDriver::setTurningdirection(QHash<int, bool> vals, int priority)
 {
 
-    for(QHash<int, bool>::iterator i = vals.begin();i != vals.end(); i++){
-
-        setTurningdirection(i.key(), i.value(), priority);
-    }
+	for(QHash<int, bool>::iterator i = vals.begin();i != vals.end(); i++)
+		setTurningdirection(i.key(), i.value(), priority);
 }
 
 //setting the turningdirection for the motor at address to the given value, with the given priority
 void NanotecStepperDriver::setTurningdirection(int address, bool val, int priority)
 {
 
-    if(val == false){
+	if(val == false)
+		sendData(QString("#%1d0\r").arg(m_motorMap[address]), priority);
 
-        sendData(QString("#%1d0\r").arg(m_motorMap[address]), priority);
-    }
-
-    else{
-
-        sendData(QString("#%1d1\r").arg(m_motorMap[address]), priority);
-    }
+	else
+		sendData(QString("#%1d1\r").arg(m_motorMap[address]), priority);
 }
 
 //setting the turningdirection for all the motors to the given value, with the given priority
 void NanotecStepperDriver::setTurningdirectionAll(bool val, int priority)
 {
 
-    if(val == false){
+	if(val == false)
+		sendData(QString("#*d0\r"), priority);
 
-        sendData(QString("#*d0\r"), priority);
-    }
-
-    else{
-
-        sendData(QString("#*d1\r"), priority);
-    }
+	else
+		sendData(QString("#*d1\r"), priority);
 }
 
 //setting the maximum jolt during acceleration for all the motors (keys) in the map to the given value in the map,
 //with the given priority
-void NanotecStepperDriver::setAccelerationJolt(QHash<int, int> vals, int priority)
+void NanotecStepperDriver::setAccelerationJolt(QHash<int, long> vals, int priority)
 {
 
-    for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++){
-
-        setAccelerationJolt(i.key(), i.value(), priority);
-    }
+	for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++)
+		setAccelerationJolt(i.key(), i.value(), priority);
 }
 
 //setting the maximum jolt during acceleration for the motor at address to the given value, with the given priority
-void NanotecStepperDriver::setAccelerationJolt(int address, int val, int priority)
+void NanotecStepperDriver::setAccelerationJolt(int address, long val, int priority)
 {
 
     sendData(QString("#%1:b%2\r").arg(m_motorMap[address]).arg(val), priority);
 }
 
 //setting the maximum jolt during acceleration for all the motors to the given value, with the given priority
-void NanotecStepperDriver::setAccelerationJoltAll(int val, int priority)
+void NanotecStepperDriver::setAccelerationJoltAll(long val, int priority)
 {
 
     sendData(QString("#*:b%1\r").arg(val), priority);
@@ -450,24 +407,22 @@ void NanotecStepperDriver::setAccelerationJoltAll(int val, int priority)
 
 //setting the maximum jolt during decceleration for all the motors (keys) in the map to the given value in the map,
 //with the given priority
-void NanotecStepperDriver::setDeccelerationJolt(QHash<int, int> vals, int priority)
+void NanotecStepperDriver::setDeccelerationJolt(QHash<int, long> vals, int priority)
 {
 
-    for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++){
-
-        setDeccelerationJolt(i.key(), i.value(), priority);
-    }
+	for(QHash<int, int>::iterator i = vals.begin();i != vals.end(); i++)
+		setDeccelerationJolt(i.key(), i.value(), priority);
 }
 
 //setting the maximum jolt during decceleration for the motor at address to the given value, with the given priority
-void NanotecStepperDriver::setDeccelerationJolt(int address, int val, int priority)
+void NanotecStepperDriver::setDeccelerationJolt(int address, long val, int priority)
 {
 
     sendData(QString("#%1:B%2\r").arg(m_motorMap[address]).arg(val), priority);
 }
 
 //setting the maximum jolt during decceleration for all the motors to the given value, with the given priority
-void NanotecStepperDriver::setDeccelerationJoltAll(int val, int priority)
+void NanotecStepperDriver::setDeccelerationJoltAll(long val, int priority)
 {
 
     sendData(QString("#*:B%1\r").arg(val), priority);
@@ -477,10 +432,8 @@ void NanotecStepperDriver::setDeccelerationJoltAll(int val, int priority)
 void NanotecStepperDriver::increaseRPM(QList<int> go, int priority)
 {
 
-    for(int i = 0;i < go.count(); i++){
-
-        increaseRPM(go.at(i), priority);
-    }
+	for(int i = 0;i < go.count(); i++)
+		increaseRPM(go.at(i), priority);
 }
 
 //increasing the rpm for the motor at address, with the given priority
@@ -501,10 +454,8 @@ void NanotecStepperDriver::increaseRPMAll(int priority)
 void NanotecStepperDriver::decreaseRPM(QList<int> go, int priority)
 {
 
-    for(int i = 0;i < go.count(); i++){
-
-        decreaseRPM(go.at(i), priority);
-    }
+	for(int i = 0;i < go.count(); i++)
+		decreaseRPM(go.at(i), priority);
 }
 
 //decreasing the rpm for the motor at address, with the given priority
@@ -533,10 +484,8 @@ void NanotecStepperDriver::setMotorAddressMap(QHash<int, int> addressmap)
 void NanotecStepperDriver::changeMotorAddressMap(QHash<int, int> addressmap)
 {
 
-    for(QHash<int, int>::iterator i = addressmap.begin();i != addressmap.end();i++){
-
-        m_motorMap.insert(i.key(), i.value());
-    }
+	for(QHash<int, int>::iterator i = addressmap.begin();i != addressmap.end();i++)
+		m_motorMap.insert(i.key(), i.value());
 }
 
 //returns the current motoraddressmap
@@ -551,20 +500,16 @@ void NanotecStepperDriver::resetMotorAddressMap()
 
     m_motorMap.clear();
 
-    for(int i = 1;i < 255;i++){
-
+	for(int i = 1;i < 255;i++)
         m_motorMap.insert(i, i);
-    }
 }
 
 //requesting the postition from all the motors (keys) in the map, with the given priority
 void NanotecStepperDriver::getPosition(QList<int> ok, int priority)
 {
 
-    for(int i = 0;i < ok.count(); i++){
-
+	for(int i = 0;i < ok.count(); i++)
         getPosition(ok.at(i), priority);
-    }
 }
 
 //requesting the postition from all the motor at address, with the given priority
@@ -585,10 +530,8 @@ void NanotecStepperDriver::getPositionAll(int priority)
 void NanotecStepperDriver::getTemperature(QList<int> ok, int priority)
 {
 
-    for(int i = 0;i < ok.count(); i++){
-
-        getTemperature(ok.at(i), priority);
-    }
+	for(int i = 0;i < ok.count(); i++)
+		getTemperature(ok.at(i), priority);
 }
 
 //requesting the temperature from all the motor at address, with the given priority
@@ -609,10 +552,8 @@ void NanotecStepperDriver::getTemperatureAll(int priority)
 void NanotecStepperDriver::getRPM(QList<int> ok, int priority)
 {
 
-    for(int i = 0;i < ok.count(); i++){
-
-        getRPM(ok.at(i), priority);
-    }
+	for(int i = 0;i < ok.count(); i++)
+		getRPM(ok.at(i), priority);
 }
 
 //requesting the rpm from all the motor at address, with the given priority
@@ -634,26 +575,26 @@ void NanotecStepperDriver::receive(QByteArray data)
 {
 
     QString dataString = QString(data);
-    int adress = removeAdress(&dataString);
+	int adress = m_motorMap.key(removeAdress(&dataString));
 
     if(dataString.contains(QString("C")) == true){
 
         bool ok;
-        emit position(adress, dataString.mid(1, dataString.count() - 2).toInt(&ok, 10));
+		emit position(adress, dataString.mid(1, dataString.count() - 2).toLong(&ok, 10));
         return;
     }
 
     else if(dataString.contains(QString(":temp_adc")) == true){
 
         bool ok;
-        emit temperature(adress, dataString.mid(9, dataString.count() - 10).toInt(&ok, 10));
+		emit temperature(adress, dataString.mid(9, dataString.count() - 10).toLong(&ok, 10));
         return;
     }
 
     else if(dataString.contains(QString(":v")) == true){
 
         bool ok;
-        emit rpm(adress, dataString.mid(2, dataString.count() - 3).toInt(&ok, 10));
+		emit rpm(adress, dataString.mid(2, dataString.count() - 3).toLong(&ok, 10));
     }
 }
 
@@ -672,10 +613,8 @@ int NanotecStepperDriver::removeAdress(QString *data)
 
     if(data->contains(QChar(42)) == false){
 
-        while(data->at(0).unicode() > 47 && data->at(0).unicode() < 58){
-
-            adress.append(data->remove(0, 1));
-        }
+		while(data->at(0).unicode() > 47 && data->at(0).unicode() < 58)
+			adress.append(data->remove(0, 1));
 
         bool ok;
         return adress.toInt(&ok, 10);
