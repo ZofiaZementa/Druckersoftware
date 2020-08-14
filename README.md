@@ -49,4 +49,4 @@ But since this is still a pre-release version, it probably wont work, so be care
 
 ## Authors
 
-* **Maximilian Fischer** - [xxfischixx2](https://github.com/xxfischixx2)
+* **Maximilian Fischer** - [ZofiaZementa](https://github.com/ZofiaZementa)
